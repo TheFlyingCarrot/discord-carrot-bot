@@ -1,0 +1,31 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "description": "Discord bot made with NodeJS and DiscordJS.",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "mysql": "^2.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheFlyingCarrot/JS-Discord-Bot.git"
+  },
+  "keywords": [
+    "nodejs",
+    "node",
+    "discord",
+    "discordjs",
+    "bot"
+  ],
+  "author": "Creedon H",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheFlyingCarrot/JS-Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/TheFlyingCarrot/JS-Discord-Bot#readme"
+}

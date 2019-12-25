@@ -5,7 +5,8 @@ const client = new Discord.Client()
 client.commands = new Discord.Collection()
 const cooldowns = new Discord.Collection()
 
-const { prefix, token } = require('./config.json')
+const { defaultPrefix, token } = require('./config.json')
+const servers = fs.readdirSync('./servers')
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
 
 for (const file of commandFiles) {
@@ -14,10 +15,34 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command)
 }
 
-// triggers when the bot is activated
+// Triggers when the client (bot) is ready.
 client.once('ready', () => {
+    const guilds = client.guilds
+    guilds.tap(guild => {
+        prefix[guild.id] = defaultPrefix
+    })
     console.log('Bot Client: Ready')
 })
+
+client.on('guildCreate', guild => {
+    console.log('Added to a new guild: ' + guild.name)
+})
+
+client.on('guildDelete', guild => {
+    console.log('Removed from a guild: ' + guild.name)
+})
+
+client.on('guildMemberAdd', member => {
+    // const guild = member.guild
+    const channel = member.guild.channels.find(ch => ch.name === 'general')
+    if (!channel) {return}
+    channel.send(`Welcome to the server, ${member}`)
+})
+
+/* client.on('guildMemberRemove', member => {
+    const guild = member.guild
+    // 
+}) */
 
 client.on('message', message => {
     if ((!message.content.startsWith(prefix)) || message.author.bot || message.tts || message.system) {return null}
