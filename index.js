@@ -26,11 +26,14 @@ client.on('message', message => {
     const commandName = args.shift().toLowerCase()
 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
-    try { // Start Command Verification
-        if (!command) { // Not a command.
+    // Start Command Verification
+    try {
+        // Not a command.
+        if (!command) {
             return
         }
-        if (command.developerOnly) { // Developer-Only Command.
+        // Developer-Only Command.
+        if (command.developerOnly) {
             const developerFile = ('./developers.txt')
             if (!fs.existsSync(developerFile)) {
                 console.log(`File ${developerFile} not found.`)
@@ -46,26 +49,32 @@ client.on('message', message => {
                 }
             }
         }
-        if (command.guildOnly && (message.channel.type !== 'text')) { // Guild/Server-Only Command.
-            return message.reply('I can\'t execute that command inside Direct Messages.') // Return to exit.
+        // Guild/Server-Only Command.
+        if (command.guildOnly && (message.channel.type !== 'text')) {
+            return message.reply('I can\'t execute that command inside Direct Messages.')
         }
-        if (command.permission && (!message.guild.me.hasPermission(command.permission))) { // Check for the required permissions.
-            return message.reply(`I need the ${command.permission} permission to execute that command.`) // Return to exit.
+        // Check for the required permissions.
+        if (command.permission && (!message.guild.me.hasPermission(command.permission))) {
+            return message.reply(`I need the ${command.permission} permission to execute that command.`)
         }
-        if (command.args && !args.length) { // Check for arguments. If none exist, reply with reason and provide usage, if it exists.
+        // Check for arguments. If none exist, reply with reason and provide usage, if it exists.
+        if (command.args && !args.length) {
             let reply = 'that command requires arguments.'
             if (command.usage) {
                 reply += (`\nThe proper usage is: \`${prefix}${command.name} ${command.usage}\``)
             }
-            return message.channel.send(reply) // Return to exit.
+            return message.channel.send(reply)
         }
-        if (!cooldowns.has(command.name)) { // Adds commands to the cooldowns collection.
+        // Adds commands to the cooldowns collection.
+        if (!cooldowns.has(command.name)) {
             cooldowns.set(command.name, new Discord.Collection())
         }
     } catch (err) { 
         console.log(err)
         return message.reply('there was an error in recognizing that command.')
-    } finally { // END Command Verification // START Debug Log
+    } finally {
+        // END Command Verification 
+        // START Debug Log
         try {
             let logMessage = (`****** new message with prefix recognized
             ------ message recognized
@@ -91,9 +100,11 @@ client.on('message', message => {
             }
             console.log(logMessage)
         } catch(err) { console.log(err) }
-    } // END Debug Log
+    }
+    // END Debug Log
 
-    const now = Date.now() // START Cooldowns  *COOLDOWNS
+    // START Cooldowns  *COOLDOWNS
+    const now = Date.now()
     const timestamps = cooldowns.get(command.name)
     const cooldownAmount = (command.cooldown || 3) * 1000
 
@@ -105,14 +116,15 @@ client.on('message', message => {
     } else if (!timestamps.has(message.author.id)) {
         timestamps.set(message.author.id, now)
         setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)
-    } // END Cooldowns
+    }
+    // END Cooldowns
 
     // START Execute Command
     try {
         command.execute(message, args)
     } catch (err) {
         console.log(err)
-        message.reply('there was an error trying to execute that command.') //  Error: ${error}
+        message.reply('there was an error trying to execute that command.') 
     }
     // END Execute Command
 })
