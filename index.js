@@ -76,27 +76,27 @@ client.on('message', message => {
         // END Command Verification 
         // START Debug Log
         try {
-            let logMessage = (`****** new message with prefix recognized
-            ------ message recognized
-                ------ message.content:         ${message.content}
-                ------ message.author.tag:      ${message.author.tag}
-                ------ message.author.id:       ${message.author.id}
-                ------ message.channel:         ${message.channel}
-                ------ message.channel.type:    ${message.channel.type}
-                ------ message.createdAt:       ${message.createdAt}`)
+            let logMessage = (`*new message with prefix recognized
+---- message recognized
+---------- message.content:         ${message.content}
+---------- message.author.tag:      ${message.author.tag}
+---------- message.author.id:       ${message.author.id}
+---------- message.channel:         ${message.channel}
+---------- message.channel.type:    ${message.channel.type}
+---------- message.createdAt:       ${message.createdAt}`)
             if (message.guild !== null) {
                 logMessage += (`
-            ------ guild recognized
-                ------ message.guild:           ${message.guild}
-                ------ message.guild.id:        ${message.guild.id}`)
+---- guild recognized
+---------- message.guild:           ${message.guild}
+---------- message.guild.id:        ${message.guild.id}`)
             }
             if (command) {
                 logMessage += (`
-            ------ command recognized
-                ------ command.name:            ${command.name}`)
+---- command recognized
+---------- command.name:            ${command.name}`)
                 if (args.length > 0) {
                 logMessage += (`
-                ------ args:                    ${args}`)
+---------- args:                    ${args}`)
                 }
             }
             console.log(logMessage)
