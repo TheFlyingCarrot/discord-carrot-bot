@@ -6,12 +6,10 @@ client.commands = new Discord.Collection()
 const cooldowns = new Discord.Collection()
 
 const { defaultPrefix, token } = require('./config.json')
-/* const servers = fs.readdirSync('./servers')
-for (const server of servers) {
-    const guild = require(`./servers${server}`)
-    if (!client.guilds.array.includes(guild.name)) {
-        fs.unlinkSync(`./servers/${guild.name}`)
-    }
+
+/* const guilds = fs.readdirSync('./guilds')
+for (const guild in guilds) {
+    console.log(guild.id)
 } */
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
 for (const file of commandFiles) {
@@ -22,8 +20,39 @@ for (const file of commandFiles) {
 
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
-    console.log('Bot Client: Ready')
+    // eslint-disable-next-line no-unused-vars
+    const guilds = client.guilds.map(g => g)
+    .forEach(guild => {
+        if (fs.existsSync(`./guilds/${guild.id}.json`)) {
+            console.log(`Guild ID File Found for Guild ID: ${guild.id}`)
+            const guildFile = JSON.parse(fs.readFileSync(`./guilds/${guild.id}.json`))
+            try {
+                console.log(`DISCORD\nName: ${guild.name}\nID: ${guild.id}`)
+                console.log(`FILESYSTEM\nName: ${guildFile.name}\nID: ${guildFile.id}`)
+            } catch (err) {
+                console.log(err)
+            }
+        } else {
+            console.log(`No Guild ID File Found for Guild ID: ${guild.id}`)
+            console.log(`DISCORD\nName: ${guild.name}\nID: ${guild.id}`)
+            const guildData = {
+                id: `${guild.id}`,
+                name: `${guild.name}`,
+            }
+            fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildData), 'utf-8')
+        }
+    })
+
+    console.log('Bot Client State: Ready')
 })
+
+client.once('reconnecting', () => {
+    console.log('Bot Client State: Reconnecting')
+})
+
+client.once('disconnect', () => {
+    console.log('Bot Client State: Disconnected')
+});
 
 client.on('guildCreate', guild => {
     console.log('Added to a new guild: ' + guild.name)
