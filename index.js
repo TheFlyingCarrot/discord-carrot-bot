@@ -16,7 +16,7 @@ for (const file of commandFiles) {
 
 // triggers when the bot is activated
 client.once('ready', () => {
-    console.log('bot client ready')
+    console.log('Bot Client: Ready')
 })
 
 client.on('message', message => {
