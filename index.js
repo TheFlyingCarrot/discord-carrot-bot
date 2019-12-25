@@ -6,9 +6,14 @@ client.commands = new Discord.Collection()
 const cooldowns = new Discord.Collection()
 
 const { defaultPrefix, token } = require('./config.json')
-const servers = fs.readdirSync('./servers')
+/* const servers = fs.readdirSync('./servers')
+for (const server of servers) {
+    const guild = require(`./servers${server}`)
+    if (!client.guilds.array.includes(guild.name)) {
+        fs.unlinkSync(`./servers/${guild.name}`)
+    }
+} */
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
-
 for (const file of commandFiles) {
 	const command = require(`./command_modules/${file}`)
 	// Set a new item in the Collection with the key as the command name and the value as the exported module
@@ -17,10 +22,6 @@ for (const file of commandFiles) {
 
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
-    const guilds = client.guilds
-    guilds.tap(guild => {
-        prefix[guild.id] = defaultPrefix
-    })
     console.log('Bot Client: Ready')
 })
 
@@ -45,9 +46,9 @@ client.on('guildMemberAdd', member => {
 }) */
 
 client.on('message', message => {
-    if ((!message.content.startsWith(prefix)) || message.author.bot || message.tts || message.system) {return null}
+    if ((!message.content.startsWith(defaultPrefix)) || message.author.bot || message.tts || message.system) {return null}
 
-    const args = message.content.slice(prefix.length).split(/ +/)
+    const args = message.content.slice(defaultPrefix.length).split(/ +/)
     const commandName = args.shift().toLowerCase()
 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
@@ -86,7 +87,7 @@ client.on('message', message => {
         if (command.args && !args.length) {
             let reply = 'that command requires arguments.'
             if (command.usage) {
-                reply += (`\nThe proper usage is: \`${prefix}${command.name} ${command.usage}\``)
+                reply += (`\nThe proper usage is: \`${defaultPrefix}${command.name} ${command.usage}\``)
             }
             return message.channel.send(reply)
         }

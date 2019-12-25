@@ -20,7 +20,9 @@
     "node",
     "discord",
     "discordjs",
-    "bot"
+    "bot",
+    "sql",
+    "mysql"
   ],
   "author": "Creedon H",
   "license": "ISC",
