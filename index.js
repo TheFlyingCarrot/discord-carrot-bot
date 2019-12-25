@@ -82,7 +82,9 @@ client.on('message', message => {
                 ------ message.author.tag:      ${message.author.tag}
                 ------ message.author.id:       ${message.author.id}
                 ------ message.channel:         ${message.channel}
-                ------ message.channel.type:    ${message.channel.type}`)
+                ------ message.channel.type:    ${message.channel.type}
+                ------ message.createdAt:       ${message.createdAt}
+                ------ message.createdTimestamp:${message.createdTimestamp}`)
             if (message.guild !== null) {
                 logMessage += (`
             ------ guild recognized
