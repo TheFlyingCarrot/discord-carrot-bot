@@ -29,6 +29,7 @@ client.once('ready', () => {
             try {
                 console.log(`DISCORD\nName: ${guild.name}\nID: ${guild.id}`)
                 console.log(`FILESYSTEM\nName: ${guildFile.name}\nID: ${guildFile.id}`)
+                
             } catch (err) {
                 console.log(err)
             }
@@ -38,6 +39,8 @@ client.once('ready', () => {
             const guildData = {
                 id: `${guild.id}`,
                 name: `${guild.name}`,
+                adminRoleID: '',
+                modRoleID: '',
             }
             fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildData), 'utf-8')
         }
