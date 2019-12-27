@@ -16,7 +16,7 @@ for (const file of commandFiles) {
 }
 
 // Independent Vars
-const INDEX_DEBUG = true
+const INDEX_DEBUG = false
 
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
@@ -102,12 +102,14 @@ client.on('guildDelete', guildObj => {
     // const guild = member.guild
     const channel = member.guild.channels.find(ch => ch.name === 'general')
     if (!channel) {return}
-    channel.send(`Welcome to the server, ${member}`)
-}) */
+    channel.send(`Welcome to the server, ${member}!`)
+})
 
-/* client.on('guildMemberRemove', member => {
-    const guild = member.guild
-    // 
+ client.on('guildMemberRemove', member => {
+    // const guild = member.guild
+    const channel = member.guild.channels.find(ch => ch.name === 'general')
+    if (!channel) {return}
+    channel.send(`Good-bye, ${member}.`)
 }) */
 
 // Triggers when any new message is recieved by the bot (client).
@@ -170,8 +172,8 @@ client.on('message', message => {
     } finally { 
         // START Debug Log
         try {
-            if (INDEX_DEBUG) {
-            let logMessage = (`*new message with prefix recognized
+            if (INDEX_DEBUG == true) {
+                let logMessage = (`*new message with prefix recognized
 ---- message recognized
 ---------- message.content:         ${message.content}
 ---------- message.author.tag:      ${message.author.tag}
@@ -179,22 +181,22 @@ client.on('message', message => {
 ---------- message.channel:         ${message.channel}
 ---------- message.channel.type:    ${message.channel.type}
 ---------- message.createdAt:       ${message.createdAt}`)
-            if (message.guild !== null) {
-                logMessage += (`
+                if (message.guild !== null) {
+                    logMessage += (`
 ---- guild recognized
 ---------- message.guild:           ${message.guild}
 ---------- message.guild.id:        ${message.guild.id}`)
-            }
-            if (command) {
-                logMessage += (`
+                }
+                if (command) {
+                    logMessage += (`
 ---- command recognized
 ---------- command.name:            ${command.name}`)
-                if (args.length > 0) {
-                logMessage += (`
+                    if (args.length > 0) {
+                    logMessage += (`
 ---------- args:                    ${args}`)
+                    }
                 }
-            }
-            console.log(logMessage)
+                console.log(logMessage)
             }
         } catch(err) { console.log(err) }
     }
