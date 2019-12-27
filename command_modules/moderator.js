@@ -43,11 +43,11 @@ module.exports = {
 			try {
 				if (targetMember && (guildFile.modRoleID)) {
 					targetMember.addRole(guildFile.modRoleID)
-						.then(message.reply(`granted ${message.mentions.members.first()} the administrator role.`))
+						.then(message.reply(`granted ${message.mentions.members.first()} the moderator role.`))
 				} else if (targetMember && (!guildFile.modRoleID)) {
-					message.reply(`I could not grant ${message.mentions.members.first()} the administrator role because you do not have one set.`)
+					message.reply(`I could not grant ${message.mentions.members.first()} the moderator role because you do not have one set.`)
 				} else {
-					message.reply('I experienced an unknown error when trying to run that command. Please contact my developer.')
+					message.reply('I can\'t process that argument.')
 				}
 			} catch(err) {
 				console.log(err)

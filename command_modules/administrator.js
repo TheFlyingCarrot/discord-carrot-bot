@@ -52,7 +52,7 @@ module.exports = {
 				} else if (!targetMember && (guildFile.adminRoleID)) {
 					message.reply('You didn\'t give me a member to assign the administrator role to, but your guild does have a admin role ID.')
 				} else {
-					message.reply('I experienced an unknown error when trying to run that command. Please contact my developer.')
+					message.reply('I can\'t process that argument.')
 				}
 			} catch(err) {
 				console.log(err)
