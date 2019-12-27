@@ -142,11 +142,12 @@ client.on('message', message => {
 		if (!cooldowns.has(command.name)) {
 			cooldowns.set(command.name, new Discord.Collection())
 		}
+		// END Command Verification
+		// Error Catch
 	} catch (err) {
 		console.log(err)
 		message.reply('there was an error in recognizing that command.')
 		return null
-		// END Command Verification
 	} finally {
 		// START Debug Log
 		if (INDEX_DEBUG == true) {
