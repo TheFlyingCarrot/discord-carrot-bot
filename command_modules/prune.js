@@ -16,13 +16,16 @@ module.exports = {
 				console.error(err)
 				message.reply(`there was an error executing that command. ${err}`)
 			})
-		} else if ((amount < 2 || amount > 100)) {
+		}
+		else if ((amount < 2 || amount > 100)) {
 			if (Number.isInteger(amount)) {
 				return message.reply('You must input a number between 2 and 99.')
-			} else {
+			}
+			else {
 				return message.reply('You must input a number between 2 and 99 that is also an integer.')
 			}
-		} else {
+		}
+		else {
 			message.channel.bulkDelete(amount, true).catch((error) => {
 				console.error(error)
 				message.reply(`there was an error executing that command. ${error}`)

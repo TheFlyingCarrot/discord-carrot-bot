@@ -44,7 +44,7 @@ client.once('reconnecting', () => {
 // Triggers when the connection to Discord API is interrupted.
 client.once('disconnect', () => {
 	console.log('Bot Client State: Disconnected')
-});
+})
 
 // Triggers when the bot (client) connects to a new server.
 client.on('guildCreate', guildObj => {
@@ -109,7 +109,8 @@ client.on('message', message => {
 			if (!fs.existsSync(developerFile)) {
 				message.reply('there was an error in finding the developers.')
 				return null
-			} else {
+			}
+			else {
 				const developers = fs.readFileSync(developerFile, 'utf-8')
 					.catch(console.error)
 				if (!developers.includes(message.author.id)) {
@@ -142,12 +143,14 @@ client.on('message', message => {
 		if (!cooldowns.has(command.name)) {
 			cooldowns.set(command.name, new Discord.Collection())
 		}
-	} catch (err) {
+	}
+	catch (err) {
 		console.log(err)
 		message.reply('there was an error in recognizing that command.')
 		return null
 		// END Command Verification
-	} finally {
+	}
+	finally {
 		// START Debug Log
 		if (INDEX_DEBUG == true) {
 			let logMessage = (`*new message with prefix recognized
@@ -190,7 +193,8 @@ client.on('message', message => {
 			message.reply(`please wait \`${timeLeft.toFixed(1)}\` more second(s) before reusing the \`${command.name}\` command.`)
 			return null
 		}
-	} else if (!timestamps.has(message.author.id)) {
+	}
+	else if (!timestamps.has(message.author.id)) {
 		timestamps.set(message.author.id, now)
 		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)
 	}
@@ -199,7 +203,8 @@ client.on('message', message => {
 	// START Execute Command
 	try {
 		command.execute(message, args)
-	} catch (err) {
+	}
+	catch (err) {
 		console.log(err)
 		message.reply('there was an error trying to execute that command.')
 		return null

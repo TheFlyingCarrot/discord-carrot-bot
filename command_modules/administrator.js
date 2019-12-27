@@ -18,7 +18,8 @@ module.exports = {
 			let targetRoleID = null
 			if ((args[1].startsWith('<@&')) && (args[1].endsWith('>'))) {
 				targetRoleID = args[1].slice(3, -1)
-			} else if (/^\d+$/.test(args[1])) {
+			}
+			else if (/^\d+$/.test(args[1])) {
 				targetRoleID = args[1]
 			}
 			if (targetRoleID) {
@@ -26,20 +27,25 @@ module.exports = {
 				guildFile.adminRoleID = targetRole.id
 				fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildFile), 'utf-8')
 				message.reply(`administrator role set to: ${targetRole.name}`)
-			} else {
+			}
+			else {
 				message.reply('you didn\'t provide me with a role.')
 			}
-		} else if (args[0] !== 'role') {
+		}
+		else if (args[0] !== 'role') {
 			let targetMember = null
 			if (args[0] === 'grant') {
 				if (/^\d+$/.test(args[1])) {
 					targetMember = guild.members.find(member => member.id === args[1])
-				} else if ((args[1].startsWith('<@!')) && (args[1].endsWith('>'))) {
+				}
+				else if ((args[1].startsWith('<@!')) && (args[1].endsWith('>'))) {
 					targetMember = message.mentions.members.first()
 				}
-			} else if ((args[0].startsWith('<@!')) && (args[0].endsWith('>'))) {
+			}
+			else if ((args[0].startsWith('<@!')) && (args[0].endsWith('>'))) {
 				targetMember = message.mentions.members.first()
-			} else if (/^\d+$/.test(args[0])) {
+			}
+			else if (/^\d+$/.test(args[0])) {
 				targetMember = guild.members.find(member => member.id === args[0])
 			}
 
@@ -47,17 +53,22 @@ module.exports = {
 				if (targetMember && (guildFile.adminRoleID)) {
 					targetMember.addRole(guildFile.adminRoleID)
 						.then(message.reply(`granted ${targetMember} the administrator role.`))
-				} else if (targetMember && (!guildFile.adminRoleID)) {
+				}
+				else if (targetMember && (!guildFile.adminRoleID)) {
 					message.reply(`I could not grant ${targetMember} the administrator role because you do not have one set.`)
-				} else if (!targetMember && (guildFile.adminRoleID)) {
+				}
+				else if (!targetMember && (guildFile.adminRoleID)) {
 					message.reply('You didn\'t give me a member to assign the administrator role to, but your guild does have a admin role ID.')
-				} else {
+				}
+				else {
 					message.reply('I experienced an unknown error when trying to run that command. Please contact my developer.')
 				}
-			} catch(err) {
+			}
+			catch(err) {
 				console.log(err)
 			}
-		} else {
+		}
+		else {
 			message.reply('please use the help command to see usage for this command.')
 		}
 	},
