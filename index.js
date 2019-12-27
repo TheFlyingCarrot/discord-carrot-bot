@@ -1,21 +1,23 @@
+// Discord Initialization
+const Discord = require('discord.js')
+const client = new Discord.Client()
+client.commands = new Discord.Collection()
+const cooldowns = new Discord.Collection()
+
+// Module Initialization
 const fs = require('fs')
 const { defaultPrefix, token } = require('./config.json')
 const readGuildData = require('./extra/readGuildData.js')
 const setGuildData = require('./extra/setGuildData.js')
-const Discord = require('discord.js')
-
-const client = new Discord.Client()
-client.commands = new Discord.Collection()
-
-const cooldowns = new Discord.Collection()
-
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
+
+// Command Palette Set-up
 for (const file of commandFiles) {
 	const command = require(`./command_modules/${file}`)
 	client.commands.set(command.name, command)
 }
 
-// Independent Vars
+// Independent Items
 const INDEX_DEBUG = false
 
 // Triggers when the client (bot) is ready.
@@ -34,28 +36,25 @@ client.once('ready', () => {
     console.log('Bot Client State: Ready')
 })
 
+// Triggers when a connection to Discord API has been found and is attempting to reconnect.
 client.once('reconnecting', () => {
     console.log('Bot Client State: Reconnecting')
 })
 
+// Triggers when the connection to Discord API is interrupted.
 client.once('disconnect', () => {
     console.log('Bot Client State: Disconnected')
 });
 
 // Triggers when the bot (client) connects to a new server.
 client.on('guildCreate', guildObj => {
-    console.log('Added to a new guild: ' + guildObj.name)
+    console.log('Bot was added to a new guild: ' + guildObj.name)
     // eslint-disable-next-line no-unused-vars
     const guilds = client.guilds.map(g => g)
         .forEach(guild => {
             if (!fs.existsSync(`./guilds/${guild.id}.json`)) {
                 console.log(`No Guild ID File Found for Guild ID: ${guild.id}`)
-                const guildData = {
-                    id: `${guild.id}`,
-                    name: `${guild.name}`,
-                    adminRoleID: NaN,
-                    modRoleID: NaN,
-                }
+                const guildData = { id: `${guild.id}`, name: `${guild.name}`, adminRoleID: NaN, modRoleID: NaN }
                 fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildData), 'utf-8')
             }
         })
@@ -63,7 +62,7 @@ client.on('guildCreate', guildObj => {
 
 // Triggers when the bot (client) is removed from a server.
 client.on('guildDelete', guildObj => {
-    console.log('Removed from a guild: ' + guildObj.name)
+    console.log('Bot was removed from a guild: ' + guildObj.name)
     // eslint-disable-next-line no-unused-vars
     const guilds = client.guilds.map(g => g)
     .forEach(guild => {
@@ -74,31 +73,29 @@ client.on('guildDelete', guildObj => {
     })
 })
 
+// Triggers when a new member is added in any guild.
 /* client.on('guildMemberAdd', member => {
-    // const guild = member.guild
-    const channel = member.guild.channels.find(ch => ch.name === 'general')
+    const channel = member.guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
     if (!channel) {
-        return null
+        channel.send(`Welcome to the server, ${member}!`)
     }
-    channel.send(`Welcome to the server, ${member}!`)
-})
+}) */
 
- client.on('guildMemberRemove', member => {
-    // const guild = member.guild
-    const channel = member.guild.channels.find(ch => ch.name === 'general')
+// Triggers when a new member is removed from any guild.
+ /* client.on('guildMemberRemove', member => {
+    const channel = member.guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
     if (!channel) {
-        return null
+        channel.send(`Good-bye, ${member}.`)
     }
-    channel.send(`Good-bye, ${member}.`)
 }) */
 
 // Triggers when any new message is recieved by the bot (client).
 client.on('message', message => {
-    if ((!message.content.startsWith(defaultPrefix)) || message.author.bot || message.tts || message.system) {return null}
-
+    if ((!message.content.startsWith(defaultPrefix)) || message.author.bot || message.tts || message.system) {
+        return null
+    }
     const args = message.content.slice(defaultPrefix.length).split(/ +/)
     const commandName = args.shift().toLowerCase()
-
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
     // Start Command Verification
     try {
