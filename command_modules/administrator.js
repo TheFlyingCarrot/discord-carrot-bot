@@ -7,8 +7,7 @@ module.exports = {
 	cooldown: 10,
 	guildOnly: true,
 	permission: 'ADMINISTRATOR',
-	role: 'admin',
 	execute(message, args) {
-		
+		message.reply(`1st Arg: ${args[0]}\n2nd Arg: ${args[1]}`)
 	},
 }

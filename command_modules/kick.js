@@ -6,6 +6,7 @@ module.exports = {
 	cooldown: 10,
 	guildOnly: true,
 	permission: 'KICK_MEMBERS',
+	requiredRole: ['admin', 'mod'],
 	execute(message) {
 		if (!message.member.hasPermission(`${this.permission}`, false, true, true)) {return message.reply('you do not have permission to use this command.')}
 		if (!message.mentions.members.size) {return message.reply('you must tag a user.')}

@@ -6,4 +6,4 @@ description
 cooldown
 guildOnly
 permission
-role
+requiredRole

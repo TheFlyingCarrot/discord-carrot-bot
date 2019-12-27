@@ -5,6 +5,7 @@ module.exports = {
     cooldown: 5,
     guildOnly: true,
     permission: 'MANAGE_MESSAGES',
+    requiredRole: ['admin', 'mod'],
 	execute(message, args) {
         if (!message.member.hasPermission(`${this.permission}`, false, true, true)) {return message.reply('you do not have permission to use this command.')}
         

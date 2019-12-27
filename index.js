@@ -7,6 +7,9 @@ const cooldowns = new Discord.Collection()
 
 const { defaultPrefix, token } = require('./config.json')
 
+const readGuildData = require('./extra/readGuildData.js')
+const setGuildData = require('./extra/setGuildData.js')
+
 /* const guilds = fs.readdirSync('./guilds')
 for (const guild in guilds) {
     console.log(guild.id)
@@ -21,31 +24,20 @@ for (const file of commandFiles) {
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
     // eslint-disable-next-line no-unused-vars
-    const guilds = client.guilds.map(g => g)
+    const guilds = new Map(client.guilds)
     .forEach(guild => {
-        if (fs.existsSync(`./guilds/${guild.id}.json`)) {
-            console.log(`Guild ID File Found for Guild ID: ${guild.id}`)
-            const guildFile = JSON.parse(fs.readFileSync(`./guilds/${guild.id}.json`))
-            try {
-                console.log(`DISCORD\nName: ${guild.name}\nID: ${guild.id}`)
-                console.log(`FILESYSTEM\nName: ${guildFile.name}\nID: ${guildFile.id}`)
-                
-            } catch (err) {
-                console.log(err)
-            }
+        const guildFile = readGuildData.read(guild)
+        if (guildFile) {
+            console.log('index.js')
+            console.log(`Guild Name: [${guild.name}] [${guildFile.name}] [${guild.name == guildFile.name}]
+            \nGuild ID: [${guild.id}] [${guildFile.id}] [${guild.id == guildFile.id}]
+            \nAdmin Role ID: [${guildFile.adminRoleID}]
+            \nMod Role ID: [${guildFile.modRoleID}]`)
         } else {
-            console.log(`No Guild ID File Found for Guild ID: ${guild.id}`)
-            console.log(`DISCORD\nName: ${guild.name}\nID: ${guild.id}`)
-            const guildData = {
-                id: `${guild.id}`,
-                name: `${guild.name}`,
-                adminRoleID: '',
-                modRoleID: '',
-            }
-            fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildData), 'utf-8')
+            console.log(`No file for guild: ${guild.name}`)
+            setGuildData.write(guild)
         }
     })
-
     console.log('Bot Client State: Ready')
 })
 
@@ -57,12 +49,53 @@ client.once('disconnect', () => {
     console.log('Bot Client State: Disconnected')
 });
 
-client.on('guildCreate', guild => {
-    console.log('Added to a new guild: ' + guild.name)
+client.on('guildCreate', guildObj => {
+    console.log('Added to a new guild: ' + guildObj.name)
+    // eslint-disable-next-line no-unused-vars
+    const guilds = client.guilds.map(g => g)
+    .forEach(guild => {
+        if (fs.existsSync(`./guilds/${guild.id}.json`)) {
+            console.log(`Guild ID File Found for Guild ID: ${guild.id}`)
+            const guildFile = JSON.parse(fs.readFileSync(`./guilds/${guild.id}.json`))
+            try {
+                console.log(`DISCORD\nName: ${guild.name}\nID: ${guild.id}`)
+                console.log(`FILESYSTEM\nName: ${guildFile.name}\nID: ${guildFile.id}\nAdmin Role ID: ${guildFile.adminRoleID}\nMod Role ID: ${guildFile.modRoleID}`)
+                
+            } catch (err) {
+                console.log(err)
+            }
+        } else {
+            console.log(`No Guild ID File Found for Guild ID: ${guild.id}`)
+            console.log(`DISCORD\nName: ${guild.name}\nID: ${guild.id}`)
+            const guildData = {
+                id: `${guild.id}`,
+                name: `${guild.name}`,
+                adminRoleID: NaN,
+                modRoleID: NaN,
+            }
+            fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildData), 'utf-8')
+        }
+    })
 })
 
-client.on('guildDelete', guild => {
-    console.log('Removed from a guild: ' + guild.name)
+client.on('guildDelete', guildObj => {
+    console.log('Removed from a guild: ' + guildObj.name)
+    // eslint-disable-next-line no-unused-vars
+    const guilds = client.guilds.map(g => g)
+    .forEach(guild => {
+        if (fs.existsSync(`./guilds/${guild.id}.json`)) {
+            console.log(`Guild ID File Found for Guild ID: ${guild.id}`)
+            try {
+                fs.unlinkSync(`./guilds/${guild.id}.json`)
+                console.log(`DISCORD\nName: ${guild.name}\nID: ${guild.id}`)
+                
+            } catch (err) {
+                console.log(err)
+            }
+        } else {
+            console.log(`No Guild ID File Found for Guild ID: ${guild.id}`)
+        }
+    })
 })
 
 client.on('guildMemberAdd', member => {
