@@ -34,7 +34,7 @@ client.once('ready', () => {
             \nGuild ID: [${guild.id}] [${guildFile[1].id}] [${guild.id == guildFile[1].id}]
             \nAdmin Role ID: [${guildFile[1].adminRoleID}]
             \nMod Role ID: [${guildFile[1].modRoleID}]`)
-        } else if (guildFile[0]) {
+        } else if (!guildFile[0]) {
             console.log(`No file for guild: ${guild.name}`)
             setGuildData.write(guild)
         }
@@ -126,7 +126,7 @@ client.on('message', message => {
         }
         // Developer-Only Command.
         if (command.developerOnly) {
-            const developerFile = ('./developers.txt')
+            const developerFile = ('./extra/developers.txt')
             if (!fs.existsSync(developerFile)) {
                 console.log(`File ${developerFile} not found.`)
                 return message.reply('there was an error in finding the developers.')
@@ -203,9 +203,10 @@ client.on('message', message => {
 
     if (timestamps.has(message.author.id)) {
         const expirationTime = timestamps.get(message.author.id) + cooldownAmount
-        if (now < expirationTime) {
+        if ((now < expirationTime) && (message.author.id !== '238880608971915264')) {
             const timeLeft = (expirationTime - now) / 1000
-            return message.reply(`please wait \`${timeLeft.toFixed(1)}\` more second(s) before reusing the \`${command.name}\` command.`) }
+            return message.reply(`please wait \`${timeLeft.toFixed(1)}\` more second(s) before reusing the \`${command.name}\` command.`)
+        }
     } else if (!timestamps.has(message.author.id)) {
         timestamps.set(message.author.id, now)
         setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)

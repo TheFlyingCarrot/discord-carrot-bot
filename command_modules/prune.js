@@ -18,9 +18,9 @@ module.exports = {
             })
         } else if ((amount < 2 || amount > 100)) {
             if (Number.isInteger(amount)) {
-                return message.channel.reply('You must input a number between 2 and 99.')
+                return message.reply('You must input a number between 2 and 99.')
             } else {
-                return message.channel.reply('You must input a number between 2 and 99 that is also an integer.')
+                return message.reply('You must input a number between 2 and 99 that is also an integer.')
             }
         } else {
             message.channel.bulkDelete(amount, true).catch((error) => {
