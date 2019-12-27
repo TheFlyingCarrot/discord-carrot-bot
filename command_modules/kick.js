@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'kick',
-    usage: '[user mention]',
+	usage: '[user mention]',
 	args: true,
 	description: 'Kick a user.',
 	cooldown: 10,

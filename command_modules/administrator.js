@@ -2,7 +2,7 @@ const fs = require('fs')
 module.exports = {
 	name: 'administrator',
 	aliases: ['admin'],
-    usage: '[grant/role] [user (id/mention)/role (id/mention)]',
+	usage: '[grant/role] [user (id/mention)/role (id/mention)]',
 	args: true,
 	description: 'Grant a user permission to use this bot with elevated permissions.',
 	cooldown: 10,
@@ -46,7 +46,7 @@ module.exports = {
 			try {
 				if (targetMember && (guildFile.adminRoleID)) {
 					targetMember.addRole(guildFile.adminRoleID)
-					.then(message.reply(`granted ${targetMember} the administrator role.`))
+						.then(message.reply(`granted ${targetMember} the administrator role.`))
 				} else if (targetMember && (!guildFile.adminRoleID)) {
 					message.reply(`I could not grant ${targetMember} the administrator role because you do not have one set.`)
 				} else if (!targetMember && (guildFile.adminRoleID)) {

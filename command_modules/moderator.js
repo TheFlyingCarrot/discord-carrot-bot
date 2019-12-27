@@ -43,7 +43,7 @@ module.exports = {
 			try {
 				if (targetMember && (guildFile.modRoleID)) {
 					targetMember.addRole(guildFile.modRoleID)
-					.then(message.reply(`granted ${message.mentions.members.first()} the administrator role.`))
+						.then(message.reply(`granted ${message.mentions.members.first()} the administrator role.`))
 				} else if (targetMember && (!guildFile.modRoleID)) {
 					message.reply(`I could not grant ${message.mentions.members.first()} the administrator role because you do not have one set.`)
 				} else {
