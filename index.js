@@ -1,25 +1,22 @@
 const fs = require('fs')
-const Discord = require('discord.js')
-const client = new Discord.Client()
-
-client.commands = new Discord.Collection()
-const cooldowns = new Discord.Collection()
-
 const { defaultPrefix, token } = require('./config.json')
-
 const readGuildData = require('./extra/readGuildData.js')
 const setGuildData = require('./extra/setGuildData.js')
+const Discord = require('discord.js')
 
-/* const guilds = fs.readdirSync('./guilds')
-for (const guild in guilds) {
-    console.log(guild.id)
-} */
+const client = new Discord.Client()
+client.commands = new Discord.Collection()
+
+const cooldowns = new Discord.Collection()
+
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
 for (const file of commandFiles) {
 	const command = require(`./command_modules/${file}`)
-	// Set a new item in the Collection with the key as the command name and the value as the exported module
 	client.commands.set(command.name, command)
 }
+
+// Independent Vars
+const INDEX_DEBUG = true
 
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
@@ -50,6 +47,7 @@ client.once('disconnect', () => {
     console.log('Bot Client State: Disconnected')
 });
 
+// Triggers when the bot (client) connects to a new server.
 client.on('guildCreate', guildObj => {
     console.log('Added to a new guild: ' + guildObj.name)
     // eslint-disable-next-line no-unused-vars
@@ -79,6 +77,7 @@ client.on('guildCreate', guildObj => {
     })
 })
 
+// Triggers when the bot (client) is removed from a server.
 client.on('guildDelete', guildObj => {
     console.log('Removed from a guild: ' + guildObj.name)
     // eslint-disable-next-line no-unused-vars
@@ -99,18 +98,19 @@ client.on('guildDelete', guildObj => {
     })
 })
 
-client.on('guildMemberAdd', member => {
+/* client.on('guildMemberAdd', member => {
     // const guild = member.guild
     const channel = member.guild.channels.find(ch => ch.name === 'general')
     if (!channel) {return}
     channel.send(`Welcome to the server, ${member}`)
-})
+}) */
 
 /* client.on('guildMemberRemove', member => {
     const guild = member.guild
     // 
 }) */
 
+// Triggers when any new message is recieved by the bot (client).
 client.on('message', message => {
     if ((!message.content.startsWith(defaultPrefix)) || message.author.bot || message.tts || message.system) {return null}
 
@@ -155,7 +155,7 @@ client.on('message', message => {
             if (command.usage) {
                 reply += (`\nThe proper usage is: \`${defaultPrefix}${command.name} ${command.usage}\``)
             }
-            return message.channel.send(reply)
+            return message.reply(reply)
         }
         // Adds commands to the cooldowns collection.
         if (!cooldowns.has(command.name)) {
@@ -191,7 +191,7 @@ client.on('message', message => {
 ---------- args:                    ${args}`)
                 }
             }
-            console.log(logMessage)
+            if (INDEX_DEBUG) { console.log(logMessage) }
         } catch(err) { console.log(err) }
     }
     // END Debug Log

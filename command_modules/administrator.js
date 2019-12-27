@@ -2,7 +2,7 @@ const fs = require('fs')
 module.exports = {
 	name: 'administrator',
 	aliases: ['admin'],
-    usage: '[user mention]',
+    usage: '[grant/role] [user (id/mention)/role (id/mention)]',
 	args: true,
 	description: 'Grant a user permission to use this bot with elevated permissions.',
 	cooldown: 10,
@@ -39,13 +39,19 @@ module.exports = {
 				}
 			} else if ((args[0].startsWith('<@!')) && (args[0].endsWith('>'))) {
 				targetMember = message.mentions.members.first()
+			} else if (/^\d+$/.test(args[0])) {
+				targetMember = guild.members.find(member => member.id === args[0])
 			}
+
 			if (targetMember && (guildFile.adminRoleID)) {
 				targetMember.addRole(guildFile.adminRoleID)
-				.then(message.reply(`granted ${message.mentions.members.first()} the administrator role.`))
+				.then(message.reply(`granted ${targetMember} the administrator role.`))
 				.catch(console.error)
 			} else if (targetMember && (!guildFile.adminRoleID)) {
-				message.reply(`I could not grant ${message.mentions.members.first()} the administrator role because you do not have one set.`)
+				message.reply(`I could not grant ${targetMember} the administrator role because you do not have one set.`)
+				.catch(console.error)
+			} else if (!targetMember && (guildFile.adminRoleID)) {
+				message.reply('You didn\'t give me a member to assign the administrator role to, but your guild does have a admin role ID.')
 				.catch(console.error)
 			} else {
 				message.reply('I experienced an unknown error when trying to run that command. Please contact my developer.')
