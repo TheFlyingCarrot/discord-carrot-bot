@@ -26,14 +26,10 @@ client.once('ready', () => {
     .forEach(guild => {
         const guildFile = readGuildData.read(guild)
         console.log(guildFile[0], guildFile[1])
-        if (guildFile[0]) {
-            console.log(`Guild Name: [${guild.name}] [${guildFile[1].name}] [${guild.name == guildFile[1].name}]
-            \nGuild ID: [${guild.id}] [${guildFile[1].id}] [${guild.id == guildFile[1].id}]
-            \nAdmin Role ID: [${guildFile[1].adminRoleID}]
-            \nMod Role ID: [${guildFile[1].modRoleID}]`)
-        } else if (!guildFile[0]) {
+        if (!guildFile[0]) {
             console.log(`No file for guild: ${guild.name}`)
             setGuildData.write(guild)
+                .catch(console.error)
         }
     })
     console.log('Bot Client State: Ready')
@@ -52,29 +48,18 @@ client.on('guildCreate', guildObj => {
     console.log('Added to a new guild: ' + guildObj.name)
     // eslint-disable-next-line no-unused-vars
     const guilds = client.guilds.map(g => g)
-    .forEach(guild => {
-        if (fs.existsSync(`./guilds/${guild.id}.json`)) {
-            console.log(`Guild ID File Found for Guild ID: ${guild.id}`)
-            const guildFile = JSON.parse(fs.readFileSync(`./guilds/${guild.id}.json`))
-            try {
-                console.log(`DISCORD\nName: ${guild.name}\nID: ${guild.id}`)
-                console.log(`FILESYSTEM\nName: ${guildFile.name}\nID: ${guildFile.id}\nAdmin Role ID: ${guildFile.adminRoleID}\nMod Role ID: ${guildFile.modRoleID}`)
-                
-            } catch (err) {
-                console.log(err)
+        .forEach(guild => {
+            if (!fs.existsSync(`./guilds/${guild.id}.json`)) {
+                console.log(`No Guild ID File Found for Guild ID: ${guild.id}`)
+                const guildData = {
+                    id: `${guild.id}`,
+                    name: `${guild.name}`,
+                    adminRoleID: NaN,
+                    modRoleID: NaN,
+                }
+                fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildData), 'utf-8')
             }
-        } else {
-            console.log(`No Guild ID File Found for Guild ID: ${guild.id}`)
-            console.log(`DISCORD\nName: ${guild.name}\nID: ${guild.id}`)
-            const guildData = {
-                id: `${guild.id}`,
-                name: `${guild.name}`,
-                adminRoleID: NaN,
-                modRoleID: NaN,
-            }
-            fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildData), 'utf-8')
-        }
-    })
+        })
 })
 
 // Triggers when the bot (client) is removed from a server.
@@ -84,16 +69,8 @@ client.on('guildDelete', guildObj => {
     const guilds = client.guilds.map(g => g)
     .forEach(guild => {
         if (fs.existsSync(`./guilds/${guild.id}.json`)) {
-            console.log(`Guild ID File Found for Guild ID: ${guild.id}`)
-            try {
-                fs.unlinkSync(`./guilds/${guild.id}.json`)
-                console.log(`DISCORD\nName: ${guild.name}\nID: ${guild.id}`)
-                
-            } catch (err) {
-                console.log(err)
-            }
-        } else {
-            console.log(`No Guild ID File Found for Guild ID: ${guild.id}`)
+            fs.unlinkSync(`./guilds/${guild.id}.json`)
+                .catch(console.error)
         }
     })
 })
@@ -171,9 +148,8 @@ client.on('message', message => {
         // END Command Verification
     } finally { 
         // START Debug Log
-        try {
-            if (INDEX_DEBUG == true) {
-                let logMessage = (`*new message with prefix recognized
+        if (INDEX_DEBUG == true) {
+            let logMessage = (`*new message with prefix recognized
 ---- message recognized
 ---------- message.content:         ${message.content}
 ---------- message.author.tag:      ${message.author.tag}
@@ -181,24 +157,23 @@ client.on('message', message => {
 ---------- message.channel:         ${message.channel}
 ---------- message.channel.type:    ${message.channel.type}
 ---------- message.createdAt:       ${message.createdAt}`)
-                if (message.guild !== null) {
-                    logMessage += (`
+            if (message.guild !== null) {
+                logMessage += (`
 ---- guild recognized
 ---------- message.guild:           ${message.guild}
 ---------- message.guild.id:        ${message.guild.id}`)
-                }
-                if (command) {
-                    logMessage += (`
+            }
+            if (command) {
+                logMessage += (`
 ---- command recognized
 ---------- command.name:            ${command.name}`)
-                    if (args.length > 0) {
-                    logMessage += (`
+                if (args.length > 0) {
+                logMessage += (`
 ---------- args:                    ${args}`)
-                    }
                 }
-                console.log(logMessage)
             }
-        } catch(err) { console.log(err) }
+            console.log(logMessage)
+        }
     }
     // END Debug Log
 
