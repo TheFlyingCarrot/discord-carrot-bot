@@ -78,14 +78,18 @@ client.on('guildDelete', guildObj => {
 /* client.on('guildMemberAdd', member => {
     // const guild = member.guild
     const channel = member.guild.channels.find(ch => ch.name === 'general')
-    if (!channel) {return}
+    if (!channel) {
+        return null
+    }
     channel.send(`Welcome to the server, ${member}!`)
 })
 
  client.on('guildMemberRemove', member => {
     // const guild = member.guild
     const channel = member.guild.channels.find(ch => ch.name === 'general')
-    if (!channel) {return}
+    if (!channel) {
+        return null
+    }
     channel.send(`Good-bye, ${member}.`)
 }) */
 
@@ -101,32 +105,32 @@ client.on('message', message => {
     try {
         // Not a command.
         if (!command) {
-            return
+            return null
         }
         // Developer-Only Command.
         if (command.developerOnly) {
             const developerFile = ('./extra/developers.txt')
             if (!fs.existsSync(developerFile)) {
-                console.log(`File ${developerFile} not found.`)
-                return message.reply('there was an error in finding the developers.')
+                message.reply('there was an error in finding the developers.')
+                return null
             } else {
-                const developers = fs.readFileSync(developerFile, 'utf-8', (err, data) => {
-                    if (err) throw err
-                    console.log(data)
-                    return message.reply('there was an error in finding the developers.')
-                })
+                const developers = fs.readFileSync(developerFile, 'utf-8')
+                    .catch(console.error)
                 if (!developers.includes(message.author.id)) {
-                    return message.reply('that is a developer-only command. Sorry!')
+                    message.reply('that is a developer-only command. Sorry!')
+                    return null
                 }
             }
         }
         // Guild/Server-Only Command.
         if (command.guildOnly && (message.channel.type !== 'text')) {
-            return message.reply('I can\'t execute that command inside Direct Messages.')
+            message.reply('I can\'t execute that command inside Direct Messages.')
+            return null
         }
         // Check for the required permissions.
         if (command.permission && (!message.guild.me.hasPermission(command.permission))) {
-            return message.reply(`I need the ${command.permission} permission to execute that command.`)
+            message.reply(`I need the ${command.permission} permission to execute that command.`)
+            return null
         }
         // Check for arguments. If none exist, reply with reason and provide usage, if it exists.
         if (command.args && !args.length) {
@@ -135,7 +139,7 @@ client.on('message', message => {
                 reply += (`\nThe proper usage is: \`${defaultPrefix}${command.name} ${command.usage}\``)
             }
             message.reply(reply)
-            .catch(console.error)
+                .catch(console.error)
             return null
         }
         // Adds commands to the cooldowns collection.
@@ -144,7 +148,8 @@ client.on('message', message => {
         }
     } catch (err) { 
         console.log(err)
-        return message.reply('there was an error in recognizing that command.')
+        message.reply('there was an error in recognizing that command.')
+        return null
         // END Command Verification
     } finally { 
         // START Debug Log
@@ -186,7 +191,8 @@ client.on('message', message => {
         const expirationTime = timestamps.get(message.author.id) + cooldownAmount
         if ((now < expirationTime) && (message.author.id !== '238880608971915264')) {
             const timeLeft = (expirationTime - now) / 1000
-            return message.reply(`please wait \`${timeLeft.toFixed(1)}\` more second(s) before reusing the \`${command.name}\` command.`)
+            message.reply(`please wait \`${timeLeft.toFixed(1)}\` more second(s) before reusing the \`${command.name}\` command.`)
+            return null
         }
     } else if (!timestamps.has(message.author.id)) {
         timestamps.set(message.author.id, now)
@@ -199,7 +205,8 @@ client.on('message', message => {
         command.execute(message, args)
     } catch (err) {
         console.log(err)
-        message.reply('there was an error trying to execute that command.') 
+        message.reply('there was an error trying to execute that command.')
+        return null
     }
     // END Execute Command
 })
