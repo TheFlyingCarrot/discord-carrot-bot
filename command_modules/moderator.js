@@ -1,13 +1,22 @@
+const fs = require('fs')
 module.exports = {
 	name: 'moderator',
 	aliases: ['mod'],
-    usage: '[user mention]',
+    usage: '[grant/set] [user mention/role ID]',
 	args: true,
 	description: 'Grant a user permission to use this bot with limited permissions.',
 	cooldown: 10,
 	guildOnly: true,
 	permission: 'ADMINISTRATOR',
 	execute(message, args) {
-		message.reply(`1st Arg: ${args[0]}\n2nd Arg: ${args[1]}`)
+		if (args[0] === 'set') {
+			console.log('moderator role set to...')
+			const guildFile = JSON.parse(fs.readFileSync(`./guilds/${message.guild.id}.json`))
+			if (guildFile) {
+				console.log('Guild file exists!')
+			}
+		} else if (args[0] === 'grant') {
+			console.log('moderator role granted to...')
+		}
 	},
 }

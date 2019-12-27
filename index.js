@@ -23,17 +23,18 @@ for (const file of commandFiles) {
 
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
+    console.log('___index.js')
     // eslint-disable-next-line no-unused-vars
     const guilds = new Map(client.guilds)
     .forEach(guild => {
         const guildFile = readGuildData.read(guild)
-        if (guildFile) {
-            console.log('index.js')
-            console.log(`Guild Name: [${guild.name}] [${guildFile.name}] [${guild.name == guildFile.name}]
-            \nGuild ID: [${guild.id}] [${guildFile.id}] [${guild.id == guildFile.id}]
-            \nAdmin Role ID: [${guildFile.adminRoleID}]
-            \nMod Role ID: [${guildFile.modRoleID}]`)
-        } else {
+        console.log(guildFile[0], guildFile[1])
+        if (guildFile[0]) {
+            console.log(`Guild Name: [${guild.name}] [${guildFile[1].name}] [${guild.name == guildFile[1].name}]
+            \nGuild ID: [${guild.id}] [${guildFile[1].id}] [${guild.id == guildFile[1].id}]
+            \nAdmin Role ID: [${guildFile[1].adminRoleID}]
+            \nMod Role ID: [${guildFile[1].modRoleID}]`)
+        } else if (guildFile[0]) {
             console.log(`No file for guild: ${guild.name}`)
             setGuildData.write(guild)
         }
