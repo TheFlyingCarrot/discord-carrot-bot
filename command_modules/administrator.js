@@ -43,19 +43,19 @@ module.exports = {
 				targetMember = guild.members.find(member => member.id === args[0])
 			}
 
-			if (targetMember && (guildFile.adminRoleID)) {
-				targetMember.addRole(guildFile.adminRoleID)
-				.then(message.reply(`granted ${targetMember} the administrator role.`))
-				.catch(console.error)
-			} else if (targetMember && (!guildFile.adminRoleID)) {
-				message.reply(`I could not grant ${targetMember} the administrator role because you do not have one set.`)
-				.catch(console.error)
-			} else if (!targetMember && (guildFile.adminRoleID)) {
-				message.reply('You didn\'t give me a member to assign the administrator role to, but your guild does have a admin role ID.')
-				.catch(console.error)
-			} else {
-				message.reply('I experienced an unknown error when trying to run that command. Please contact my developer.')
-				.catch(console.error)
+			try {
+				if (targetMember && (guildFile.adminRoleID)) {
+					targetMember.addRole(guildFile.adminRoleID)
+					.then(message.reply(`granted ${targetMember} the administrator role.`))
+				} else if (targetMember && (!guildFile.adminRoleID)) {
+					message.reply(`I could not grant ${targetMember} the administrator role because you do not have one set.`)
+				} else if (!targetMember && (guildFile.adminRoleID)) {
+					message.reply('You didn\'t give me a member to assign the administrator role to, but your guild does have a admin role ID.')
+				} else {
+					message.reply('I experienced an unknown error when trying to run that command. Please contact my developer.')
+				}
+			} catch(err) {
+				console.log(err)
 			}
 		} else {
 			message.reply('please use the help command to see usage for this command.')

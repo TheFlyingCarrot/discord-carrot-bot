@@ -40,16 +40,17 @@ module.exports = {
 			} else if ((args[0].startsWith('<@!')) && (args[0].endsWith('>'))) {
 				targetMember = message.mentions.members.first()
 			}
-			if (targetMember && (guildFile.modRoleID)) {
-				targetMember.addRole(guildFile.modRoleID)
-				.then(message.reply(`granted ${message.mentions.members.first()} the administrator role.`))
-				.catch(console.error)
-			} else if (targetMember && (!guildFile.modRoleID)) {
-				message.reply(`I could not grant ${message.mentions.members.first()} the administrator role because you do not have one set.`)
-				.catch(console.error)
-			} else {
-				message.reply('I experienced an unknown error when trying to run that command. Please contact my developer.')
-				.catch(console.error)
+			try {
+				if (targetMember && (guildFile.modRoleID)) {
+					targetMember.addRole(guildFile.modRoleID)
+					.then(message.reply(`granted ${message.mentions.members.first()} the administrator role.`))
+				} else if (targetMember && (!guildFile.modRoleID)) {
+					message.reply(`I could not grant ${message.mentions.members.first()} the administrator role because you do not have one set.`)
+				} else {
+					message.reply('I experienced an unknown error when trying to run that command. Please contact my developer.')
+				}
+			} catch(err) {
+				console.log(err)
 			}
 		} else {
 			message.reply('please use the help command to see usage for this command.')

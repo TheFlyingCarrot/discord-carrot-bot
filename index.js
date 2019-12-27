@@ -20,7 +20,6 @@ const INDEX_DEBUG = false
 
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
-    console.log('___index.js')
     // eslint-disable-next-line no-unused-vars
     const guilds = new Map(client.guilds)
     .forEach(guild => {
