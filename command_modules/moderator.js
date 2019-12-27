@@ -18,8 +18,7 @@ module.exports = {
 			let targetRoleID = null
 			if ((args[1].startsWith('<@&')) && (args[1].endsWith('>'))) {
 				targetRoleID = args[1].slice(3, -1)
-			}
-			else if (/^\d+$/.test(args[1])) {
+			} else if (/^\d+$/.test(args[1])) {
 				targetRoleID = args[1]
 			}
 			if (targetRoleID) {
@@ -27,41 +26,33 @@ module.exports = {
 				guildFile.modRoleID = targetRole.id
 				fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildFile), 'utf-8')
 				message.reply(`moderator role set to: ${targetRole.name}`)
-			}
-			else {
+			} else {
 				message.reply('you didn\'t provide me with a role.')
 			}
-		}
-		else if (args[0] !== 'role') {
+		} else if (args[0] !== 'role') {
 			let targetMember = null
 			if (args[0] === 'grant') {
 				if (/^\d+$/.test(args[1])) {
 					targetMember = guild.members.find(member => member.id === args[1])
-				}
-				else if ((args[1].startsWith('<@!')) && (args[1].endsWith('>'))) {
+				} else if ((args[1].startsWith('<@!')) && (args[1].endsWith('>'))) {
 					targetMember = message.mentions.members.first()
 				}
-			}
-			else if ((args[0].startsWith('<@!')) && (args[0].endsWith('>'))) {
+			} else if ((args[0].startsWith('<@!')) && (args[0].endsWith('>'))) {
 				targetMember = message.mentions.members.first()
 			}
 			try {
 				if (targetMember && (guildFile.modRoleID)) {
 					targetMember.addRole(guildFile.modRoleID)
 						.then(message.reply(`granted ${message.mentions.members.first()} the administrator role.`))
-				}
-				else if (targetMember && (!guildFile.modRoleID)) {
+				} else if (targetMember && (!guildFile.modRoleID)) {
 					message.reply(`I could not grant ${message.mentions.members.first()} the administrator role because you do not have one set.`)
-				}
-				else {
+				} else {
 					message.reply('I experienced an unknown error when trying to run that command. Please contact my developer.')
 				}
-			}
-			catch(err) {
+			} catch(err) {
 				console.log(err)
 			}
-		}
-		else {
+		} else {
 			message.reply('please use the help command to see usage for this command.')
 		}
 	},
