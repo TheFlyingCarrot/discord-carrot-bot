@@ -155,7 +155,9 @@ client.on('message', message => {
             if (command.usage) {
                 reply += (`\nThe proper usage is: \`${defaultPrefix}${command.name} ${command.usage}\``)
             }
-            return message.reply(reply)
+            message.reply(reply)
+            .catch(console.error)
+            return null
         }
         // Adds commands to the cooldowns collection.
         if (!cooldowns.has(command.name)) {
@@ -164,10 +166,11 @@ client.on('message', message => {
     } catch (err) { 
         console.log(err)
         return message.reply('there was an error in recognizing that command.')
-    } finally {
-        // END Command Verification 
+        // END Command Verification
+    } finally { 
         // START Debug Log
         try {
+            if (INDEX_DEBUG) {
             let logMessage = (`*new message with prefix recognized
 ---- message recognized
 ---------- message.content:         ${message.content}
@@ -191,7 +194,8 @@ client.on('message', message => {
 ---------- args:                    ${args}`)
                 }
             }
-            if (INDEX_DEBUG) { console.log(logMessage) }
+            console.log(logMessage)
+            }
         } catch(err) { console.log(err) }
     }
     // END Debug Log
