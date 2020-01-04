@@ -1,6 +1,6 @@
 {
   "name": "discord-bot",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Discord bot made with NodeJS and DiscordJS.",
   "main": "index.js",
   "dependencies": {
