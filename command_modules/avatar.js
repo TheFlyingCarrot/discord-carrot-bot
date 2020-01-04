@@ -8,8 +8,8 @@ module.exports = {
 		if (!message.mentions.users.size) {
 			return { title: 'Command Success', body: `Your avatar: <${message.author.displayAvatarURL}>` }
 		}
-		let avatarList = ''
-		message.mentions.users.map(user => { avatarList += (`${user.username}'s avatar: <${user.displayAvatarURL}>\n`) })
-		return { title: 'Command Success', body: avatarList }
+		const avatarData = []
+		message.mentions.users.map(user => { avatarData.push(`${user.username}'s avatar: <${user.displayAvatarURL}>\n`) })
+		return { title: 'Command Success', body: avatarData }
 	},
 }
