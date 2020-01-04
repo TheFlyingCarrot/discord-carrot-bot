@@ -11,6 +11,7 @@ const { defaultPrefix } = require('./config.json')
 const readGuildData = require('./extra/readGuildData.js')
 const setGuildData = require('./extra/setGuildData.js')
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
+const developers = fs.readFileSync('./extra/developers.txt')
 
 // Command Palette Set-up
 for (const file of commandFiles) {
@@ -110,13 +111,9 @@ client.on('message', message => {
 			if (!fs.existsSync(developerFile)) {
 				message.reply('there was an error in finding the developers.')
 				return null
-			} else {
-				const developers = fs.readFileSync(developerFile, 'utf-8')
-					.catch(console.error)
-				if (!developers.includes(message.author.id)) {
-					message.reply('that is a developer-only command. Sorry!')
-					return null
-				}
+			} else if (!developers.includes(message.author.id)) {
+				message.reply('that is a developer-only command. Sorry!')
+				return null
 			}
 		}
 		// Guild/Server-Only Command.
