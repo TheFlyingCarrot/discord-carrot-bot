@@ -1,4 +1,5 @@
 // Discord Initialization
+require('dotenv').config()
 const Discord = require('discord.js')
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
@@ -6,7 +7,7 @@ const cooldowns = new Discord.Collection()
 
 // Module Initialization
 const fs = require('fs')
-const { defaultPrefix, token } = require('./config.json')
+const { defaultPrefix } = require('./config.json')
 const readGuildData = require('./extra/readGuildData.js')
 const setGuildData = require('./extra/setGuildData.js')
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
@@ -208,4 +209,4 @@ client.on('message', message => {
 	// END Execute Command
 })
 
-client.login(token)
+client.login()
