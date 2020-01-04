@@ -8,14 +8,14 @@ module.exports = {
 	permission: 'KICK_MEMBERS',
 	requiredRole: ['admin', 'mod'],
 	execute(message) {
-		if (!message.member.hasPermission(`${this.permission}`, false, true, true)) {return message.reply('you do not have permission to use this command.')}
-		if (!message.mentions.members.size) {return message.reply('you must tag a user.')}
+		if (!message.member.hasPermission(`${this.permission}`, false, true, true)) return { title: 'Command Error', body: 'You do not have permission to use this command.' }
+		if (!message.mentions.members.size) return { title: 'Command Error', body: 'You must tag a user.' }
 		const targetUser = message.mentions.members.first()
-		if (!targetUser.kickable) {return message.reply('I cannot kick this user.')}
+		if (!targetUser.kickable) return { title: 'Command Error', body: 'I can\'t kick that user.' }
 		targetUser.kick().then(() => {
-			message.reply(`${targetUser} was kicked.`)
-		}).catch((error) => {
-			message.reply(`${targetUser} was not kicked. ${error}`)
+			return { title: 'Command Success', body: `${targetUser} was kicked.` }
+		}).catch((err) => {
+			return { title: 'Command Fail', body: `${targetUser} was not kicked. ${err}` }
 		})
 	},
 }

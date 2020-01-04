@@ -24,12 +24,9 @@ for (const file of commandFiles) {
 const INDEX_DEBUG = false
 
 // Embed
-// eslint-disable-next-line no-unused-vars
-const exampleEmbed = new Discord.MessageEmbed()
+const exampleEmbed = new Discord.RichEmbed()
 	.setColor('#ff9b00')
-	.setAuthor('Carrot Bot', 'https://cdn.discordapp.com/avatars/442956645845303296/dc8d6f257a3cb52773a7bf5f59ec8cc5.png?size=128')
-	.addField('Title', 'Body')
-	.setFooter('Object#3918', 'https://cdn.discordapp.com/avatars/238880608971915264/b1a6df2e17cfec849ac6b07da5706a47.png?size=128')
+	.setFooter('Creator: Object#3918', 'https://cdn.discordapp.com/avatars/238880608971915264/b1a6df2e17cfec849ac6b07da5706a47.png?size=128')
 	.setTimestamp()
 
 // Triggers when the client (bot) is ready.
@@ -46,16 +43,10 @@ client.once('ready', () => {
 			}
 			const channel = guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
 			if ((channel) && (packageInfo.version)) {
-				channel.send(
-					new Discord.MessageEmbed()
-						.setColor('#ff9b00')
-						.setAuthor('Carrot Bot', 'https://cdn.discordapp.com/avatars/442956645845303296/dc8d6f257a3cb52773a7bf5f59ec8cc5.png?size=128')
-						.addField('Title', 'Body')
-						.setFooter('Object#3918', 'https://cdn.discordapp.com/avatars/238880608971915264/b1a6df2e17cfec849ac6b07da5706a47.png?size=128')
-						.setTimestamp()
-						.setTitle('Service Restart')
-						.addfield('Reason', `Hello, I was just updated! New version: ${packageInfo.version}.`),
-				)
+				const newEmbed = exampleEmbed
+					.setTitle('Service Restart')
+					.setDescription(`Hello, I was just updated! New version: ${packageInfo.version}.`)
+				channel.send(newEmbed)
 			}
 		})
 	console.log('Bot Client State: Ready')
@@ -132,31 +123,45 @@ client.on('message', message => {
 		if (command.developerOnly) {
 			const developerFile = ('./extra/developers.txt')
 			if (!fs.existsSync(developerFile)) {
-				message.reply('there was an error in finding the developers.')
+				const newEmbed = exampleEmbed
+					.setTitle('Command Error')
+					.setDescription('There was an error in finding the developers.')
+				message.channel.send(newEmbed)
 				return null
 			} else if (!developers.includes(message.author.id)) {
-				message.reply('that is a developer-only command. Sorry!')
+				const newEmbed = exampleEmbed
+					.setTitle('Command Error')
+					.setDescription('That is a developer-only command. Sorry!')
+				message.channel.send(newEmbed)
 				return null
 			}
 		}
 		// Guild/Server-Only Command.
 		if (command.guildOnly && (message.channel.type !== 'text')) {
-			message.reply('I can\'t execute that command inside Direct Messages.')
+			const newEmbed = exampleEmbed
+				.setTitle('Command Error')
+				.setDescription('I can\'t execute that command inside Direct Messages.')
+			message.channel.send(newEmbed)
 			return null
 		}
 		// Check for the required permissions.
 		if (command.permission && (!message.guild.me.hasPermission(command.permission))) {
-			message.reply(`I need the ${command.permission} permission to execute that command.`)
+			const newEmbed = exampleEmbed
+				.setTitle('Command Error')
+				.setDescription(`I need the ${command.permission} permission to execute that command.`)
+			message.channel.send(newEmbed)
 			return null
 		}
 		// Check for arguments. If none exist, reply with reason and provide usage, if it exists.
 		if (command.args && !args.length) {
-			let reply = 'that command requires arguments.'
+			let reply = 'That command requires arguments.'
 			if (command.usage) {
 				reply += (`\nThe proper usage is: \`${defaultPrefix}${command.name} ${command.usage}\``)
 			}
-			message.reply(reply)
-				.catch(console.error)
+			const newEmbed = exampleEmbed
+				.setTitle('Command Error')
+				.setDescription(reply)
+			message.channel.send(newEmbed)
 			return null
 		}
 		// Adds commands to the cooldowns collection.
@@ -167,7 +172,10 @@ client.on('message', message => {
 		// Error Catch
 	} catch (err) {
 		console.log(err)
-		message.reply('there was an error in recognizing that command.')
+		const newEmbed = exampleEmbed
+			.setTitle('Command Error')
+			.setDescription('There was an error in recognizing that command.')
+		message.channel.send(newEmbed)
 		return null
 	} finally {
 		// START Debug Log
@@ -209,7 +217,10 @@ client.on('message', message => {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount
 		if ((now < expirationTime) && (message.author.id !== '238880608971915264')) {
 			const timeLeft = (expirationTime - now) / 1000
-			message.reply(`please wait \`${timeLeft.toFixed(1)}\` more second(s) before reusing the \`${command.name}\` command.`)
+			const newEmbed = exampleEmbed
+				.setTitle('Command Cooldown')
+				.setDescription(`Please wait \`${timeLeft.toFixed(1)}\` more second(s) before reusing the \`${command.name}\` command.`)
+			message.channel.send(newEmbed)
 			return null
 		}
 	} else if (!timestamps.has(message.author.id)) {
@@ -220,11 +231,20 @@ client.on('message', message => {
 
 	// START Execute Command
 	try {
-		command.execute(message, args)
+		const returns = command.execute(message, args)
+		if (returns) {
+			const newEmbed = exampleEmbed
+				.setTitle(returns.title)
+				.setDescription(returns.body)
+			message.channel.send(newEmbed)
+		}
 		console.log(`TIMESTAMP[${message.createdTimestamp}] A_ID[${message.author.id}] A_NAME[${message.author.username}] CMD_NAME[${commandName}] CMD_ARGS[${args}].`)
 	} catch (err) {
 		console.log(err)
-		message.reply('there was an error trying to execute that command.')
+		const newEmbed = exampleEmbed
+			.setTitle('Command Error')
+			.setDescription('There was an error trying to execute that command.')
+		message.channel.send(newEmbed)
 		return null
 	}
 	// END Execute Command

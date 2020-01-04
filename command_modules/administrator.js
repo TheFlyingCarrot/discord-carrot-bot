@@ -12,7 +12,7 @@ module.exports = {
 		const guild = message.guild
 		const guildFile = JSON.parse(fs.readFileSync(`./guilds/${guild.id}.json`))
 		if (!guildFile) {
-			return message.reply('your guild does not have a file! Please contact my developer.')
+			return { title: 'Command Error', body: 'Your guild does not have a file! Please contact my developer.' }
 		}
 		if (args[0] === 'role') {
 			let targetRoleID = null
@@ -26,12 +26,12 @@ module.exports = {
 				if (targetRole) {
 					guildFile.adminRoleID = targetRole.id
 					fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildFile), 'utf-8')
-					message.reply(`${this.name} role set to: ${targetRole.name}`)
+					return { title: 'Command Error', body: `${this.name} role set to: ${targetRole.name}` }
 				} else {
-					message.reply(`I could not find a role with an ID that matches: ${targetRoleID}`)
+					return { title: 'Command Error', body: `I could not find a role with an ID that matches: ${targetRoleID}` }
 				}
 			} else {
-				message.reply('you didn\'t provide me with a role.')
+				return { title: 'Command Error', body: 'you didn\'t provide me with a role.' }
 			}
 		} else if (args[0] !== 'role') {
 			let targetMember = null
@@ -49,19 +49,21 @@ module.exports = {
 			try {
 				if (targetMember && (guildFile.adminRoleID)) {
 					targetMember.addRole(guildFile.adminRoleID)
-						.then(message.reply(`granted ${targetMember} the ${this.name} role.`))
+					return { title: 'Command Success', body: `Granted ${targetMember} the ${this.name} role.` }
 				} else if (targetMember && (!guildFile.adminRoleID)) {
-					message.reply(`I could not grant ${targetMember} the ${this.name} role because you do not have one set.`)
+					return { title: 'Command Fail',
+						body: `I could not grant ${targetMember} the ${this.name} role because you do not have one set.` }
 				} else if (!targetMember && (guildFile.adminRoleID)) {
-					message.reply(`You didn't give me a member to assign the ${this.name} role to, but your guild does have a ${this.name} role ID.`)
+					return { title: 'Command Fail',
+						body: `You didn't give me a member to assign the ${this.name} role to, but your guild does have a ${this.name} role ID.` }
 				} else {
-					message.reply('I can\'t process that argument.')
+					return { title: 'Command Fail', body: 'I can\'t process that argument.' }
 				}
 			} catch(err) {
 				console.log(err)
 			}
 		} else {
-			message.reply('please use the help command to see usage for this command.')
+			return { title: 'Command Fail', body: 'Please use the help command to see usage for this command.' }
 		}
 	},
 }

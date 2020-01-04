@@ -8,14 +8,14 @@ module.exports = {
 	permission: 'BAN_MEMBERS',
 	requiredRole: ['admin'],
 	execute(message) {
-		if (!message.member.hasPermission(`${this.permission}`, false, true, true)) {return message.reply('you do not have permission to use this command.')}
-		if (!message.mentions.members.size) {return message.reply('you must tag a user.')}
+		if (!message.member.hasPermission(`${this.permission}`, false, true, true)) return { title: 'Command Error', body: 'You do not have permission to use this command.' }
+		if (!message.mentions.members.size) return { title: 'Command Error', body: 'You must tag a user.' }
 		const targetUser = message.mentions.members.first()
-		if (!targetUser.bannable) {return message.reply('I cannot ban this user.')}
+		if (!targetUser.bannable) return { title: 'Command Error', body: 'I can\'t ban that user.' }
 		targetUser.ban().then(() => {
-			message.reply(`${targetUser} was banned.`)
-		}).catch((error) => {
-			message.reply(`${targetUser} was not banned. ${error}`)
+			return { title: 'Command Success', body: `${targetUser} was banned.` }
+		}).catch((err) => {
+			return { title: 'Command Fail', body: `${targetUser} was not banned. ${err}` }
 		})
 	},
 }
