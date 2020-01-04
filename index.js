@@ -198,7 +198,7 @@ client.on('message', message => {
 	// START Execute Command
 	try {
 		command.execute(message, args)
-		console.log(`[${message.author.id}] [${message.author.name}] used command [${commandName}] with args [${args}].`)
+		console.log(`[${message.author.id}] [${message.author}] used command [${commandName}] with args [${args}].`)
 	} catch (err) {
 		console.log(err)
 		message.reply('there was an error trying to execute that command.')
