@@ -232,7 +232,7 @@ client.on('message', message => {
 	// START Execute Command
 	try {
 		const returns = command.execute(message, args)
-		if (returns) {
+		if ((returns) && (returns.title) && (returns.body)) {
 			const newEmbed = exampleEmbed
 				.setTitle(returns.title)
 				.setDescription(returns.body)
@@ -243,7 +243,7 @@ client.on('message', message => {
 		console.log(err)
 		const newEmbed = exampleEmbed
 			.setTitle('Command Error')
-			.setDescription('There was an error trying to execute that command.')
+			.setDescription(`There was an error trying to execute that command. ${err}`)
 		message.channel.send(newEmbed)
 		return null
 	}
