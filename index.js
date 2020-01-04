@@ -243,7 +243,7 @@ client.on('message', message => {
 		console.log(err)
 		const newEmbed = exampleEmbed
 			.setTitle('Command Error')
-			.setDescription('There was an error trying to execute that command.')
+			.setDescription(`There was an error trying to execute that command. ${err}`)
 		message.channel.send(newEmbed)
 		return null
 	}
