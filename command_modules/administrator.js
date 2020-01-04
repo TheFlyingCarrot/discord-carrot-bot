@@ -53,7 +53,7 @@ module.exports = {
 				} else if (targetMember && (!guildFile.adminRoleID)) {
 					message.reply(`I could not grant ${targetMember} the ${this.name} role because you do not have one set.`)
 				} else if (!targetMember && (guildFile.adminRoleID)) {
-					message.reply(`You didn't give me a member to assign the ${this.name} role to, but your guild does have a admin role ID.`)
+					message.reply(`You didn't give me a member to assign the ${this.name} role to, but your guild does have a ${this.name} role ID.`)
 				} else {
 					message.reply('I can\'t process that argument.')
 				}
