@@ -23,9 +23,13 @@ module.exports = {
 			}
 			if (targetRoleID) {
 				const targetRole = guild.roles.find(role => role.id === targetRoleID)
-				guildFile.modRoleID = targetRole.id
-				fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildFile), 'utf-8')
-				message.reply(`moderator role set to: ${targetRole.name}`)
+				if (targetRole) {
+					guildFile.adminRoleID = targetRole.id
+					fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildFile), 'utf-8')
+					message.reply(`${this.name} role set to: ${targetRole.name}`)
+				} else {
+					message.reply(`I could not find a role with an ID that matches: ${targetRoleID}`)
+				}
 			} else {
 				message.reply('you didn\'t provide me with a role.')
 			}
@@ -39,13 +43,17 @@ module.exports = {
 				}
 			} else if ((args[0].startsWith('<@!')) && (args[0].endsWith('>'))) {
 				targetMember = message.mentions.members.first()
+			} else if (/^\d+$/.test(args[0])) {
+				targetMember = guild.members.find(member => member.id === args[0])
 			}
 			try {
 				if (targetMember && (guildFile.modRoleID)) {
 					targetMember.addRole(guildFile.modRoleID)
-						.then(message.reply(`granted ${message.mentions.members.first()} the moderator role.`))
+						.then(message.reply(`granted ${message.mentions.members.first()} the ${this.name} role.`))
 				} else if (targetMember && (!guildFile.modRoleID)) {
-					message.reply(`I could not grant ${message.mentions.members.first()} the moderator role because you do not have one set.`)
+					message.reply(`I could not grant ${message.mentions.members.first()} the ${this.name} role because you do not have one set.`)
+				} else if (!targetMember && (guildFile.modRoleID)) {
+					message.reply(`You didn't give me a member to assign the ${this.name} role to, but your guild does have a admin role ID.`)
 				} else {
 					message.reply('I can\'t process that argument.')
 				}
