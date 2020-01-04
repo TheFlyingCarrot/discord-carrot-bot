@@ -232,7 +232,7 @@ client.on('message', message => {
 	// START Execute Command
 	try {
 		const returns = command.execute(message, args)
-		if ((returns.title) && (returns.body)) {
+		if ((returns) && (returns.title) && (returns.body)) {
 			const newEmbed = exampleEmbed
 				.setTitle(returns.title)
 				.setDescription(returns.body)
