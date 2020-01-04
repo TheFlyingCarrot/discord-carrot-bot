@@ -26,12 +26,12 @@ module.exports = {
 				if (targetRole) {
 					guildFile.adminRoleID = targetRole.id
 					fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildFile), 'utf-8')
-					return { title: 'Command Error', body: `${this.name} role set to: ${targetRole.name}` }
+					return { title: 'Command Success', body: `${this.name} role set to: ${targetRole.name}` }
 				} else {
 					return { title: 'Command Error', body: `I could not find a role with an ID that matches: ${targetRoleID}` }
 				}
 			} else {
-				return { title: 'Command Error', body: 'you didn\'t provide me with a role.' }
+				return { title: 'Command Fail', body: 'you didn\'t provide me with a role.' }
 			}
 		} else if (args[0] !== 'role') {
 			let targetMember = null
@@ -51,13 +51,11 @@ module.exports = {
 					targetMember.addRole(guildFile.adminRoleID)
 					return { title: 'Command Success', body: `Granted ${targetMember} the ${this.name} role.` }
 				} else if (targetMember && (!guildFile.adminRoleID)) {
-					return { title: 'Command Fail',
-						body: `I could not grant ${targetMember} the ${this.name} role because you do not have one set.` }
+					return { title: 'Command Fail', body: `I could not grant ${targetMember} the ${this.name} role because you do not have one set.` }
 				} else if (!targetMember && (guildFile.adminRoleID)) {
-					return { title: 'Command Fail',
-						body: `You didn't give me a member to assign the ${this.name} role to, but your guild does have a ${this.name} role ID.` }
+					return { title: 'Command Fail', body: `You didn't give me a member to assign the ${this.name} role to, but your guild does have a ${this.name} role ID.` }
 				} else {
-					return { title: 'Command Fail', body: 'I can\'t process that argument.' }
+					return { title: 'Command Error', body: 'I can\'t process that argument.' }
 				}
 			} catch(err) {
 				console.log(err)

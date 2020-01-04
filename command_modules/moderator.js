@@ -28,10 +28,10 @@ module.exports = {
 					fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildFile), 'utf-8')
 					return { title: 'Command Success', body: `${this.name} role set to: ${targetRole.name}` }
 				} else {
-					return { title: 'Command Success', body: `I could not find a role with an ID that matches: ${targetRoleID}` }
+					return { title: 'Command Error', body: `I could not find a role with an ID that matches: ${targetRoleID}` }
 				}
 			} else {
-				return { title: 'Command Success', body: 'You didn\'t provide me with a role.' }
+				return { title: 'Command Fail', body: 'You didn\'t provide me with a role.' }
 			}
 		} else if (args[0] !== 'role') {
 			let targetMember = null
@@ -49,19 +49,19 @@ module.exports = {
 			try {
 				if (targetMember && (guildFile.modRoleID)) {
 					targetMember.addRole(guildFile.modRoleID)
-						.then(message.reply(`granted ${message.mentions.members.first()} the ${this.name} role.`))
+					return { title: 'Command Success', body: `Granted ${message.mentions.members.first()} the ${this.name} role.` }
 				} else if (targetMember && (!guildFile.modRoleID)) {
-					return { title: 'Command Success', body: `I could not grant ${message.mentions.members.first()} the ${this.name} role because you do not have one set.` }
+					return { title: 'Command Fail', body: `I could not grant ${message.mentions.members.first()} the ${this.name} role because you do not have one set.` }
 				} else if (!targetMember && (guildFile.modRoleID)) {
-					return { title: 'Command Success', body: `You didn't give me a member to assign the ${this.name} role to, but your guild does have a ${this.name} role ID.` }
+					return { title: 'Command Fail', body: `You didn't give me a member to assign the ${this.name} role to, but your guild does have a ${this.name} role ID.` }
 				} else {
-					return { title: 'Command Success', body: 'I can\'t process that argument.' }
+					return { title: 'Command Error', body: 'I can\'t process that argument.' }
 				}
 			} catch(err) {
 				console.log(err)
 			}
 		} else {
-			return { title: 'Command Success', body: 'Please use the help command to see usage for this command.' }
+			return { title: 'Command Fail', body: 'Please use the help command to see usage for this command.' }
 		}
 	},
 }
