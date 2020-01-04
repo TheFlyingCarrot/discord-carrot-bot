@@ -12,6 +12,7 @@ const readGuildData = require('./extra/readGuildData.js')
 const setGuildData = require('./extra/setGuildData.js')
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
 const developers = fs.readFileSync('./extra/developers.txt')
+const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
 
 // Command Palette Set-up
 for (const file of commandFiles) {
@@ -33,6 +34,10 @@ client.once('ready', () => {
 				console.log(`No file for guild: ${guild.name}`)
 				setGuildData.write(guild)
 					.catch(console.error)
+			}
+			const channel = guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
+			if ((channel) && (packageInfo.version)) {
+				channel.send(`Hello, I was just updated! New version: ${packageInfo.version}`)
 			}
 		})
 	console.log('Bot Client State: Ready')

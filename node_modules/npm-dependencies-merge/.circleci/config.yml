@@ -1,0 +1,63 @@
+version: 2
+
+references:
+  workspace_root: &workspace_root
+    /home/circleci/npm-dependencies-merge
+  cache_key: &cache_key
+    dependencies-{{ .Environment.CIRCLE_SHA1 }}
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+  restore_cache: &restore_cache
+    restore_cache:
+      key: *cache_key
+  save_cache: &save_cache
+    save_cache:
+      key: *cache_key
+      paths:
+        - .
+
+defaults: &defaults
+  working_directory: *workspace_root
+  docker:
+    - image: circleci/node:6.10
+
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      # Checkout the code from the branch into the working_directory
+      - checkout
+      # Log the current branch
+      - run:
+          name: Show current branch
+          command: echo ${CIRCLE_BRANCH}
+      # Restore dependencies from cache
+      - *restore_cache
+      # Install project dependencies
+      - run:
+          name: Installing
+          command: npm install
+      - *save_cache
+  deploy:
+    <<: *defaults
+    steps:
+      # Checkout the code from the branch into the working_directory
+      - *attach_workspace
+      # Restore dependencies from cache
+      - *restore_cache
+      - run:
+          name: Deploy to NPM
+          command: echo -e "$NPM_USER\n$NPM_PASS\n$NPM_EMAIL" | npm login && npm publish
+      - *save_cache
+workflows:
+  version: 2
+  runner:
+    jobs:
+      - install
+      - deploy:
+          requires:
+            - install
+          filters:
+            branches:
+              only: master
