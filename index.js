@@ -23,6 +23,15 @@ for (const file of commandFiles) {
 // Independent Items
 const INDEX_DEBUG = false
 
+// Embed
+// eslint-disable-next-line no-unused-vars
+const exampleEmbed = new Discord.MessageEmbed()
+	.setColor('#ff9b00')
+	.setAuthor('Carrot Bot', 'https://cdn.discordapp.com/avatars/442956645845303296/dc8d6f257a3cb52773a7bf5f59ec8cc5.png?size=128')
+	.addField('Title', 'Body')
+	.setFooter('Object#3918', 'https://cdn.discordapp.com/avatars/238880608971915264/b1a6df2e17cfec849ac6b07da5706a47.png?size=128')
+	.setTimestamp()
+
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
 	// eslint-disable-next-line no-unused-vars
@@ -37,7 +46,16 @@ client.once('ready', () => {
 			}
 			const channel = guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
 			if ((channel) && (packageInfo.version)) {
-				channel.send(`Hello, I was just updated! New version: ${packageInfo.version}`)
+				channel.send(
+					new Discord.MessageEmbed()
+						.setColor('#ff9b00')
+						.setAuthor('Carrot Bot', 'https://cdn.discordapp.com/avatars/442956645845303296/dc8d6f257a3cb52773a7bf5f59ec8cc5.png?size=128')
+						.addField('Title', 'Body')
+						.setFooter('Object#3918', 'https://cdn.discordapp.com/avatars/238880608971915264/b1a6df2e17cfec849ac6b07da5706a47.png?size=128')
+						.setTimestamp()
+						.setTitle('Service Restart')
+						.addfield('Reason', `Hello, I was just updated! New version: ${packageInfo.version}.`),
+				)
 			}
 		})
 	console.log('Bot Client State: Ready')
