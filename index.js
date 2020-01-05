@@ -22,6 +22,7 @@ for (const file of commandFiles) {
 
 // Independent Items
 const INDEX_DEBUG = false
+// eslint-disable-next-line no-unused-vars
 let guilds = new Map()
 
 // Embed
@@ -229,41 +230,26 @@ client.on('message', message => {
 
 	// START Execute Command
 	const newEmbed = exampleEmbed
-	let useEmbed = false
 	try {
 		let returns = null
-		if (command.developerOnly) {
-			returns = command.execute(message, args, guilds)
-			newEmbed
-				.setTitle(returns.title)
-				.setDescription(`Current Bot Version: ${packageInfo.version}`)
-			if (returns.body) {
-				newEmbed
-					.addField('Developer Note', returns.body)
-			}
-		} else {
-			returns = command.execute(message, args)
-			newEmbed
-				.setTitle(returns.title)
-				.setDescription(returns.body)
-			useEmbed = true
-		}
+		returns = command.execute(message, args)
 		if ((returns) && (returns.title) && (returns.body)) {
 			newEmbed
 				.setTitle(returns.title)
 				.setDescription(returns.body)
-			useEmbed = true
+			message.channel.send(newEmbed)
+		} else {
+			newEmbed
+				.setTitle(returns.title)
+				.setDescription(returns.body)
+			message.channel.send(newEmbed)
 		}
 	} catch (err) {
 		console.log(err)
 		newEmbed
 			.setTitle('Command Error')
 			.setDescription(`There was an error trying to execute that command. ${err}`)
-		useEmbed = true
-	} finally {
-		if ((useEmbed) && (newEmbed)) {
-			message.channel.send(newEmbed)
-		}
+		message.channel.send(newEmbed)
 	}
 	// END Execute Command
 })

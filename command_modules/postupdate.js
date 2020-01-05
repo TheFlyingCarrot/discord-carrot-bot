@@ -9,6 +9,6 @@ module.exports = {
 		if (!args.length) {
 			return { title: '[DEV] Command Fail', body: 'You didn\'t give me anything to say.' }
 		}
-		return { title: '[DEV] Command Fail', body: args.join() }
+		return { title: '[DEV] Command Fail', body: args }
 	},
 }
