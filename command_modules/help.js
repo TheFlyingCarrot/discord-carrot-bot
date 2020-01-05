@@ -13,7 +13,7 @@ module.exports = {
 			data.push(commands.map(command => command.developerOnly ? `${command.name} (dev)` : `${command.name}`).join(', '))
 			data.push(`\nYou can use \`${defaultPrefix}help [command name]\` to get info on a specific command.`)
 
-			return message.author.send(data, { split: true })
+			return { title: 'Command Success', body: data }
 				.then(() => {
 					if (message.channel.type !== 'dm') return { title: 'Command Success', body: 'I\'ve sent you a DM with all my commands!' }
 				})
