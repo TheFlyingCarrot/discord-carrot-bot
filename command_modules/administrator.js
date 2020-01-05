@@ -4,7 +4,7 @@ module.exports = {
 	aliases: ['admin'],
 	usage: '[grant/role] [user (id/mention)/role (id/mention)]',
 	args: true,
-	description: 'Grant a user permission to use this bot with elevated permissions.',
+	description: 'Grant a user permission to use elevated commands.',
 	cooldown: 10,
 	guildOnly: true,
 	permission: 'ADMINISTRATOR',

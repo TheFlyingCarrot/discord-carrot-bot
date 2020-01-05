@@ -3,26 +3,39 @@ module.exports = {
 	args: true,
 	description: 'Reloads a command.',
 	developerOnly: true,
-	execute(message, args) {
+	execute(itemTable) {
+		const { message, args, templateEmbed } = itemTable
 		if (!args.length) {
-			return { title: '[DEV] Command Fail', body: 'You didn\'t give me anything to reload!' }
+			message.reply('you didn\'t give me anything to reload.')
+			return null
 		}
 		const commandName = args[0].toLowerCase()
 		const command = message.client.commands.get(commandName) || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
-
 		if (!command) {
-			return { title: '[DEV] Command Fail', body: `There is no command with name or alias \`${commandName}\`, ${message.author}!` }
+			message.reply('no such command was found.')
+			return null
 		}
-
 		delete require.cache[require.resolve(`./${command.name}.js`)]
-
 		try {
 			const newCommand = require(`./${command.name}.js`)
 			message.client.commands.set(newCommand.name, newCommand)
-			return { title: '[DEV] Command Success', body: `Command \`${commandName}\` was reloaded!` }
-		} catch (error) {
-			console.log(error)
-			return { title: '[DEV] Command Error', body: `There was an error while reloading a command \`${commandName}\`:\n\`${error.message}\`` }
+			const newEmbed = templateEmbed
+				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+				.setThumbnail('https://i.ibb.co/sJ4CyGj/admin-check.png')
+				.setTimestamp()
+				.setTitle('Command Reload')
+				.addField('Command Success', `Command \`${commandName}\` was reloaded!`)
+			message.channel.send(newEmbed)
+			return null
+		} catch (err) {
+			const newEmbed = templateEmbed
+				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+				.setThumbnail('https://i.ibb.co/8bCYm1p/admin-warning.png')
+				.setTimestamp()
+				.setTitle('Command Reload')
+				.addField('Command Error', `There was an error while reloading a command \`${commandName}\`:\n\`${err}\``)
+			message.channel.send(newEmbed)
+			return err
 		}
 	},
 }
