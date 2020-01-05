@@ -238,11 +238,6 @@ client.on('message', message => {
 				.setTitle(returns.title)
 				.setDescription(returns.body)
 			message.channel.send(newEmbed)
-		} else {
-			newEmbed
-				.setTitle(returns.title)
-				.setDescription(returns.body)
-			message.channel.send(newEmbed)
 		}
 	} catch (err) {
 		console.log(err)
