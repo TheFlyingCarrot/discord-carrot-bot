@@ -12,6 +12,7 @@ const readGuildData = require('./extra/readGuildData.js')
 const setGuildData = require('./extra/setGuildData.js')
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
 const developers = fs.readFileSync('./extra/developers.txt')
+// eslint-disable-next-line no-unused-vars
 const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
 
 // Command Palette Set-up
@@ -42,13 +43,13 @@ client.once('ready', () => {
 				setGuildData.write(guild)
 					.catch(console.error)
 			}
-			const channel = guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
+			/* const channel = guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
 			if ((channel) && (packageInfo.version)) {
 				const newEmbed = exampleEmbed
 					.setTitle('Service Restart')
 					.setDescription(`Hello, I was just updated! New version: ${packageInfo.version}.`)
 				channel.send(newEmbed)
-			}
+			} */
 		})
 	console.log('Bot Client State: Ready')
 })

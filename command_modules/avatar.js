@@ -9,7 +9,7 @@ module.exports = {
 			return { title: 'Command Success', body: `Your avatar: <${message.author.displayAvatarURL}>` }
 		}
 		const avatarData = []
-		message.mentions.users.map(user => { avatarData.push(`${user.username}'s avatar: <${user.displayAvatarURL}>\n`) })
+		message.mentions.users.map(user => { avatarData.push(`${user.username}'s avatar: <${user.displayAvatarURL}>\n\n`) })
 		return { title: 'Command Success', body: avatarData }
 	},
 }
