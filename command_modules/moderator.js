@@ -8,11 +8,13 @@ module.exports = {
 	cooldown: 10,
 	guildOnly: true,
 	permission: 'ADMINISTRATOR',
-	execute(message, args) {
+	execute(itemTable) {
+		const { client, message, args, templateEmbed } = itemTable
 		const guild = message.guild
 		const guildFile = JSON.parse(fs.readFileSync(`./guilds/${guild.id}.json`))
 		if (!guildFile) {
-			return { title: 'Command Error', body: 'Your guild does not have a file! Please contact my developer.' }
+			message.reply('your guild does not have a file! Please contact my developer.')
+			return null
 		}
 		if (args[0] === 'role') {
 			let targetRoleID = null
@@ -26,12 +28,15 @@ module.exports = {
 				if (targetRole) {
 					guildFile.adminRoleID = targetRole.id
 					fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildFile), 'utf-8')
-					return { title: 'Command Success', body: `${this.name} role set to: ${targetRole.name}` }
+					message.reply(`${this.name} role set to: ${targetRole.name}`)
+					return null
 				} else {
-					return { title: 'Command Error', body: `I could not find a role with an ID that matches: ${targetRoleID}` }
+					message.reply(`I could not find a role with an ID that matches: ${targetRoleID}`)
+					return null
 				}
 			} else {
-				return { title: 'Command Fail', body: 'You didn\'t provide me with a role.' }
+				message.reply('you didn\'t provide me with a role.')
+				return null
 			}
 		} else if (args[0] !== 'role') {
 			let targetMember = null
@@ -49,19 +54,24 @@ module.exports = {
 			try {
 				if (targetMember && (guildFile.modRoleID)) {
 					targetMember.addRole(guildFile.modRoleID)
-					return { title: 'Command Success', body: `Granted ${message.mentions.members.first()} the ${this.name} role.` }
+					message.reply(`granted ${message.mentions.members.first()} the ${this.name} role.`)
+					return null
 				} else if (targetMember && (!guildFile.modRoleID)) {
-					return { title: 'Command Fail', body: `I could not grant ${message.mentions.members.first()} the ${this.name} role because you do not have one set.` }
+					message.reply(`I could not grant ${message.mentions.members.first()} the ${this.name} role because you do not have one set.`)
+					return null
 				} else if (!targetMember && (guildFile.modRoleID)) {
-					return { title: 'Command Fail', body: `You didn't give me a member to assign the ${this.name} role to, but your guild does have a ${this.name} role ID.` }
+					message.reply(`you didn't give me a member to assign the ${this.name} role to, but your guild does have a ${this.name} role ID.`)
+					return null
 				} else {
-					return { title: 'Command Error', body: 'I can\'t process that argument.' }
+					message.reply('I can\'t process that argument.')
+					return null
 				}
 			} catch(err) {
 				console.log(err)
 			}
 		} else {
-			return { title: 'Command Fail', body: 'Please use the help command to see usage for this command.' }
+			message.reply('please use the help command to see usage for this command.')
+			return null
 		}
 	},
 }

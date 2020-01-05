@@ -238,4 +238,6 @@ client.on('message', message => {
 	// END Execute Command
 })
 
+process.on('uncaughtException', (err) => console.log(err))
+
 client.login()

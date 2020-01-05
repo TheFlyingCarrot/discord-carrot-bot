@@ -7,15 +7,32 @@ module.exports = {
 	guildOnly: true,
 	permission: 'KICK_MEMBERS',
 	requiredRole: ['admin', 'mod'],
-	execute(message) {
-		if (!message.member.hasPermission(`${this.permission}`, false, true, true)) return { title: 'Command Error', body: 'You do not have permission to use this command.' }
-		if (!message.mentions.members.size) return { title: 'Command Error', body: 'You must tag a user.' }
+	execute(itemTable) {
+		const { client, message, args, templateEmbed } = itemTable
+		if (!message.member.hasPermission(`${this.permission}`, false, true, true)) {
+			message.reply('you do not have permission to use that command.')
+			return null
+		}
+		if (!message.mentions.members.size) {
+			message.reply('you must tag a user.')
+			return null
+		}
 		const targetUser = message.mentions.members.first()
-		if (!targetUser.kickable) return { title: 'Command Error', body: 'I can\'t kick that user.' }
+		if (!targetUser.kickable) {
+			message.reply('I can\'t kick that user.')
+			return null
+		}
 		targetUser.kick().then(() => {
-			return { title: 'Command Success', body: `${targetUser} was kicked.` }
+			const newEmbed = templateEmbed
+				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+				.setThumbnail('https://i.ibb.co/QjCW2nx/user-banned.png')
+				.setTimestamp()
+				.setTitle('Kick Command')
+				.addField(`**${targetUser}**`, `Kicked by ${message.author}`)
+			message.channel.send(newEmbed)
+			return null
 		}).catch((err) => {
-			return { title: 'Command Fail', body: `${targetUser} was not kicked. ${err}` }
+			message.reply(`${targetUser} could not be kicked. Error: ${err}`)
 		})
 	},
 }

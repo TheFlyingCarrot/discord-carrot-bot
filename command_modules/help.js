@@ -5,7 +5,7 @@ module.exports = {
 	usage: '[command name]',
 	description: 'Commands or info about a specific command.',
 	execute(itemTable) {
-		const { message, args, client } = itemTable
+		const { client, message, args, templateEmbed } = itemTable
 		const commands = client.commands
 		if (!args.length > 0) {
 			const newEmbed = itemTable.templateEmbed

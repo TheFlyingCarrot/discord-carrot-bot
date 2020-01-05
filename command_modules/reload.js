@@ -4,7 +4,7 @@ module.exports = {
 	description: 'Reloads a command.',
 	developerOnly: true,
 	execute(itemTable) {
-		const { message, args, templateEmbed } = itemTable
+		const { client, message, args, templateEmbed } = itemTable
 		if (!args.length) {
 			message.reply('you didn\'t give me anything to reload.')
 			return null
@@ -23,7 +23,7 @@ module.exports = {
 				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 				.setThumbnail('https://i.ibb.co/sJ4CyGj/admin-check.png')
 				.setTimestamp()
-				.setTitle('Command Reload')
+				.setTitle('Reload Command')
 				.addField('Command Success', `Command \`${commandName}\` was reloaded!`)
 			message.channel.send(newEmbed)
 			return null
@@ -32,7 +32,7 @@ module.exports = {
 				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 				.setThumbnail('https://i.ibb.co/8bCYm1p/admin-warning.png')
 				.setTimestamp()
-				.setTitle('Command Reload')
+				.setTitle('Reload Command')
 				.addField('Command Error', `There was an error while reloading a command \`${commandName}\`:\n\`${err}\``)
 			message.channel.send(newEmbed)
 			return err
