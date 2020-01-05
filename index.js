@@ -22,6 +22,7 @@ for (const file of commandFiles) {
 
 // Independent Items
 const INDEX_DEBUG = false
+let guilds = new Map()
 
 // Embed
 const exampleEmbed = new Discord.RichEmbed()
@@ -31,8 +32,7 @@ const exampleEmbed = new Discord.RichEmbed()
 
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
-	// eslint-disable-next-line no-unused-vars
-	const guilds = new Map(client.guilds)
+	guilds = new Map(client.guilds)
 		.forEach(guild => {
 			const guildFile = readGuildData.read(guild)
 			console.log(guildFile[0], guildFile[1])
@@ -65,8 +65,7 @@ client.once('disconnect', () => {
 // Triggers when the bot (client) connects to a new server.
 client.on('guildCreate', guildObj => {
 	console.log('Bot was added to a new guild: ' + guildObj.name)
-	// eslint-disable-next-line no-unused-vars
-	const guilds = client.guilds.map(g => g)
+	guilds = client.guilds.map(g => g)
 		.forEach(guild => {
 			if (!fs.existsSync(`./guilds/${guild.id}.json`)) {
 				console.log(`No Guild ID File Found for Guild ID: ${guild.id}`)
@@ -79,8 +78,7 @@ client.on('guildCreate', guildObj => {
 // Triggers when the bot (client) is removed from a server.
 client.on('guildDelete', guildObj => {
 	console.log('Bot was removed from a guild: ' + guildObj.name)
-	// eslint-disable-next-line no-unused-vars
-	const guilds = client.guilds.map(g => g)
+	guilds = client.guilds.map(g => g)
 		.forEach(guild => {
 			if (fs.existsSync(`./guilds/${guild.id}.json`)) {
 				fs.unlinkSync(`./guilds/${guild.id}.json`)
@@ -230,22 +228,42 @@ client.on('message', message => {
 	// END Cooldowns
 
 	// START Execute Command
+	const newEmbed = exampleEmbed
+	let useEmbed = false
 	try {
-		const returns = command.execute(message, args)
-		if ((returns) && (returns.title) && (returns.body)) {
-			const newEmbed = exampleEmbed
+		let returns = null
+		if (command.developerOnly) {
+			returns = command.execute(message, args, guilds)
+			newEmbed
+				.setTitle(returns.title)
+				.setDescription(`Current Bot Version: ${packageInfo.version}`)
+			if (returns.body) {
+				newEmbed
+					.addField('Developer Note', returns.body)
+			}
+		} else {
+			returns = command.execute(message, args)
+			newEmbed
 				.setTitle(returns.title)
 				.setDescription(returns.body)
-			message.channel.send(newEmbed)
+			useEmbed = true
 		}
-		console.log(`TIMESTAMP[${message.createdTimestamp}] A_ID[${message.author.id}] A_NAME[${message.author.username}] CMD_NAME[${commandName}] CMD_ARGS[${args}].`)
+		if ((returns) && (returns.title) && (returns.body)) {
+			newEmbed
+				.setTitle(returns.title)
+				.setDescription(returns.body)
+			useEmbed = true
+		}
 	} catch (err) {
 		console.log(err)
-		const newEmbed = exampleEmbed
+		newEmbed
 			.setTitle('Command Error')
 			.setDescription(`There was an error trying to execute that command. ${err}`)
-		message.channel.send(newEmbed)
-		return null
+		useEmbed = true
+	} finally {
+		if ((useEmbed) && (newEmbed)) {
+			message.channel.send(newEmbed)
+		}
 	}
 	// END Execute Command
 })
