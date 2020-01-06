@@ -9,9 +9,9 @@ const cooldowns = new Discord.Collection()
 // Module Initialization
 const fs = require('fs')
 const { defaultPrefix } = require('./config.json')
-const readGuildData = require('./extra/readGuildData.js')
-const setGuildData = require('./extra/setGuildData.js')
-const developers = fs.readFileSync('./extra/developers.txt')
+const readGuildData = require('./helper_modules/readGuildData.js')
+const setGuildData = require('./helper_modules/setGuildData.js')
+const developers = fs.readFileSync('./helper_modules/developers.txt')
 const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
 
 // Command Palette Set-up
