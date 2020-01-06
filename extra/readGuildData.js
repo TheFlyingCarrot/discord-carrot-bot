@@ -4,13 +4,13 @@ module.exports = {
 		if (fs.existsSync(`./guilds/${guild.id}.json`)) {
 			const guildFile = JSON.parse(fs.readFileSync(`./guilds/${guild.id}.json`))
 			try {
-				return [true, guildFile]
+				return guildFile
 			} catch (err) {
 				console.log(err)
-				return [false, null]
+				return null
 			}
 		} else {
-			return [false, null]
+			return null
 		}
 	},
 }

@@ -1,5 +1,6 @@
-// Discord Initialization
 require('dotenv').config()
+
+// Discord Initialization
 const Discord = require('discord.js')
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
@@ -10,11 +11,11 @@ const fs = require('fs')
 const { defaultPrefix } = require('./config.json')
 const readGuildData = require('./extra/readGuildData.js')
 const setGuildData = require('./extra/setGuildData.js')
-const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
 const developers = fs.readFileSync('./extra/developers.txt')
 const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
 
 // Command Palette Set-up
+const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
 for (const file of commandFiles) {
 	const command = require(`./command_modules/${file}`)
 	client.commands.set(command.name, command)
@@ -36,7 +37,9 @@ client.once('ready', () => {
 			if (!guildFile[0]) {
 				console.log(`No file for guild: ${guild.name}`)
 				setGuildData.write(guild)
-					.catch(console.error)
+			} else if ((guildFile) && (guild.name != guildFile.name)) {
+				console.log(`Guild file discrepancy found for guild: ${guild.name}`)
+				setGuildData.write(guild)
 			}
 		})
 	console.log('Bot Client State: Ready')
