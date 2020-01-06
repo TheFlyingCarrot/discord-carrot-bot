@@ -9,9 +9,9 @@ const cooldowns = new Discord.Collection()
 // Module Initialization
 const fs = require('fs')
 const { defaultPrefix } = require('./config.json')
-const readGuildData = require('./extra/readGuildData.js')
-const setGuildData = require('./extra/setGuildData.js')
-const developers = fs.readFileSync('./extra/developers.txt')
+const readGuildData = require('./helper_modules/readGuildData.js')
+const setGuildData = require('./helper_modules/setGuildData.js')
+const developers = fs.readFileSync('./helper_modules/developers.txt')
 const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
 
 // Command Palette Set-up
@@ -22,7 +22,7 @@ for (const file of commandFiles) {
 }
 
 // Independent Items
-const INDEX_DEBUG = false
+const INDEX_DEBUG = true
 let guilds = new Map()
 
 // Embed
@@ -33,12 +33,11 @@ client.once('ready', () => {
 	guilds = new Map(client.guilds)
 		.forEach(guild => {
 			const guildFile = readGuildData.read(guild)
-			console.log(guildFile[0], guildFile[1])
-			if (!guildFile[0]) {
+			if (!guildFile) {
 				console.log(`No file for guild: ${guild.name}`)
 				setGuildData.write(guild)
 			} else if ((guildFile) && (guild.name != guildFile.name)) {
-				console.log(`Guild file discrepancy found for guild: ${guild.name}`)
+				console.log(`Discrepancy found in guild file: ${guild.name} != ${guildFile.name}`)
 				setGuildData.write(guild)
 			}
 		})
@@ -79,7 +78,6 @@ client.on('guildDelete', guildObj => {
 			}
 		})
 })
-
 // Triggers when a new member is added in any guild.
 client.on('guildMemberAdd', member => {
 	const channel = member.guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
@@ -104,7 +102,7 @@ client.on('message', message => {
 	const args = message.content.slice(defaultPrefix.length).split(/ +/)
 	const commandName = args.shift().toLowerCase()
 	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
-	// Start Command Verification
+	// START Command Verification
 	try {
 		// Not a command.
 		if (!command) {
@@ -112,16 +110,19 @@ client.on('message', message => {
 		}
 		// Developer-Only Command.
 		if (command.developerOnly) {
-			const developerFile = ('./extra/developers.txt')
-			if (!fs.existsSync(developerFile)) {
+			if (!developers) {
 				const newEmbed = templateEmbed
 					.setTitle('Command Error')
+					.setThumbnail('https://i.ibb.co/GvWjZyY/admin-alert.png')
+					.setTimestamp()
 					.setDescription('There was an error in finding the developers.')
 				message.channel.send(newEmbed)
 				return null
 			} else if (!developers.includes(message.author.id)) {
 				const newEmbed = templateEmbed
 					.setTitle('Command Error')
+					.setThumbnail('https://i.ibb.co/GvWjZyY/admin-alert.png')
+					.setTimestamp()
 					.setDescription('That is a developer-only command. Sorry!')
 				message.channel.send(newEmbed)
 				return null
@@ -131,6 +132,8 @@ client.on('message', message => {
 		if (command.guildOnly && (message.channel.type !== 'text')) {
 			const newEmbed = templateEmbed
 				.setTitle('Command Error')
+				.setThumbnail('https://i.ibb.co/GvWjZyY/admin-alert.png')
+				.setTimestamp()
 				.setDescription('I can\'t execute that command inside Direct Messages.')
 			message.channel.send(newEmbed)
 			return null
@@ -139,6 +142,8 @@ client.on('message', message => {
 		if (command.permission && (!message.guild.me.hasPermission(command.permission))) {
 			const newEmbed = templateEmbed
 				.setTitle('Command Error')
+				.setThumbnail('https://i.ibb.co/GvWjZyY/admin-alert.png')
+				.setTimestamp()
 				.setDescription(`I need the ${command.permission} permission to execute that command.`)
 			message.channel.send(newEmbed)
 			return null
@@ -151,6 +156,8 @@ client.on('message', message => {
 			}
 			const newEmbed = templateEmbed
 				.setTitle('Command Error')
+				.setThumbnail('https://i.ibb.co/GvWjZyY/admin-alert.png')
+				.setTimestamp()
 				.setDescription(reply)
 			message.channel.send(newEmbed)
 			return null
@@ -159,12 +166,12 @@ client.on('message', message => {
 		if (!cooldowns.has(command.name)) {
 			cooldowns.set(command.name, new Discord.Collection())
 		}
-		// END Command Verification
-		// Error Catch
 	} catch (err) {
 		console.log(err)
 		const newEmbed = templateEmbed
 			.setTitle('Command Error')
+			.setThumbnail('https://i.ibb.co/GvWjZyY/admin-alert.png')
+			.setTimestamp()
 			.setDescription('There was an error in recognizing that command.')
 		message.channel.send(newEmbed)
 		return null
@@ -197,9 +204,9 @@ client.on('message', message => {
 			console.log(logMessage)
 		}
 	}
-	// END Debug Log
+	// END Debug Log / END Command Verification
 
-	// START Cooldowns  *COOLDOWNS
+	// START Cooldowns *COOLDOWNS
 	const now = Date.now()
 	const timestamps = cooldowns.get(command.name)
 	const cooldownAmount = (command.cooldown || 3) * 1000
@@ -235,6 +242,8 @@ client.on('message', message => {
 		console.log(err)
 		const newEmbed = templateEmbed
 			.setTitle('Command Error')
+			.setThumbnail('https://i.ibb.co/GvWjZyY/admin-alert.png')
+			.setTimestamp()
 			.setDescription(`There was an error trying to execute that command. ${err}`)
 		message.channel.send(newEmbed)
 	}

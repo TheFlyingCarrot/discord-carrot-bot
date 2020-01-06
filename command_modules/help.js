@@ -8,7 +8,7 @@ module.exports = {
 		const { client, message, args, templateEmbed } = itemTable
 		const commands = client.commands
 		if (!args.length > 0) {
-			const newEmbed = itemTable.templateEmbed
+			const newEmbed = templateEmbed
 				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 				.setThumbnail('https://i.ibb.co/MhzStmL/user-inquiry.png')
 				.setTimestamp()
@@ -23,19 +23,19 @@ module.exports = {
 			newEmbed.addField('Additional Information', `\nYou can use \`${defaultPrefix}help [command name]\` to get info on a specific command.`)
 			message.author.send(newEmbed)
 				.then(() => {
-					if (message.channel.type !== 'dm') return message.reply('I\'ve sent you a DM with all my commands!')
+					if (message.channel.type !== 'dm') return message.channel.send(`${message.author}, I've sent you a DM with all my commands!`)
 				})
 				.catch((err) => {
-					message.reply('it appears that I can\'t DM you! Please check if you have DMs disabled.')
+					message.channel.send(`${message.author}, it appears that I can't DM you! Please check if you have DMs disabled. Some other error may have occured.`)
 					return (`Could not send a help DM to ${message.author.tag}. Error: ${err}`)
 				})
 		} else if (args.length > 0) {
 			const name = args[0].toLowerCase()
 			const command = commands.get(name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))
 			if (!command) {
-				return message.reply('that\'s not a valid command.')
+				return message.channel.send(`${message.author}, that's not a valid command.`)
 			}
-			const newEmbed = itemTable.templateEmbed
+			const newEmbed = templateEmbed
 				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 				.setThumbnail('https://i.ibb.co/MhzStmL/user-inquiry.png')
 				.setTimestamp()
