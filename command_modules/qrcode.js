@@ -18,7 +18,6 @@ module.exports = {
 			let argStitch = ''
 			args.forEach(arg => {
 				argStitch += ((args[args.length - 1] === arg) ? (`${arg}`) : (`${arg} `))
-				console.log(argStitch)
 			})
 			QRCode.toFile(`./qrcodes/${message.author.id}.png`, String(argStitch), {
 				color: {
@@ -33,6 +32,7 @@ module.exports = {
 				.setTitle('QR Code')
 				.addField('**Conents**', argStitch)
 				.attachFile(`./qrcodes/${message.author.id}.png`)
+				.setImage(`attachment://${message.author.id}.png`)
 			message.channel.send(newEmbed)
 		}
 	},

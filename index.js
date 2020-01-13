@@ -1,13 +1,25 @@
 require('dotenv').config()
 
+const INDEX_DEBUG = false
+
 // Discord Initialization
 const Discord = require('discord.js')
 const client = new Discord.Client()
+const templateEmbed = new Discord.RichEmbed()
 client.commands = new Discord.Collection()
 const cooldowns = new Discord.Collection()
 
-// Module Initialization
+// Module Pre-Initalization
 const fs = require('fs')
+const currentQRCodes = fs.readdirSync('./qrcodes/')
+for (let i = 0; i < currentQRCodes.length; i++) {
+	const file = currentQRCodes[i]
+	if (file.endsWith('.png')) {
+		fs.unlinkSync(`./qrcodes/${file}`)
+	}
+}
+
+// Module Initialization
 const { defaultPrefix } = require('./config.json')
 const readGuildData = require('./helper_modules/readGuildData.js')
 const setGuildData = require('./helper_modules/setGuildData.js')
@@ -15,18 +27,12 @@ const developers = fs.readFileSync('./helper_modules/developers.txt')
 const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
 
 // Command Palette Set-up
+let guilds = new Map()
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
 for (const file of commandFiles) {
 	const command = require(`./command_modules/${file}`)
 	client.commands.set(command.name, command)
 }
-
-// Independent Items
-const INDEX_DEBUG = true
-let guilds = new Map()
-
-// Embed
-const templateEmbed = new Discord.RichEmbed()
 
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
