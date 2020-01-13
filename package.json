@@ -9,6 +9,7 @@
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
     "npm-dependencies-merge": "^1.0.5",
+    "qrcode": "^1.4.4",
     "request": "2.81.0"
   },
   "devDependencies": {
