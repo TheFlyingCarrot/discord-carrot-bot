@@ -19,16 +19,16 @@ module.exports = {
 				message.channel.send(`${message.author}, there was an error executing that command. Error: ${err}`)
 				return null
 			})
-		} else if ((amount < 2 || amount > 100)) {
+		} else if ((amount < 1 || amount > 100)) {
 			if (Number.isInteger(amount)) {
-				message.channel.send(`${message.author}, you must input a number between 2 and 99.`)
+				message.channel.send(`${message.author}, you must input a number between 1 and 99.`)
 				return null
 			} else {
-				message.channel.send(`${message.author}, you must input a number between 2 and 99 that is also an integer.`)
+				message.channel.send(`${message.author}, you must input a number between 1 and 99 that is also an integer.`)
 				return null
 			}
 		} else {
-			message.channel.bulkDelete(amount, true).catch((error) => {
+			message.channel.bulkDelete(amount + 1, true).catch((error) => {
 				console.error(error)
 				message.channel.send(`${message.author}, there was an error executing that command. ${error}`)
 				return null
