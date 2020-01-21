@@ -30,7 +30,7 @@ module.exports = {
 				.setThumbnail('https://i.ibb.co/VTS5PXk/user-write.png')
 				.setTimestamp()
 				.setTitle('QR Code')
-				.addField('**Conents**', argStitch)
+				.addField('**Contents**', argStitch)
 				.attachFile(`./qrcodes/${message.author.id}.png`)
 				.setImage(`attachment://${message.author.id}.png`)
 			message.channel.send(newEmbed)
