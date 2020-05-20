@@ -5,6 +5,7 @@ if (!Array.prototype.last) {
 	}
 }
 module.exports = {
+	enabled: false,
 	name: 'qrcode',
 	aliases: ['qr', 'q'],
 	usage: '[link]',

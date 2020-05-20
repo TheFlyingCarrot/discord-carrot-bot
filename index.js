@@ -24,9 +24,11 @@ const { defaultPrefix } = require('./config.json')
 const readGuildData = require('./helper_modules/readGuildData.js')
 const setGuildData = require('./helper_modules/setGuildData.js')
 const developers = fs.readFileSync('./helper_modules/developers.txt')
+// eslint-disable-next-line no-unused-vars
 const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
 
 // Command Palette Set-up
+// eslint-disable-next-line no-unused-vars
 let guilds = new Map()
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
 for (const file of commandFiles) {
@@ -111,8 +113,17 @@ client.on('message', message => {
 	// START Command Verification
 	try {
 		// Not a command.
-		if (!command) {
+		// eslint-disable-next-line no-inline-comments
+		if ((!command)) { // || (!command.enabled)
 			return null
+		}
+		if (!command.enabled) {
+			const newEmbed = templateEmbed
+				.setTitle('Command Error')
+				.setThumbnail('https://i.ibb.co/GvWjZyY/admin-alert.png')
+				.setTimestamp()
+				.setDescription('That command is currently disabled. Sorry!')
+			message.channel.send(newEmbed)
 		}
 		// Developer-Only Command.
 		if (command.developerOnly) {
