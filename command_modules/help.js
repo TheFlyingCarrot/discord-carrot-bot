@@ -1,4 +1,4 @@
-const { defaultPrefix } = require('../config.json')
+const { prefix } = require('../config.json')
 const { developers } = require('../index.js')
 module.exports = {
 	enabled: true,
@@ -26,7 +26,7 @@ module.exports = {
 					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}**`), `${command.description}`, true)
 				}
 			})
-			newEmbed.addField('Additional Information', `\nYou can use \`${defaultPrefix}help [command name]\` to get info on a specific command.`)
+			newEmbed.addField('Additional Information', `\nYou can use \`${prefix}help [command name]\` to get info on a specific command.`)
 			message.author.send(newEmbed)
 				.then(() => {
 					if (message.channel.type !== 'dm') return message.channel.send(`${message.author}, I've sent you a DM with all my commands!`)
@@ -48,7 +48,7 @@ module.exports = {
 				.setTitle('Help Command')
 				.addField('**Name:**', `${command.name}`)
 			if (command.aliases) newEmbed.addField('**Aliases:**', `${command.aliases.join(', ')}`)
-			if (command.usage) newEmbed.addField('**Usage:**', `${defaultPrefix}${command.name} ${command.usage}`)
+			if (command.usage) newEmbed.addField('**Usage:**', `${prefix}${command.name} ${command.usage}`)
 			if (command.description) newEmbed.addField('**Description:**', `${command.description}`)
 			newEmbed.addField('**Cooldown:**', `${command.cooldown || 3} second(s)`)
 			message.channel.send(newEmbed)
