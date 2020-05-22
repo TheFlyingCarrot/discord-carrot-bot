@@ -1,4 +1,5 @@
 module.exports = {
+	enabled: true,
 	name: 'reload',
 	description: 'Reloads a command.',
 	developerOnly: true,
