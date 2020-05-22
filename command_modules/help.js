@@ -1,4 +1,5 @@
 const { defaultPrefix } = require('../config.json')
+const { developers } = require('../index.js')
 module.exports = {
 	enabled: true,
 	can_toggle: true,
@@ -17,7 +18,9 @@ module.exports = {
 				.setTitle('Help Command')
 			commands.forEach(command => {
 				if (command.developerOnly) {
-					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}** (dev-only)`), `${command.description}`, true)
+					if (developers.includes(message.author.id)) {
+						newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}** (dev-only)`), `${command.description}`, true)
+					}
 				} else {
 					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}**`), `${command.description}`, true)
 				}
