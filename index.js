@@ -29,6 +29,7 @@ client.once('ready', () => {
 	console.log('Bot Client State: Ready')
 })
 
+
 // Triggers when a connection to Discord API has been found and is attempting to reconnect.
 client.once('reconnecting', () => {
 	console.log('Bot Client State: Reconnecting')
