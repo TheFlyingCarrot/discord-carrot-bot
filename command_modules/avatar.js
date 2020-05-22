@@ -6,6 +6,7 @@ module.exports = {
 	usage: '[user mention]',
 	description: 'Get a user\'s avatar.',
 	execute(itemTable) {
+		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = itemTable
 		if (!message.mentions.users.size) {
 			const newEmbed = templateEmbed

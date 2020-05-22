@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const INDEX_DEBUG = true
+const INDEX_DEBUG = false
 
 // Discord Initialization
 const Discord = require('discord.js')
@@ -13,17 +13,11 @@ const cooldowns = new Discord.Collection()
 const fs = require('fs')
 
 // Module Initialization
-const { defaultPrefix } = require('./config.json')
-const readGuildData = require('./helper_modules/readGuildData.js')
-const setGuildData = require('./helper_modules/setGuildData.js')
+const { prefix } = require('./config.json')
 const developers = fs.readFileSync('./helper_modules/developers.txt')
 module.exports.developers = developers
-// eslint-disable-next-line no-unused-vars
-const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
 
 // Command Palette Set-up
-// eslint-disable-next-line no-unused-vars
-let guilds = new Map()
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
 for (const file of commandFiles) {
 	const command = require(`./command_modules/${file}`)
@@ -32,17 +26,6 @@ for (const file of commandFiles) {
 
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
-	guilds = new Map(client.guilds)
-		.forEach(guild => {
-			const guildFile = readGuildData.read(guild)
-			if (!guildFile) {
-				console.log(`No file for guild: ${guild.name}`)
-				setGuildData.write(guild)
-			} else if ((guildFile) && (guild.name != guildFile.name)) {
-				console.log(`Discrepancy found in guild file: ${guild.name} != ${guildFile.name}`)
-				setGuildData.write(guild)
-			}
-		})
 	console.log('Bot Client State: Ready')
 })
 
@@ -59,26 +42,11 @@ client.once('disconnect', () => {
 // Triggers when the bot (client) connects to a new server.
 client.on('guildCreate', guildObj => {
 	console.log('Bot was added to a new guild: ' + guildObj.name)
-	guilds = client.guilds.map(g => g)
-		.forEach(guild => {
-			if (!fs.existsSync(`./guilds/${guild.id}.json`)) {
-				console.log(`No Guild ID File Found for Guild ID: ${guild.id}`)
-				const guildData = { id: `${guild.id}`, name: `${guild.name}`, adminRoleID: NaN, modRoleID: NaN }
-				fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildData), 'utf-8')
-			}
-		})
 })
 
 // Triggers when the bot (client) is removed from a server.
 client.on('guildDelete', guildObj => {
 	console.log('Bot was removed from a guild: ' + guildObj.name)
-	guilds = client.guilds.map(g => g)
-		.forEach(guild => {
-			if (fs.existsSync(`./guilds/${guild.id}.json`)) {
-				fs.unlinkSync(`./guilds/${guild.id}.json`)
-					.catch(console.error)
-			}
-		})
 })
 // Triggers when a new member is added in any guild.
 client.on('guildMemberAdd', member => {
@@ -98,10 +66,10 @@ client.on('guildMemberRemove', member => {
 
 // Triggers when any new message is recieved by the bot (client).
 client.on('message', message => {
-	if ((!message.content.startsWith(defaultPrefix)) || message.author.bot || message.tts || message.system) {
+	if ((!message.content.startsWith(prefix)) || message.author.bot || message.tts || message.system) {
 		return null
 	}
-	const args = message.content.slice(defaultPrefix.length).split(/ +/)
+	const args = message.content.slice(prefix.length).split(/ +/)
 	const commandName = args.shift().toLowerCase()
 	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 	// START Command Verification
@@ -164,7 +132,7 @@ client.on('message', message => {
 		if (command.args && !args.length) {
 			let reply = 'That command requires arguments.'
 			if (command.usage) {
-				reply += (`\nThe proper usage is: \`${defaultPrefix}${command.name} ${command.usage}\``)
+				reply += (`\nThe proper usage is: \`${prefix}${command.name} ${command.usage}\``)
 			}
 			const newEmbed = templateEmbed
 				.setTitle('Command Error')

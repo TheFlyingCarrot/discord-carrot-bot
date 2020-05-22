@@ -8,6 +8,7 @@ module.exports = {
 	usage: '[command name]',
 	description: 'Commands or info about a specific command.',
 	execute(itemTable) {
+		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = itemTable
 		const commands = client.commands
 		if (!args.length > 0) {
