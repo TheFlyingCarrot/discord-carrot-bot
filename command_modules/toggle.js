@@ -29,7 +29,7 @@ module.exports = {
 		}
 
 		if (query) {
-			message.reply(`${message.author}, the command \`${commandName}\` is currently ${query ? 'enabled' : 'disabled'}.`)
+			message.reply(`${message.author}, the command \`${commandName}\` is currently ${command.enabled ? 'enabled' : 'disabled'}.`)
 		} else if (!command.can_toggle) {
 			message.reply(`${message.author}, the command \`${commandName}\` cannot be toggled.`)
 		} else if ((command.can_toggle) && ((command.enabled) || (!command.enabled))) {
