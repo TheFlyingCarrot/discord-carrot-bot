@@ -17,6 +17,7 @@ const { defaultPrefix } = require('./config.json')
 const readGuildData = require('./helper_modules/readGuildData.js')
 const setGuildData = require('./helper_modules/setGuildData.js')
 const developers = fs.readFileSync('./helper_modules/developers.txt')
+module.exports.developers = developers
 // eslint-disable-next-line no-unused-vars
 const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
 
