@@ -35,7 +35,7 @@ module.exports = {
 		} else if ((command.can_toggle) && ((command.enabled) || (!command.enabled))) {
 			try {
 				command.enabled = command.enabled ? false : true
-				message.reply(`${message.author}, the command \`${commandName}\` was toggled.`)
+				message.reply(`${message.author}, the command \`${commandName}\` is now ${command.enabled ? 'enabled' : 'disabled'}.`)
 			} catch (error) {
 				message.reply(`${message.author}, toggling the command \`${commandName}\` produced an error.`)
 			}
