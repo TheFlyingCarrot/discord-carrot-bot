@@ -3,7 +3,7 @@ module.exports = {
 	enabled: true,
 	can_toggle: true,
 	name: 'qrcode',
-	aliases: ['qr', 'q'],
+	aliases: ['qr'],
 	usage: '[link]',
 	description: 'Generate a QR code.',
 	cooldown: 30,
