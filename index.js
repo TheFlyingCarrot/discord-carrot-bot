@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const INDEX_DEBUG = false
+const INDEX_DEBUG = true
 
 // Discord Initialization
 const Discord = require('discord.js')
@@ -117,6 +117,7 @@ client.on('message', message => {
 				.setTimestamp()
 				.setDescription('That command is currently disabled. Sorry!')
 			message.channel.send(newEmbed)
+			return null
 		}
 		// Developer-Only Command.
 		if (command.developerOnly) {

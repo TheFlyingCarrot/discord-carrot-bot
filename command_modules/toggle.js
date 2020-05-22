@@ -16,7 +16,7 @@ module.exports = {
 
 		let commandName = null
 		let query = false
-		if (args[0].toLowerCase() in query_aliases) {
+		if (query_aliases.includes(args[0].toLowerCase())) {
 			query = true
 			commandName = args[1].toLowerCase()
 		} else {
