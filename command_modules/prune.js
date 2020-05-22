@@ -1,4 +1,6 @@
 module.exports = {
+	enabled: true,
+	can_toggle: true,
 	name: 'prune',
 	aliases: ['purge', 'delete', 'erase'],
 	description: 'Prune messages.',

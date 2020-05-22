@@ -1,4 +1,6 @@
 module.exports = {
+	enabled: true,
+	can_toggle: true,
 	name: 'kick',
 	usage: '[user mention]',
 	args: true,

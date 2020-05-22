@@ -11,13 +11,6 @@ const cooldowns = new Discord.Collection()
 
 // Module Pre-Initalization
 const fs = require('fs')
-const currentQRCodes = fs.readdirSync('./qrcodes/')
-for (let i = 0; i < currentQRCodes.length; i++) {
-	const file = currentQRCodes[i]
-	if (file.endsWith('.png')) {
-		fs.unlinkSync(`./qrcodes/${file}`)
-	}
-}
 
 // Module Initialization
 const { defaultPrefix } = require('./config.json')
@@ -114,7 +107,7 @@ client.on('message', message => {
 	try {
 		// Not a command.
 		// eslint-disable-next-line no-inline-comments
-		if ((!command)) { // || (!command.enabled)
+		if ((!command)) {
 			return null
 		}
 		if (!command.enabled) {
@@ -189,7 +182,7 @@ client.on('message', message => {
 			.setTitle('Command Error')
 			.setThumbnail('https://i.ibb.co/GvWjZyY/admin-alert.png')
 			.setTimestamp()
-			.setDescription('There was an error in recognizing that command.')
+			.setDescription('There was an error in executing that command.')
 		message.channel.send(newEmbed)
 		return null
 	} finally {

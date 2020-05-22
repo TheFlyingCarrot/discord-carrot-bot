@@ -1,4 +1,6 @@
 module.exports = {
+	enabled: true,
+	can_toggle: true,
 	name: 'ping',
 	description: 'Ping!',
 	execute(itemTable) {

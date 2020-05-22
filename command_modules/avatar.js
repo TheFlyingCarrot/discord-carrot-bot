@@ -1,4 +1,6 @@
 module.exports = {
+	enabled: true,
+	can_toggle: true,
 	name: 'avatar',
 	aliases: ['icon', 'pfp'],
 	usage: '[user mention]',

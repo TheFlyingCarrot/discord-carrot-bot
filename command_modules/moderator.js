@@ -1,5 +1,7 @@
 const fs = require('fs')
 module.exports = {
+	enabled: true,
+	can_toggle: true,
 	name: 'moderator',
 	aliases: ['mod'],
 	usage: '[grant/role] [user (id/mention)/role (id/mention)]',

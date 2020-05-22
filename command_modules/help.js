@@ -1,5 +1,7 @@
 const { defaultPrefix } = require('../config.json')
 module.exports = {
+	enabled: true,
+	can_toggle: true,
 	name: 'help',
 	aliases: ['commands', 'usage'],
 	usage: '[command name]',

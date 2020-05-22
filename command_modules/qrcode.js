@@ -1,17 +1,14 @@
 const QRCode = require('qrcode')
-if (!Array.prototype.last) {
-	Array.prototype.last = function() {
-		return this[this.length - 1]
-	}
-}
 module.exports = {
-	enabled: false,
+	enabled: true,
+	can_toggle: true,
 	name: 'qrcode',
 	aliases: ['qr', 'q'],
 	usage: '[link]',
 	description: 'Generate a QR code.',
 	cooldown: 30,
 	execute(itemTable) {
+		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = itemTable
 		if (!args) {
 			return null

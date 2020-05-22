@@ -1,5 +1,7 @@
 const fs = require('fs')
 module.exports = {
+	enabled: true,
+	can_toggle: true,
 	name: 'administrator',
 	aliases: ['admin'],
 	usage: '[grant/role] [user (id/mention)/role (id/mention)]',
@@ -9,6 +11,7 @@ module.exports = {
 	guildOnly: true,
 	permission: 'ADMINISTRATOR',
 	execute(itemTable) {
+		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = itemTable
 		const guild = message.guild
 		const guildFile = JSON.parse(fs.readFileSync(`./guilds/${guild.id}.json`))
