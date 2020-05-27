@@ -5,7 +5,7 @@ module.exports = {
 	can_toggle: true,
 	name: 'help',
 	aliases: ['commands', 'usage'],
-	usage: '[command name]',
+	usage: '(command)',
 	description: 'Commands or info about a specific command.',
 	execute(itemTable) {
 		// eslint-disable-next-line no-unused-vars

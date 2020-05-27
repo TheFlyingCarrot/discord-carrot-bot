@@ -3,11 +3,11 @@ module.exports = {
 	can_toggle: true,
 	name: 'prune',
 	aliases: ['purge', 'delete', 'erase'],
+	usage: '(amount of messages to delete)',
 	description: 'Prune messages.',
 	cooldown: 5,
 	guildOnly: true,
 	permission: 'MANAGE_MESSAGES',
-	requiredRole: ['admin', 'mod'],
 	execute(itemTable) {
 		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = itemTable
