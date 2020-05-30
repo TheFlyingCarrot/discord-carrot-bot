@@ -3,14 +3,14 @@ const INDEX_DEBUG = false
 // Discord Initialization
 const Discord = require('discord.js')
 const client = new Discord.Client()
+client.login(process.env.BOT_TOKEN)
+
 const templateEmbed = new Discord.MessageEmbed()
 client.commands = new Discord.Collection()
 const cooldowns = new Discord.Collection()
 
-client.login(process.env.BOT_TOKEN)
 
 // Module Pre-Initalization
-// const pathToFfmpeg = require('ffmpeg-static')
 const fs = require('fs')
 
 // Module Initialization
