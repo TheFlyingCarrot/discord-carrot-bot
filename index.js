@@ -10,7 +10,7 @@ client.commands = new Discord.Collection()
 const cooldowns = new Discord.Collection()
 
 // Module Pre-Initalization
-const pathToFfmpeg = require('ffmpeg-static')
+// const pathToFfmpeg = require('ffmpeg-static')
 const fs = require('fs')
 
 // Module Initialization
