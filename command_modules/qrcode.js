@@ -7,9 +7,9 @@ module.exports = {
 	usage: '[link]',
 	description: 'Generate a QR code.',
 	cooldown: 30,
-	execute(itemTable) {
+	execute(dataTable) {
 		// eslint-disable-next-line no-unused-vars
-		const { client, message, args, templateEmbed } = itemTable
+		const { client, message, args, templateEmbed } = dataTable
 		if (!args) {
 			return null
 		} else {

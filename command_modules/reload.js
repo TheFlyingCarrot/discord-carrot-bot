@@ -3,9 +3,9 @@ module.exports = {
 	name: 'reload',
 	description: 'Reloads a command.',
 	developerOnly: true,
-	execute(itemTable) {
+	execute(dataTable) {
 		// eslint-disable-next-line no-unused-vars
-		const { client, message, args, templateEmbed } = itemTable
+		const { client, message, args, templateEmbed } = dataTable
 		if (!args.length) {
 			message.reply(`${message.author}, you didn't give me anything to reload.`)
 			return null

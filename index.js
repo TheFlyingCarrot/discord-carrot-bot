@@ -1,13 +1,13 @@
-require('dotenv').config()
-
 const INDEX_DEBUG = false
 
 // Discord Initialization
 const Discord = require('discord.js')
 const client = new Discord.Client()
-const templateEmbed = new Discord.RichEmbed()
+const templateEmbed = new Discord.MessageEmbed()
 client.commands = new Discord.Collection()
 const cooldowns = new Discord.Collection()
+
+client.login(process.env.BOT_TOKEN)
 
 // Module Pre-Initalization
 // const pathToFfmpeg = require('ffmpeg-static')
@@ -215,7 +215,7 @@ client.on('message', message => {
 			client,
 			message,
 			args,
-			templateEmbed: new Discord.RichEmbed(),
+			templateEmbed: new Discord.MessageEmbed(),
 		})
 		if (returns) {
 			console.log(returns)

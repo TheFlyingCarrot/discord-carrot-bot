@@ -5,9 +5,9 @@ module.exports = {
 	aliases: ['icon', 'pfp'],
 	usage: '[user mention]',
 	description: 'Get a user\'s avatar.',
-	execute(itemTable) {
+	execute(dataTable) {
 		// eslint-disable-next-line no-unused-vars
-		const { client, message, args, templateEmbed } = itemTable
+		const { client, message, args, templateEmbed } = dataTable
 		if (!message.mentions.users.size) {
 			const newEmbed = templateEmbed
 				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')

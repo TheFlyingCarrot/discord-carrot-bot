@@ -3,9 +3,9 @@ module.exports = {
 	can_toggle: true,
 	name: 'ping',
 	description: 'Ping!',
-	execute(itemTable) {
+	execute(dataTable) {
 		// eslint-disable-next-line no-unused-vars
-		const { client, message, args, templateEmbed } = itemTable
+		const { client, message, args, templateEmbed } = dataTable
 		message.channel.send('Pong.')
 	},
 }

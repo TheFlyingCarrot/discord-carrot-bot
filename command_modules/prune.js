@@ -8,9 +8,9 @@ module.exports = {
 	cooldown: 5,
 	guildOnly: true,
 	permission: 'MANAGE_MESSAGES',
-	execute(itemTable) {
+	execute(dataTable) {
 		// eslint-disable-next-line no-unused-vars
-		const { client, message, args, templateEmbed } = itemTable
+		const { client, message, args, templateEmbed } = dataTable
 		if (!message.member.hasPermission(`${this.permission}`, false, true, true)) {
 			message.channel.send(`${message.author}, you do not have permission to use this command.`)
 			return null

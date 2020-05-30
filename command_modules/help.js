@@ -7,9 +7,9 @@ module.exports = {
 	aliases: ['commands', 'usage'],
 	usage: '(command)',
 	description: 'Commands or info about a specific command.',
-	execute(itemTable) {
+	execute(dataTable) {
 		// eslint-disable-next-line no-unused-vars
-		const { client, message, args, templateEmbed } = itemTable
+		const { client, message, args, templateEmbed } = dataTable
 		const commands = client.commands
 		if (!args.length > 0) {
 			const newEmbed = templateEmbed

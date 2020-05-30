@@ -1,5 +1,4 @@
-/* eslint-disable spaced-comment */
-/* eslint-disable no-unreachable */
+const fs = require('fs')
 module.exports = {
 	enabled: false,
 	can_toggle: true,
@@ -8,13 +7,9 @@ module.exports = {
 	description: 'Play a tune.',
 	cooldown: 5,
 	guildOnly: true,
-	async execute(itemTable) {
+	async execute(dataTable) {
 		// eslint-disable-next-line no-unused-vars
-		const { client, message, args, templateEmbed } = itemTable
-		//console.log(message)
-		console.log(message.member.voice)
-		//console.log(message.member.voice)
-		return null
+		const { client, message, args, templateEmbed } = dataTable
 		if (message.member.voice.channel) {
 			if (!args) {
 				message.channel.send(`${message.author}, you didn't give any song to play.`)
@@ -23,7 +18,7 @@ module.exports = {
 				// add song to queue
 				// message.channel.send(`${message.author}, ${newSong} was added to the queue.`)
 				if (args[0] == 'juicy') {
-					const dispatcher = connection.play('./dump/audio/juicy.mp3')
+					const dispatcher = connection.play(fs.createReadStream('./dump/audio/juicy.ogg'), { type: 'ogg/opus', highWaterMark: 15 })
 					dispatcher.on('finish', () => {
 						dispatcher.destroy()
 					})

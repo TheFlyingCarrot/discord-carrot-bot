@@ -5,12 +5,12 @@ module.exports = {
 	usage: '[command]',
 	description: 'Toggle usage of a command.',
 	developerOnly: true,
-	execute(itemTable) {
+	execute(dataTable) {
 		// eslint-disable-next-line no-unused-vars
-		const { client, message, args, templateEmbed } = itemTable
+		const { client, message, args, templateEmbed } = dataTable
 
 		if (!args.length) {
-			message.reply(`${message.author}, you didn't give me any command to toggle.`)
+			message.channel.send(`${message.author}, you didn't give me any command to toggle.`)
 			return null
 		}
 
@@ -24,20 +24,20 @@ module.exports = {
 		}
 		const command = message.client.commands.get(commandName) || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 		if (!command) {
-			message.reply(`${message.author}, no such command was found.`)
+			message.channel.send(`${message.author}, no such command was found.`)
 			return null
 		}
 
 		if (query) {
-			message.reply(`${message.author}, the command \`${commandName}\` is currently ${command.enabled ? 'enabled' : 'disabled'}.`)
+			message.channel.send(`${message.author}, the command \`${commandName}\` is currently ${command.enabled ? 'enabled' : 'disabled'}.`)
 		} else if (!command.can_toggle) {
-			message.reply(`${message.author}, the command \`${commandName}\` cannot be toggled.`)
+			message.channel.send(`${message.author}, the command \`${commandName}\` cannot be toggled.`)
 		} else if ((command.can_toggle) && ((command.enabled) || (!command.enabled))) {
 			try {
 				command.enabled = command.enabled ? false : true
-				message.reply(`${message.author}, the command \`${commandName}\` is now ${command.enabled ? 'enabled' : 'disabled'}.`)
+				message.channel.send(`${message.author}, the command \`${commandName}\` is now ${command.enabled ? 'enabled' : 'disabled'}.`)
 			} catch (error) {
-				message.reply(`${message.author}, toggling the command \`${commandName}\` produced an error.`)
+				message.channel.send(`${message.author}, toggling the command \`${commandName}\` produced an error.`)
 			}
 		}
 	},
