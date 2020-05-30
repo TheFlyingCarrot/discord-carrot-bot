@@ -16,7 +16,6 @@ const fs = require('fs')
 // Module Initialization
 const { prefix } = require('./config.json')
 const developers = fs.readFileSync('./helper_modules/developers.txt')
-module.exports.developers = developers
 
 // Command Palette Set-up
 const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
