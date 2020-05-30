@@ -4,6 +4,7 @@
   "description": "Discord bot made with NodeJS and DiscordJS.",
   "main": "index.js",
   "dependencies": {
+	"acorn": ">=7.1.1",
     "@discordjs/opus": "^0.3.2",
     "@discordjs/uws": "^10.149.0",
     "@hapi/hoek": "^9.0.4",
