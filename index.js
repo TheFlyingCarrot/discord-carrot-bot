@@ -10,6 +10,7 @@ client.commands = new Discord.Collection()
 const cooldowns = new Discord.Collection()
 
 // Module Pre-Initalization
+const pathToFfmpeg = require('ffmpeg-static')
 const fs = require('fs')
 
 // Module Initialization
@@ -77,7 +78,7 @@ client.on('message', message => {
 	try {
 		// Not a command.
 		// eslint-disable-next-line no-inline-comments
-		if ((!command)) {
+		if (!command) {
 			return null
 		}
 		if (!command.enabled) {

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.2
+
+- Prevent errors when expanded env variable does not exist
+
+## 1.4.2
+
+- Update minimist to 0.2.1 to fix security issue
+
 ## 1.4.0
 
 - Change default shorthand resolver from git:// to https://

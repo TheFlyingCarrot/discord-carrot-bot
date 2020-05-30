@@ -17,7 +17,7 @@ module.exports = {
 			args.forEach(arg => {
 				argStitch += ((args[args.length - 1] === arg) ? (`${arg}`) : (`${arg} `))
 			})
-			QRCode.toFile(`./qrcodes/${message.author.id}.png`, String(argStitch), {
+			QRCode.toFile(`./dump/qr_codes/${message.author.id}.png`, String(argStitch), {
 				color: {
 					dark: '#F00',
 					light: '#0000',
