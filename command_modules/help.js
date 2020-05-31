@@ -1,5 +1,4 @@
-const { prefix } = require('../config.json')
-const { developers } = require('../index.js')
+const { prefix, developers } = require('../helper_modules/config.json')
 module.exports = {
 	enabled: true,
 	can_toggle: true,

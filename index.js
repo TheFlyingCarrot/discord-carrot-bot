@@ -1,24 +1,18 @@
-const INDEX_DEBUG = false
+// Pre-Initalization
+const fs = require('fs')
+const Discord = require('discord.js')
+const { prefix, developers } = require('./helper_modules/config.json')
+const debug_logger = require('./helper_modules/debug_logger')
 
 // Discord Initialization
-const Discord = require('discord.js')
 const client = new Discord.Client()
 client.login(process.env.BOT_TOKEN)
-
 // const templateEmbed = new Discord.MessageEmbed()
 client.commands = new Discord.Collection()
 const cooldowns = new Discord.Collection()
 
-// Module Pre-Initalization
-const fs = require('fs')
-
-// Module Initialization
-const { prefix } = require('./config.json')
-const developers = fs.readFileSync('./helper_modules/developers.txt')
-
-// Command Palette Set-up
-const commandFiles = fs.readdirSync('./command_modules').filter(file => file.endsWith('.js'))
-for (const file of commandFiles) {
+// Command Palette
+for (const file of fs.readdirSync('./command_modules')) {
 	const command = require(`./command_modules/${file}`)
 	client.commands.set(command.name, command)
 }
@@ -27,7 +21,6 @@ for (const file of commandFiles) {
 client.once('ready', () => {
 	console.log('Bot Client State: Ready')
 })
-
 
 // Triggers when a connection to Discord API has been found and is attempting to reconnect.
 client.once('reconnecting', () => {
@@ -41,27 +34,24 @@ client.once('disconnect', () => {
 
 // Triggers when the bot (client) connects to a new server.
 client.on('guildCreate', guildObject => {
-	console.log('Bot was added to a new guild: ' + guildObject.name)
+	console.log(`Bot Added To Guild: ${guildObject.name}`)
 })
 
 // Triggers when the bot (client) is removed from a server.
 client.on('guildDelete', guildObject => {
-	console.log('Bot was removed from a guild: ' + guildObject.name)
+	console.log(`Bot Removed From Guild: ${guildObject.name}`)
 })
+
 // Triggers when a new member is added in any guild.
 client.on('guildMemberAdd', member => {
 	const channel = member.guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
-	if (channel) {
-		channel.send(`Welcome to the server, ${member}!`)
-	}
+	if (channel) { channel.send(`Welcome to the server, ${member}!`) }
 })
 
 // Triggers when a new member is removed from any guild.
 client.on('guildMemberRemove', member => {
 	const channel = member.guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
-	if (channel) {
-		channel.send(`Good-bye, ${member}.` || `Good-bye, ${member}.`)
-	}
+	if (channel) { channel.send(`Good-bye, ${member}.`) }
 })
 
 // Triggers when any new message is recieved by the bot (client).
@@ -90,7 +80,7 @@ client.on('message', message => {
 		}
 		// Toggled Check / Enabled Check
 		if (!command.enabled) {
-			message.channel.send(`${message.author}, ${command} is currently \`disabled\`. Sorry!`)
+			message.channel.send(`${message.author}, ${command.name} is currently \`disabled\`. Sorry!`)
 			return null
 		}
 		// Permissions Check
@@ -109,38 +99,10 @@ client.on('message', message => {
 		}
 	} catch (err) {
 		console.log(err)
-		message.channel.send(`${message.author}, ${command} caused an internal error and has been cancelled.`)
+		message.channel.send(`${message.author}, \`${command.name}\` caused an internal error and has been cancelled.`)
 		return null
-	} finally {
-		// Start Debug Logging
-		if (INDEX_DEBUG == true) {
-			let logMessage = (`*new message with prefix recognized
----- message recognized
----------- message.content:         ${message.content}
----------- message.author.tag:      ${message.author.tag}
----------- message.author.id:       ${message.author.id}
----------- message.channel:         ${message.channel}
----------- message.channel.type:    ${message.channel.type}
----------- message.createdAt:       ${message.createdAt}`)
-			if (message.guild !== null) {
-				logMessage += (`
----- guild recognized
----------- message.guild:           ${message.guild}
----------- message.guild.id:        ${message.guild.id}`)
-			}
-			if (command) {
-				logMessage += (`
----- command recognized
----------- command.name:            ${command.name}`)
-				if (args.length > 0) {
-					logMessage += (`
----------- args:                    ${args}`)
-				}
-			}
-			console.log(logMessage)
-		}
-	}
-	// End Debug Logging & End Command Verification
+	} finally { if (debug_logger.enabled) { debug_logger.execute({ message, command, args, developers }) } }
+	// End Command Verification
 
 	// Start Cooldown Handler
 	const now = Date.now()
@@ -166,7 +128,7 @@ client.on('message', message => {
 		if (returns) { console.log(returns) }
 	} catch (err) {
 		console.log(err)
-		message.channel.send(`${message.author}, ${command} produced an error: ${err}`)
+		message.channel.send(`${message.author}, \`${command.name}\` produced an error: ${err}`)
 	}
 	// END Execute Command
 })
