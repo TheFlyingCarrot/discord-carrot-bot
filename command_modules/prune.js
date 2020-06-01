@@ -3,7 +3,7 @@ module.exports = {
 	can_toggle: true,
 	name: 'prune',
 	aliases: ['purge', 'delete', 'erase'],
-	usage: '(amount of messages to delete)',
+	usage: '(number of messages to delete)',
 	description: 'Prune messages.',
 	cooldown: 5,
 	guildOnly: true,
