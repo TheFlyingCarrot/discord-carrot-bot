@@ -24,8 +24,8 @@
     "npm": "*"
   },
   "scripts": {
-    "test": "echo 'Error: no test specified' && exit 1",
-    "start": "node index.js"
+    "test": "heroku local",
+    "start": "heroku local"
   },
   "repository": {
     "type": "git",
