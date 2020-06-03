@@ -6,6 +6,7 @@
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
     "@discordjs/uws": "^10.149.0",
+    "@hapi/cryptiles": "^5.1.0",
     "@hapi/hoek": "^9.0.4",
     "acorn": "^7.2.0",
     "concat-stream": "^2.0.0",
@@ -35,9 +36,7 @@
     "node",
     "discord",
     "discordjs",
-    "bot",
-    "sql",
-    "mysql"
+    "bot"
   ],
   "author": "Creedon H",
   "license": "ISC",
