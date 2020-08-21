@@ -52,7 +52,7 @@ module.exports = {
 		cleanseOldRoles(guild, guildMember)
 		createRole(guild, roleColor, roleName)
 			.then(newRole => {
-				message.channel.send(`${message.author}, your new VIP role was created and has been assigned.`)
+				message.channel.send(`${message.author}, your new role was created and has been assigned.`)
 				assignRole(guildMember, newRole)
 			})
 			.catch(error => {
