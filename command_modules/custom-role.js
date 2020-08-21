@@ -7,7 +7,7 @@ function assignRole(guildMember, role) {
 
 function createRole(guild, roleColor, roleName) {
 	return new Promise(resolve => {
-		if (roleName.length > 32) throw new Error('StringLengthError')
+		if (roleName.length > 64) throw new Error('StringLengthError')
 		if (!HexColorRegExp.test(`${roleColor}`)) throw new Error('RoleColorError')
 		resolve(guild.roles.create({
 			data: {
