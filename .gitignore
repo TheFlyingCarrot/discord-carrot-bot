@@ -1,3 +1,5 @@
 .env
+.vscode
+.vs
 node_modules
 npm-debug.log
