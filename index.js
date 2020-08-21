@@ -78,11 +78,6 @@ client.on('message', message => {
 			message.channel.send(`${message.author}, that command is reserved for servers only. Sorry!`)
 			return null
 		}
-		// VIP-Only Command Check // vip_roles.includes(`${message.author.id}`)) // array1.filter(element => array2.includes(element))
-		if ((command.vipOnly) && (message.author.roles && !vip_roles.filter(role => message.author.roles.includes(role)))) {
-			message.channel.send(`${message.author}, that command is reserved for VIPs only. Sorry!`)
-			return null
-		}
 		// Toggled Check / Enabled Check
 		if (!command.enabled) {
 			message.channel.send(`${message.author}, ${command.name} is currently \`disabled\`. Sorry!`)
