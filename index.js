@@ -1,7 +1,7 @@
 // Pre-Initalization
 const fs = require('fs')
 const Discord = require('discord.js')
-const { prefix, developers } = require('./helper_modules/config.json')
+const { prefix, developers, vip_roles } = require('./helper_modules/config.json')
 const debug_logger = require('./helper_modules/debug_logger')
 
 // Discord Initialization
@@ -43,16 +43,16 @@ client.on('guildDelete', guildObject => {
 })
 
 // Triggers when a new member is added in any guild.
-client.on('guildMemberAdd', member => {
-	const channel = member.guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
-	if (channel) { channel.send(`Welcome to the server, ${member}!`) }
-})
+// Currently not working.
+/* client.on('guildMemberAdd', member => {
+	return null
+}) */
 
 // Triggers when a new member is removed from any guild.
-client.on('guildMemberRemove', member => {
-	const channel = member.guild.channels.find(ch => ch.name === 'general' && ch.type == 'text')
-	if (channel) { channel.send(`Good-bye, ${member}.`) }
-})
+// Currently not working.
+/* client.on('guildMemberRemove', member => {
+	return null
+}) */
 
 // Triggers when any new message is recieved by the bot (client).
 client.on('message', message => {
@@ -69,13 +69,18 @@ client.on('message', message => {
 			return null
 		}
 		// Developer Command Check
-		if ((command.developerOnly) && (!developers.includes(message.author.id))) {
+		if ((command.developerOnly) && (!developers.includes(`${message.author.id}`))) {
 			message.channel.send(`${message.author}, that command can only be used by developers. Sorry!`)
 			return null
 		}
 		// Guild-Only Command Check
 		if ((command.guildOnly) && (message.channel.type !== 'text')) {
 			message.channel.send(`${message.author}, that command is reserved for servers only. Sorry!`)
+			return null
+		}
+		// VIP-Only Command Check // vip_roles.includes(`${message.author.id}`)) // array1.filter(element => array2.includes(element))
+		if ((command.vipOnly) && (message.author.roles && !vip_roles.filter(role => message.author.roles.includes(role)))) {
+			message.channel.send(`${message.author}, that command is reserved for VIPs only. Sorry!`)
 			return null
 		}
 		// Toggled Check / Enabled Check
@@ -108,7 +113,6 @@ client.on('message', message => {
 	const now = Date.now()
 	const timestamps = cooldowns.get(command.name)
 	const cooldownAmount = (command.cooldown || 3) * 1000
-
 	if (timestamps.has(message.author.id)) {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount
 		if (now < expirationTime) {
@@ -116,7 +120,7 @@ client.on('message', message => {
 			message.channel.send(`${message.author}, you cannot use that command for another \`${timeLeft.toFixed(1)}\` ${timeLeft.toFixed(1) !== 1.0 ? 'seconds' : 'second'}.`)
 			return null
 		}
-	} else if (!timestamps.has(message.author.id)) {
+	} else if (!timestamps.has(message.author.id) && !(message.author.id in developers)) {
 		timestamps.set(message.author.id, now)
 		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)
 	}
@@ -128,7 +132,7 @@ client.on('message', message => {
 		if (returns) { console.log(returns) }
 	} catch (err) {
 		console.log(err)
-		message.channel.send(`${message.author}, \`${command.name}\` produced an error: ${err}`)
+		message.channel.send(`${message.author}, \`${command.name}\` produced an error.`)
 	}
 	// END Execute Command
 })
