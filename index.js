@@ -108,6 +108,7 @@ client.on('message', message => {
 	const now = Date.now()
 	const timestamps = cooldowns.get(command.name)
 	const cooldownAmount = (command.cooldown || 3) * 1000
+
 	if (timestamps.has(message.author.id)) {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount
 		if (now < expirationTime) {
@@ -115,7 +116,7 @@ client.on('message', message => {
 			message.channel.send(`${message.author}, you cannot use that command for another \`${timeLeft.toFixed(1)}\` ${timeLeft.toFixed(1) !== 1.0 ? 'seconds' : 'second'}.`)
 			return null
 		}
-	} else if (!timestamps.has(message.author.id) && !(message.author.id in developers)) {
+	} else if (!timestamps.has(message.author.id) && !developers.includes(message.author.id)) {
 		timestamps.set(message.author.id, now)
 		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)
 	}
@@ -127,7 +128,7 @@ client.on('message', message => {
 		if (returns) { console.log(returns) }
 	} catch (err) {
 		console.log(err)
-		message.channel.send(`${message.author}, \`${command.name}\` produced an error.`)
+		message.channel.send(`${message.author}, \`${command.name}\` produced an unknown error.`)
 	}
 	// END Execute Command
 })

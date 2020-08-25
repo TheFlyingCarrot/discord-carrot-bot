@@ -1,7 +1,7 @@
 const QRCode = require('qrcode')
 module.exports = {
-	enabled: true,
-	can_toggle: true,
+	enabled: false,
+	can_toggle: false,
 	name: 'qrcode',
 	aliases: ['qr'],
 	usage: '[link]',
