@@ -1,13 +1,12 @@
 // Pre-Initalization
 const fs = require('fs')
 const Discord = require('discord.js')
-const { prefix, developers, vip_roles } = require('./helper_modules/config.json')
+const { prefix, developers } = require('./helper_modules/config.json')
 const debug_logger = require('./helper_modules/debug_logger')
 
 // Discord Initialization
 const client = new Discord.Client()
 client.login(process.env.BOT_TOKEN)
-// const templateEmbed = new Discord.MessageEmbed()
 client.commands = new Discord.Collection()
 const cooldowns = new Discord.Collection()
 
