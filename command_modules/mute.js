@@ -1,48 +1,12 @@
-const HexColorRegExp = /^[A-Fa-f0-9]{3}(?:[A-Fa-f0-9]{3})?$/i
-const { personal_role_id, max_role_name_length } = require('../helper_modules/config.json')
-
-function assignRole(guildMember, role) {
-	guildMember.roles.add(role, 'New VIP role.')
-}
-
-function createRole(guild, roleColor, roleName) {
-	return new Promise(resolve => {
-		if (roleName.length > max_role_name_length) throw 'StringLengthError'
-		if (!HexColorRegExp.test(`${roleColor.replace('#', '')}`)) throw 'RoleColorError'
-		resolve(guild.roles.create({
-			data: {
-				name: roleName,
-				color: roleColor,
-				mentionable: true,
-				permissions: 0,
-			},
-			reason: 'New VIP role.',
-		}))
-	})
-}
-
-function cleanseOldRoles(guild, guildMember) {
-	guild.roles.fetch(personal_role_id)
-		.then(personal_role => {
-			guildMember.roles.cache.forEach(existingRole => {
-				if ((existingRole.id !== guild.roles.everyone.id) && (existingRole.position < personal_role.position)) {
-					existingRole.delete(existingRole, 'Old VIP role.')
-				}
-			})
-		})
-}
-
 module.exports = {
 	enabled: true,
 	canToggle: true,
-	name: 'custom-role',
-	aliases: ['customrole', 'crole', 'cr'],
-	usage: '[hex color] [role name]',
+	name: 'mute',
 	args: true,
 	description: 'Set a custom role.',
 	cooldown: 10,
 	guildOnly: true,
-	guildSpecific: ['442001192655257620'],
+	guildSpecific: ['442001192655257620', '750480529765171302'],
 	execute(dataTable) {
 		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = dataTable

@@ -77,6 +77,11 @@ client.on('message', message => {
 			message.channel.send(`${message.author}, that command is reserved for servers only. Sorry!`)
 			return null
 		}
+		// Guild-Specific Command Check
+		if ((command.guildSpecific) && (!command.guildSpecific.includes(message.guild.id))) {
+			message.channel.send(`${message.author}, that command is reserved for certain servers only. Sorry!`)
+			return null
+		}
 		// Toggled Check / Enabled Check
 		if (!command.enabled) {
 			message.channel.send(`${message.author}, ${command.name} is currently \`disabled\`. Sorry!`)

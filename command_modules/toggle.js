@@ -30,9 +30,9 @@ module.exports = {
 
 		if (query) {
 			message.channel.send(`${message.author}, the command \`${commandName}\` is currently \`${command.enabled ? 'enabled' : 'disabled'}\`.`)
-		} else if (!command.can_toggle) {
+		} else if (!command.canToggle) {
 			message.channel.send(`${message.author}, the command \`${commandName}\` cannot be toggled.`)
-		} else if ((command.can_toggle) && ((command.enabled) || (!command.enabled))) {
+		} else if ((command.canToggle) && ((command.enabled) || (!command.enabled))) {
 			try {
 				command.enabled = command.enabled ? false : true
 				message.channel.send(`${message.author}, the command \`${commandName}\` is now \`${command.enabled ? 'enabled' : 'disabled'}\`.`)

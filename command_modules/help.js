@@ -1,7 +1,7 @@
 const { prefix, developers } = require('../helper_modules/config.json')
 module.exports = {
 	enabled: true,
-	can_toggle: true,
+	canToggle: true,
 	name: 'help',
 	aliases: ['commands', 'usage'],
 	usage: '(command)',
@@ -17,11 +17,11 @@ module.exports = {
 				.setTimestamp()
 				.setTitle('Help Command')
 			commands.forEach(command => {
-				if (command.developerOnly) {
-					if (developers.includes(message.author.id)) {
-						newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}** (dev-only)`), `${command.description}`, true)
-					}
-				} else {
+				if ((command.developerOnly) && (developers.includes(message.author.id))) {
+					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}** (dev-only)`), `${command.description}`, true)
+				} else if ((command.guildSpecific) && (message.guild.id == command.guildSpecific)) {
+					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}**`), `${command.description}`, true)
+				} else if ((!command.developerOnly) && (!command.guildSpecific)) {
 					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}**`), `${command.description}`, true)
 				}
 			})
