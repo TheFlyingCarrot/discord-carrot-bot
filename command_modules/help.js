@@ -19,9 +19,7 @@ module.exports = {
 			commands.forEach(command => {
 				if ((command.developerOnly) && (developers.includes(message.author.id))) {
 					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}** (dev-only)`), `${command.description}`, true)
-				} else if ((command.guildSpecific) && (message.guild.id == command.guildSpecific)) {
-					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}**`), `${command.description}`, true)
-				} else if ((!command.developerOnly) && (!command.guildSpecific)) {
+				} else {
 					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}**`), `${command.description}`, true)
 				}
 			})
