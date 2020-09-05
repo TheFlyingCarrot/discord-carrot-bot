@@ -3,9 +3,11 @@ const fs = require('fs')
 const Discord = require('discord.js')
 const { prefix, developers } = require('./helper_modules/config.json')
 const debug_logger = require('./helper_modules/debug_logger')
+const reaction_handler = require('./helper_modules/reaction_handler')
+
 
 // Discord Initialization
-const client = new Discord.Client()
+const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 client.login(process.env.BOT_TOKEN)
 client.commands = new Discord.Collection()
 const cooldowns = new Discord.Collection()
@@ -41,17 +43,18 @@ client.on('guildDelete', guildObject => {
 	console.log(`Bot Removed From Guild: ${guildObject.name}`)
 })
 
-// Triggers when a new member is added in any guild.
-// Currently not working.
-/* client.on('guildMemberAdd', member => {
-	return null
-}) */
+client.on('messageReactionAdd', async (reaction, user) => {
+	if (reaction.partial) {
+		try {
+			await reaction.fetch()
+		} catch (error) {
+			console.log('Something went wrong when fetching the message: ', error)
+			return null
+		}
+	}
 
-// Triggers when a new member is removed from any guild.
-// Currently not working.
-/* client.on('guildMemberRemove', member => {
-	return null
-}) */
+	reaction_handler.execute({ client, reaction, user })
+})
 
 // Triggers when any new message is recieved by the bot (client).
 client.on('message', message => {

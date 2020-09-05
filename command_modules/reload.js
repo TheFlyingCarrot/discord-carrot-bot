@@ -7,13 +7,13 @@ module.exports = {
 		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = dataTable
 		if (!args.length) {
-			message.reply(`${message.author}, you didn't give me anything to reload.`)
+			message.reply('you didn\'t give me anything to reload.')
 			return null
 		}
 		const commandName = args[0].toLowerCase()
 		const command = message.client.commands.get(commandName) || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 		if (!command) {
-			message.reply(`${message.author}, no such command was found.`)
+			message.reply('no such command was found.')
 			return null
 		}
 		delete require.cache[require.resolve(`./${command.name}.js`)]
