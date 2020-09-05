@@ -51,8 +51,6 @@ module.exports = {
 		const guild = reaction.message.guild
 		const guildMember = guild.member(user)
 
-		console.log(typeof guild.id)
-
 		if (reaction.message.author == client.user) {
 			const DesiredReactionRole = findMatchingReactionRoleWithEmojiTag(reaction.emoji.name, reaction.emoji.id)
 			if (!DesiredReactionRole) return null
