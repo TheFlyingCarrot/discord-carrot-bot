@@ -1,7 +1,6 @@
 {
-	"guild_id": 750480529765171302,
-	"role_channel_id": 751241962534731867,
-	"technical_roles": 750485601261977632,
+	"guild_id": "750480529765171302",
+	"role_channel_id": "751241962534731867",
 	"role_categories": ["business", "technical"],
 	"reaction_roles": {
 		"Awards": {

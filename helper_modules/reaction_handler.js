@@ -46,8 +46,12 @@ module.exports = {
 	execute(dataTable) {
 		const { client, reaction, user } = dataTable
 
+		if (reaction.message.channel.id != team_discord.role_channel_id) return null
+
 		const guild = reaction.message.guild
 		const guildMember = guild.member(user)
+
+		console.log(typeof guild.id)
 
 		if (reaction.message.author == client.user) {
 			const DesiredReactionRole = findMatchingReactionRoleWithEmojiTag(reaction.emoji.name, reaction.emoji.id)
@@ -58,7 +62,7 @@ module.exports = {
 
 			getRole(guild, DesiredReactionRole.role_id)
 				.then(DesiredRole => {
-					if (DesiredRole) assignRole(guildMember, DesiredRole)
+					assignRole(guildMember, DesiredRole)
 				})
 				.catch(error => {
 					console.error(error)
