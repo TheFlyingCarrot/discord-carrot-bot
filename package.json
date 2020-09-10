@@ -24,7 +24,6 @@
     "npm": "*"
   },
   "scripts": {
-    "test": "heroku local",
     "start": "heroku local"
   },
   "repository": {
