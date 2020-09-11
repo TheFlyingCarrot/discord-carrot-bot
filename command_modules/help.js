@@ -1,4 +1,5 @@
 const { prefix, developers } = require('../helper_modules/config.json')
+
 module.exports = {
 	enabled: true,
 	canToggle: true,

@@ -1,4 +1,5 @@
 const query_aliases = ['query', 'q']
+
 module.exports = {
 	enabled: true,
 	name: 'toggle',

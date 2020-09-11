@@ -1,4 +1,5 @@
 const QRCode = require('qrcode')
+
 module.exports = {
 	enabled: false,
 	canToggle: false,

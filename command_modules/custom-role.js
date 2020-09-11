@@ -1,32 +1,13 @@
-const HexColorRegExp = /^[A-Fa-f0-9]{3}(?:[A-Fa-f0-9]{3})?$/i
 const { personal_role_id, max_role_name_length } = require('../helper_modules/config.json')
+const { assignRole } = require('../helper_modules/assignRole')
+const { createRole } = require('../helper_modules/createRole')
 
-function assignRole(guildMember, role) {
-	guildMember.roles.add(role, 'New VIP role.')
-}
-
-function createRole(guild, roleColor, roleName) {
-	return new Promise(resolve => {
-		if (roleName.length > max_role_name_length) throw 'StringLengthError'
-		if (!HexColorRegExp.test(`${roleColor.replace('#', '')}`)) throw 'RoleColorError'
-		resolve(guild.roles.create({
-			data: {
-				name: roleName,
-				color: roleColor,
-				mentionable: true,
-				permissions: 0,
-			},
-			reason: 'New VIP role.',
-		}))
-	})
-}
-
-function cleanseOldRoles(guild, guildMember) {
+function cleanseOldVIPRoles(guild, guildMember, reason) {
 	guild.roles.fetch(personal_role_id)
 		.then(personal_role => {
 			guildMember.roles.cache.forEach(existingRole => {
 				if ((existingRole.id !== guild.roles.everyone.id) && (existingRole.position < personal_role.position)) {
-					existingRole.delete(existingRole, 'Old VIP role.')
+					existingRole.delete(existingRole, reason)
 				}
 			})
 		})
@@ -54,11 +35,11 @@ module.exports = {
 		if ((!roleColor) || (!roleName)) {
 			message.channel.send(`${message.author}, you must provide proper arguments.`)
 		} else {
-			createRole(guild, roleColor, roleName)
+			createRole(guild, roleColor, roleName, 'New VIP role.')
 				.then(newRole => {
 					message.channel.send(`${message.author}, your new role was created and has been assigned.`)
-					cleanseOldRoles(guild, guildMember)
-					assignRole(guildMember, newRole)
+					cleanseOldVIPRoles(guild, guildMember, 'Old VIP role.')
+					assignRole(guildMember, newRole, 'New VIP role.')
 				})
 				.catch(error => {
 					if (error == 'StringLengthError') {
