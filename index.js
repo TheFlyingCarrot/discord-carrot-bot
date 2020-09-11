@@ -40,15 +40,17 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 // Triggers when any new message is recieved by the bot (client).
 client.on('message', message => {
-	// Command Validator | ./helper_modules/command_validator
+	// Command Validation
 	const { command, args } = command_validator.execute({ client, message, prefix, developers, cooldowns, debug_logger, Discord })
-	if (!command || !args) {
+	if (!command) {
 		return null
 	}
-	// Cooldown Handling | ./helper_modules/cooldown_handler
+
+	// Cooldown Handling
 	if (!cooldown_handler.execute({ message, command, cooldowns, developers })) {
 		return null
 	}
+
 	// Command Execution
 	try {
 		const command_execution_logs = command.execute({ client, message, args, templateEmbed: new Discord.MessageEmbed() })

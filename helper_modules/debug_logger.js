@@ -13,7 +13,7 @@ module.exports = {
 -------- message.createdAt:        ${message.createdAt}
 -------- guild
 ------------ message.guild:        ${message.guild ? message.guild : 'null'}
------------- message.guild.id:     ${message.guild.id ? message.guild.id : 'null'}
+------------ message.guild.id:     ${message.guild ? message.guild.id : 'null'}
 -------- command recognized
 ------------ command.name:         ${command ? command.name : 'null'}
 ------------ args:                 ${args ? args : 'null'}

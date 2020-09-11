@@ -7,7 +7,7 @@ module.exports = {
 	aliases: ['reactroles', 'react-role'],
 	usage: '[message]',
 	args: true,
-	description: 'Message the admins.',
+	description: 'Add a message for reaction roles.',
 	cooldown: 10,
 	guildOnly: true,
 	developerOnly: true,

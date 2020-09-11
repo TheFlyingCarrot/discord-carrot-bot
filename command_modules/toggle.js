@@ -1,4 +1,5 @@
 const query_aliases = ['query', 'q']
+
 module.exports = {
 	enabled: true,
 	name: 'toggle',
@@ -34,7 +35,7 @@ module.exports = {
 			message.channel.send(`${message.author}, the command \`${commandName}\` cannot be toggled.`)
 		} else if ((command.canToggle) && ((command.enabled) || (!command.enabled))) {
 			try {
-				command.enabled = command.enabled ? false : true
+				command.enabled = !command.enabled
 				message.channel.send(`${message.author}, the command \`${commandName}\` is now \`${command.enabled ? 'enabled' : 'disabled'}\`.`)
 			} catch (error) {
 				message.channel.send(`${message.author}, toggling the command \`${commandName}\` produced an error.`)

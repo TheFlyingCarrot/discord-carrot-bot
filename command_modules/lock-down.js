@@ -8,8 +8,8 @@ const Ignored_Channels = new Set([
 module.exports = {
 	enabled: true,
 	canToggle: true,
-	name: 'lockdown',
-	aliases: ['lock-down'],
+	name: 'lock-down',
+	aliases: ['lockdown'],
 	usage: '[true/false/null]',
 	args: true,
 	description: 'Lockdown the server.',

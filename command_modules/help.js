@@ -1,4 +1,5 @@
 const { prefix, developers } = require('../helper_modules/config.json')
+
 module.exports = {
 	enabled: true,
 	canToggle: true,
@@ -17,10 +18,10 @@ module.exports = {
 				.setTimestamp()
 				.setTitle('Help Command')
 			commands.forEach(command => {
-				if ((command.developerOnly) && (developers.includes(message.author.id))) {
-					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}** (dev-only)`), `${command.description}`, true)
-				} else {
+				if ((!command.developerOnly)) {
 					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}**`), `${command.description}`, true)
+				} else if (developers.includes(message.author.id)) {
+					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}** (dev-only)`), `${command.description}`, true)
 				}
 			})
 			newEmbed.addField('Additional Information', `\nYou can use \`${prefix}help [command name]\` to get info on a specific command.`)
