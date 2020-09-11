@@ -42,7 +42,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 client.on('message', message => {
 	// Command Validation
 	const { command, args } = command_validator.execute({ client, message, prefix, developers, cooldowns, debug_logger, Discord })
-	if (!command || !args) {
+	if (!command) {
 		return null
 	}
 
