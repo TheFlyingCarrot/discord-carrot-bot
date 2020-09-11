@@ -32,8 +32,22 @@ module.exports = {
 		channels.forEach(channel => {
 			if (!Ignored_Channels.has(channel.id)) {
 				channel.updateOverwrite(message.guild.roles.everyone.id, {
-					SEND_MESSAGES: !flag,
-				}, `Lockdown by: ${message.author.tag}`).catch(err => console.log(err))
+					SEND_MESSAGES: flag === null ? null : !flag,
+				}, `Lockdown by: ${message.author.tag}`)
+					.then(guildChannel => {
+						if (flag) {
+							if (!guildChannel.name.endsWith('🔒')) {
+								guildChannel.edit({
+									name: guildChannel.name + ' 🔒',
+								}, `Lockdown by: ${message.author.tag}`)
+							}
+						} else {
+							guildChannel.edit({
+								name: guildChannel.name.replace(/\s*🔒/, ''),
+							}, `Lockdown by: ${message.author.tag}`)
+						}
+					})
+					.catch(err => console.log(err))
 			} else {
 				console.log(`Skipping channel: [${channel.name}]:[${channel.id}]`)
 			}
