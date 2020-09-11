@@ -1,11 +1,11 @@
 const QRCode = require('qrcode')
 
 module.exports = {
-	enabled: false,
-	canToggle: false,
+	enabled: true,
+	canToggle: true,
 	name: 'qrcode',
 	aliases: ['qr'],
-	usage: '[link]',
+	usage: '[message/link to encode]',
 	description: 'Generate a QR code.',
 	cooldown: 30,
 	execute(dataTable) {
@@ -14,25 +14,23 @@ module.exports = {
 		if (!args) {
 			return null
 		} else {
-			let argStitch = ''
-			args.forEach(arg => {
-				argStitch += ((args[args.length - 1] === arg) ? (`${arg}`) : (`${arg} `))
-			})
+			const argStitch = args.join(' ')
 			QRCode.toFile(`./dump/qr_codes/${message.author.id}.png`, String(argStitch), {
 				color: {
 					dark: '#F00',
 					light: '#0000',
 				},
+			}).then(() => {
+				const newEmbed = templateEmbed
+					.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+					.setThumbnail('https://i.ibb.co/VTS5PXk/user-write.png')
+					.setTimestamp()
+					.setTitle('QR Code')
+					.addField('**Contents**', argStitch)
+					.attachFile(`./qrcodes/${message.author.id}.png`)
+					.setImage(`attachment://${message.author.id}.png`)
+				message.channel.send(newEmbed)
 			})
-			const newEmbed = templateEmbed
-				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
-				.setThumbnail('https://i.ibb.co/VTS5PXk/user-write.png')
-				.setTimestamp()
-				.setTitle('QR Code')
-				.addField('**Contents**', argStitch)
-				.attachFile(`./qrcodes/${message.author.id}.png`)
-				.setImage(`attachment://${message.author.id}.png`)
-			message.channel.send(newEmbed)
 		}
 	},
 }
