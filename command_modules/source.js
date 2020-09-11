@@ -13,5 +13,7 @@ module.exports = {
 			.setTimestamp()
 			.addField('Carrot Bot Repository', 'https://github.com/TheFlyingCarrot/discord-carrot-bot')
 		message.channel.send(newEmbed)
+		
+		return null
 	},
 }

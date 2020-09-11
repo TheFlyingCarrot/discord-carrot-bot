@@ -37,9 +37,12 @@ module.exports = {
 			try {
 				command.enabled = !command.enabled
 				message.channel.send(`${message.author}, the command \`${commandName}\` is now \`${command.enabled ? 'enabled' : 'disabled'}\`.`)
-			} catch (error) {
+			} catch (err) {
 				message.channel.send(`${message.author}, toggling the command \`${commandName}\` produced an error.`)
+				return err
 			}
 		}
+		
+		return null
 	},
 }

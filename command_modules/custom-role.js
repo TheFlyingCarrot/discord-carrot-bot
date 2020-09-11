@@ -41,15 +41,17 @@ module.exports = {
 					cleanseOldVIPRoles(guild, guildMember, 'Old VIP role.')
 					assignRole(guildMember, newRole, 'New VIP role.')
 				})
-				.catch(error => {
-					if (error == 'StringLengthError') {
+				.catch((err) => {
+					if (err == 'StringLengthError') {
 						message.channel.send(`${message.author}, your role name cannot be exceed ${max_role_name_length} characters.`)
-					} else if (error == 'RoleColorError') {
+					} else if (err == 'RoleColorError') {
 						message.channel.send(`${message.author}, you provided an invalid role color.`)
 					} else {
-						console.error(error)
+						return err
 					}
 				})
 		}
+		
+		return null
 	},
 }

@@ -9,5 +9,7 @@ module.exports = {
 		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = dataTable
 		console.log(message.guild)
+		
+		return null
 	},
 }

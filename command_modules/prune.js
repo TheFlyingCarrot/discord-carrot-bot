@@ -17,25 +17,24 @@ module.exports = {
 		}
 		const amount = parseInt(args[0])
 		if (isNaN(amount)) {
-			message.channel.bulkDelete(2, true).catch(err => {
+			message.channel.bulkDelete(2, true).catch((err) => {
 				console.error(err)
 				message.channel.send(`${message.author}, there was an error executing that command. Error: ${err}`)
-				return null
 			})
 		} else if ((amount < 1 || amount > 100)) {
 			if (Number.isInteger(amount)) {
 				message.channel.send(`${message.author}, you must input a number between 1 and 99.`)
-				return null
 			} else {
 				message.channel.send(`${message.author}, you must input a number between 1 and 99 that is also an integer.`)
-				return null
 			}
 		} else {
-			message.channel.bulkDelete(amount + 1, true).catch((error) => {
-				console.error(error)
-				message.channel.send(`${message.author}, there was an error executing that command. ${error}`)
-				return null
-			})
+			message.channel.bulkDelete(amount + 1, true)
+				.catch((err) => {
+					message.channel.send(`${message.author}, I encountered an error executing that command.`)
+					return err
+				})
 		}
+		
+		return null
 	},
 }

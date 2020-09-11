@@ -17,8 +17,8 @@ module.exports = {
 			message.delete({ reason: 'Mod-mail.' })
 			const modMail = args.join(' ')
 			guild.publicUpdatesChannel.send(`<@&750486984987770881>, ${message.author} sent: ${modMail}`)
-		} else {
-			return null
 		}
+		
+		return null
 	},
 }

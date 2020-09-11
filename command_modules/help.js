@@ -37,7 +37,8 @@ module.exports = {
 			const name = args[0].toLowerCase()
 			const command = commands.get(name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))
 			if (!command) {
-				return message.channel.send(`${message.author}, that's not a valid command.`)
+				message.channel.send(`${message.author}, that's not a valid command.`)
+				return null
 			}
 			const newEmbed = templateEmbed
 				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
@@ -51,5 +52,7 @@ module.exports = {
 			newEmbed.addField('**Cooldown:**', `${command.cooldown || 3} second(s)`)
 			message.channel.send(newEmbed)
 		}
+		
+		return null
 	},
 }

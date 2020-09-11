@@ -42,21 +42,17 @@ client.on('messageReactionAdd', async (reaction, user) => {
 client.on('message', message => {
 	// Command Validation
 	const { command, args } = command_validator.execute({ client, message, prefix, developers, cooldowns, debug_logger, Discord })
-	if (!command) {
-		return null
-	}
+	if (!command) return null
 
 	// Cooldown Handling
-	if (!cooldown_handler.execute({ message, command, cooldowns, developers })) {
-		return null
-	}
+	if (!cooldown_handler.execute({ message, command, cooldowns, developers })) return null
 
 	// Command Execution
 	try {
 		const command_execution_logs = command.execute({ client, message, args, templateEmbed: new Discord.MessageEmbed() })
-		if (command_execution_logs) { console.log(command_execution_logs) }
+		if (command_execution_logs) console.error(command_execution_logs)
 	} catch (err) {
-		console.log(err)
+		console.error(err)
 		message.channel.send(`${message.author}, \`${command.name}\` produced an unknown error.`)
 	}
 })

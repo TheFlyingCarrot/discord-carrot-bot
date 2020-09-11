@@ -9,5 +9,7 @@ module.exports = {
 		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = dataTable
 		debug_logger.enabled = !debug_logger.enabled
+		
+		return null
 	},
 }

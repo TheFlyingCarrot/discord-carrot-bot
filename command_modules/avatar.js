@@ -16,7 +16,6 @@ module.exports = {
 				.setTitle('Avatar Command')
 				.addField('**Your Avatar**', `<${message.author.displayAvatarURL}>`, true)
 			message.reply(newEmbed)
-			return null
 		} else {
 			const newEmbed = templateEmbed
 				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
@@ -27,7 +26,8 @@ module.exports = {
 				newEmbed.addField(`**${user.tag}'s Avatar**`, `<${user.displayAvatarURL}>`, true)
 			})
 			message.channel.send(newEmbed)
-			return null
 		}
+		
+		return null
 	},
 }

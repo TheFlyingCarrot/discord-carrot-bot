@@ -26,5 +26,7 @@ module.exports = {
 		} else {
 			message.channel.send(`${message.author}, please provide valid arguments for \`${this.name}\`.`)
 		}
+		
+		return null
 	},
 }

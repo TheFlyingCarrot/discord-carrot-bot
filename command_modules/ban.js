@@ -35,7 +35,10 @@ module.exports = {
 				message.channel.send(newEmbed)
 			})
 			.catch((err) => {
-				message.channel.send(`${message.author}, ${targetUser} could not be banned. Error: ${err}`)
+				message.channel.send(`${message.author}, ${targetUser} could not be banned.`)
+				return err
 			})
+
+		return null
 	},
 }

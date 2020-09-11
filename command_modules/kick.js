@@ -36,7 +36,10 @@ module.exports = {
 				return null
 			})
 			.catch((err) => {
-				message.channel.send(`${message.author}, ${targetUser} could not be kicked. Error: ${err}`)
+				message.channel.send(`${message.author}, ${targetUser} could not be kicked.`)
+				return err
 			})
+
+		return null
 	},
 }

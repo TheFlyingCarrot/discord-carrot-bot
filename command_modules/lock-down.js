@@ -47,10 +47,12 @@ module.exports = {
 							}, `Lockdown by: ${message.author.tag}`)
 						}
 					})
-					.catch(err => console.log(err))
+					.catch((err) => console.log(err))
 			} else {
 				console.log(`Skipping channel: [${channel.name}]:[${channel.id}]`)
 			}
 		})
+		
+		return null
 	},
 }

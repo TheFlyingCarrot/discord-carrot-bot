@@ -31,8 +31,11 @@ module.exports = {
 					message.channel.send(`${message.author}, slow-mode was enabled in this channel for ${rateLimit} seconds per user.`)
 				})
 				.catch((err) => {
-					message.channel.send(`${message.author}, there was an error executing that command. ${err}`)
+					message.channel.send(`${message.author}, there was an error executing that command.`)
+					return err
 				})
 		}
+		
+		return null
 	},
 }

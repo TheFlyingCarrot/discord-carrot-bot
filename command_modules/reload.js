@@ -27,7 +27,6 @@ module.exports = {
 				.setTitle('Reload Command')
 				.addField('Command Success', `Command \`${commandName}\` was reloaded!`)
 			message.channel.send(newEmbed)
-			return null
 		} catch (err) {
 			const newEmbed = templateEmbed
 				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
@@ -36,7 +35,10 @@ module.exports = {
 				.setTitle('Reload Command')
 				.addField('Command Error', `There was an error while reloading a command \`${commandName}\`:\n\`${err}\``)
 			message.channel.send(newEmbed)
+			
 			return err
 		}
+		
+		return null
 	},
 }
