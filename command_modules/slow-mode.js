@@ -1,8 +1,8 @@
 module.exports = {
 	enabled: true,
 	canToggle: true,
-	name: 'slowmode',
-	aliases: ['slow'],
+	name: 'slow-mode',
+	aliases: ['slownode', 'slow'],
 	usage: '(duration in seconds)',
 	description: 'Enable slow-mode in the current channel.',
 	cooldown: 10,
