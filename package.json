@@ -38,8 +38,8 @@
     "discordjs",
     "bot"
   ],
-  "author": "Creedon H",
-  "license": "ISC",
+  "author": "Creedon H.",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/TheFlyingCarrot/JS-Discord-Bot/issues"
   },
