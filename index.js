@@ -6,7 +6,6 @@ const debug_logger = require('./helper_modules/debug_logger')
 const reaction_handler = require('./helper_modules/reaction_handler')
 const cooldown_handler = require('./helper_modules/cooldown_handler')
 const command_validator = require('./helper_modules/command_validator')
-const perf = require('execution-time')(console.log)
 
 // Discord Initialization
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
@@ -27,7 +26,6 @@ client.once('ready', () => {
 
 // Triggers when any message in any guild has a reaction added to it.
 client.on('messageReactionAdd', async (reaction, user) => {
-	perf.start('Reaction Processing')
 	if (reaction.partial) {
 		try {
 			await reaction.fetch()
@@ -38,22 +36,17 @@ client.on('messageReactionAdd', async (reaction, user) => {
 	}
 
 	reaction_handler.execute({ client, reaction, user })
-
-	perf.stop('Message Processing')
 })
 
 // Triggers when any new message is recieved by the bot (client).
 client.on('message', message => {
-	perf.start('Message Processing')
 	// Command Validator | ./helper_modules/command_validator
 	const { command, args } = command_validator.execute({ client, message, prefix, developers, cooldowns, debug_logger, Discord })
 	if (!command || !args) {
-		perf.stop('Message Processing')
 		return null
 	}
 	// Cooldown Handling | ./helper_modules/cooldown_handler
 	if (!cooldown_handler.execute({ message, command, cooldowns, developers })) {
-		perf.stop('Message Processing')
 		return null
 	}
 	// Command Execution
@@ -63,8 +56,6 @@ client.on('message', message => {
 	} catch (err) {
 		console.log(err)
 		message.channel.send(`${message.author}, \`${command.name}\` produced an unknown error.`)
-	} finally {
-		perf.stop('Message Processing')
 	}
 })
 
