@@ -27,7 +27,7 @@ module.exports = {
 			message.channel.send(`${message.author}, you did not provide a valid flag.`)
 			return null
 		}
-		const flag = flag.toLowerCase() === 'true' ? true : (flag.toLowerCase() === 'false' ? false : null)
+		const flag = args[0].toLowerCase() === 'true' ? true : (args[0].toLowerCase() === 'false' ? false : null)
 		const channels = message.guild.channels.cache.filter(ch => ch.type !== 'category')
 		channels.forEach(channel => {
 			if (!Ignored_Channels.has(channel.id)) {
