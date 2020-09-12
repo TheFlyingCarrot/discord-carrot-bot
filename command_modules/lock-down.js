@@ -38,7 +38,7 @@ module.exports = {
 						if (flag) {
 							if (!guildChannel.name.endsWith('🔒')) {
 								guildChannel.edit({
-									name: guildChannel.name + ' 🔒',
+									name: `${guildChannel.name} 🔒`,
 								}, `Lockdown by: ${message.author.tag}`)
 							}
 						} else {
