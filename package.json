@@ -15,7 +15,7 @@
     "execution-time": "^1.4.1",
     "npm-dependencies-merge": "^1.0.5",
     "qrcode": "^1.4.4",
-    "request": "2.88.0"
+    "request": "2.88.2"
   },
   "devDependencies": {
     "check-dependencies": "^1.1.0"
