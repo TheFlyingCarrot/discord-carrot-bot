@@ -7,15 +7,15 @@
     "@discordjs/opus": "^0.3.2",
     "@discordjs/uws": "^10.149.0",
     "@hapi/cryptiles": "^5.1.0",
-    "@hapi/hoek": "^9.0.4",
+    "@hapi/hoek": "^9.1.0",
     "acorn": "^7.4.0",
     "concat-stream": "^2.0.0",
-    "discord.js": "^12.2.0",
+    "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
     "execution-time": "^1.4.1",
     "npm-dependencies-merge": "^1.0.5",
     "qrcode": "^1.4.4",
-    "request": "2.88.0"
+    "request": "2.88.2"
   },
   "devDependencies": {
     "check-dependencies": "^1.1.0"
