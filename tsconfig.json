@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"target": "ESNext",
+		"outDir": "./dist",
+		"watch": true,
+		"removeComments": true,
+		"pretty": true,
+		"allowJs": true
+	},
+	"exclude": [
+		"./dist"
+	],
+	"include": [
+		"src/**/*",
+		"src/**/*.json"
+	]
+}

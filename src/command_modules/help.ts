@@ -1,4 +1,3 @@
-const { prefix, developers } = require('../helper_modules/config.json')
 
 module.exports = {
 	enabled: true,
@@ -11,7 +10,7 @@ module.exports = {
 		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = dataTable
 		const commands = client.commands
-		if (!args.length > 0) {
+		if (args.length == 0) {
 			const newEmbed = templateEmbed
 				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 				.setThumbnail('https://i.ibb.co/MhzStmL/user-inquiry.png')

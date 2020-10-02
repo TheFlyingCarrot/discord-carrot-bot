@@ -1,6 +1,7 @@
 {
-	"prefix": ".",
+	"prefix": ",",
 	"developers": ["238880608971915264"],
 	"personal_role_id": "491109065687040000",
-	"max_role_name_length": 64
+	"max_role_name_length": 32,
+	"default_cooldown": 3
 }

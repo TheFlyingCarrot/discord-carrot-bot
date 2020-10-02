@@ -8,20 +8,20 @@ module.exports = {
 	cooldown: 5,
 	guildOnly: true,
 	permission: 'MANAGE_MESSAGES',
-	execute(dataTable) {
+	execute (dataTable) {
 		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = dataTable
 		if (!message.member.hasPermission(`${this.permission}`, false, true, true)) {
 			message.channel.send(`${message.author}, you do not have permission to use this command.`)
 			return null
 		}
-		const amount = parseInt(args[0])
+		const amount = parseInt(args[0], 10)
 		if (isNaN(amount)) {
 			message.channel.bulkDelete(2, true).catch((err) => {
 				console.error(err)
 				message.channel.send(`${message.author}, there was an error executing that command. Error: ${err}`)
 			})
-		} else if ((amount < 1 || amount > 100)) {
+		} else if (amount < 1 || amount > 100) {
 			if (Number.isInteger(amount)) {
 				message.channel.send(`${message.author}, you must input a number between 1 and 99.`)
 			} else {
@@ -34,7 +34,7 @@ module.exports = {
 					return err
 				})
 		}
-		
+
 		return null
-	},
+	}
 }

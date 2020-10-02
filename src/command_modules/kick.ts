@@ -1,16 +1,17 @@
-module.exports = {
-	enabled: true,
-	canToggle: true,
+const kick: Command = {
 	name: 'kick',
+	description: 'Kick a user.',
 	usage: '[user mention]',
 	args: true,
-	description: 'Kick a user.',
 	cooldown: 10,
+
+	enabled: true,
+	toggleable: true,
+
 	guildOnly: true,
 	permission: 'KICK_MEMBERS',
-	execute(dataTable) {
-		// eslint-disable-next-line no-unused-vars
-		const { client, message, args, templateEmbed } = dataTable
+
+    execute (_client, message, _args, MessageEmbed): void {
 		if (!message.member.hasPermission(`${this.permission}`, false, true, true)) {
 			message.channel.send(`${message.author}, you do not have permission to use that command.`)
 			return null
@@ -26,7 +27,7 @@ module.exports = {
 		}
 		targetUser.kick(`Kicked by: ${message.author.tag}`)
 			.then(() => {
-				const newEmbed = templateEmbed
+				const newEmbed = new MessageEmbed
 					.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 					.setThumbnail('https://i.ibb.co/QjCW2nx/user-banned.png')
 					.setTimestamp()
@@ -39,7 +40,7 @@ module.exports = {
 				message.channel.send(`${message.author}, ${targetUser} could not be kicked.`)
 				return err
 			})
-
+	
 		return null
-	},
+	}
 }

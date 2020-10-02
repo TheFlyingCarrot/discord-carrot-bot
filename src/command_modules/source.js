@@ -4,7 +4,7 @@ module.exports = {
 	name: 'source',
 	aliases: ['sourcecode', 'github', 'repository'],
 	description: 'View my GitHub repository.',
-	execute(dataTable) {
+	execute (dataTable) {
 		// eslint-disable-next-line no-unused-vars
 		const { client, message, args, templateEmbed } = dataTable
 		const newEmbed = templateEmbed
@@ -13,7 +13,7 @@ module.exports = {
 			.setTimestamp()
 			.addField('Carrot Bot Repository', 'https://github.com/TheFlyingCarrot/discord-carrot-bot')
 		message.channel.send(newEmbed)
-		
+
 		return null
-	},
+	}
 }
