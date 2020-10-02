@@ -9,9 +9,11 @@ const cooldowns = new Discord.Collection()
 
 // Command Palette Setup
 for (const file of filesys.readdirSync(`${__dirname}\/command_modules\/`)) {
-  const command = require(`./command_modules/${file}`)
-  console.log(`./command_modules/${file}: ${command['name']}: ${command}`)
-	client.commands.set(command['name'], command)
+  const command:Command = require(`./command_modules/${file}`).default
+  if (command) {
+    console.log(`./command_modules/${file}: ${command.name}: ${command}`)
+    client.commands.set(command.name, command)
+  }
 }
 
 // Debug

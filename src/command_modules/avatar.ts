@@ -1,4 +1,4 @@
-const command: Command = {
+const avatar: Command = {
 	name: 'avatar',
 	description: 'Get a user\'s avatar.',
 	aliases: ['icon', 'pfp'],
@@ -27,4 +27,4 @@ const command: Command = {
 	}
 }
 
-export default command
+export default avatar as Command
