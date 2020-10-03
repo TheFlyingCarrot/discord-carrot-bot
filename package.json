@@ -36,8 +36,7 @@
   "scripts": {
     "build-ts": "tsc",
     "postinstall": "npm run build-ts",
-    "start": "npm run serve",
-    "serve": "node dist/index.js",
+    "start": "heroku local",
     "watch-ts": "tsc -w"
   },
   "repository": {
