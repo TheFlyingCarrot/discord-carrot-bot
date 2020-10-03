@@ -1,3 +1,5 @@
+import Discord, { Role } from '../internal'
+
 const roleChecker = require('../helper_modules/role_checker').default
 const assignRole = require('../helper_modules/assign_role').default
 const team_discord = require('../guilds/team_discord.json')
@@ -11,12 +13,11 @@ function matchRoleWithEmojiTag (emojiName, emojiID) {
 	}
 }
 
-async function fetchRoleFromRoleID(guild, roleID) {
+function fetchRoleFromRoleID(guild, roleID): Promise<Role | null> {
   console.log(roleID)
-	new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
     resolve(guild.roles.fetch(roleID))
-    reject('Could not fetch role from role ID.')
-	})
+  })
 }
 
 export async function handle_reaction(client, reaction, user) {
@@ -32,12 +33,11 @@ export async function handle_reaction(client, reaction, user) {
 		const CategoryIsFull = roleChecker(guildMember, DesiredReactionRole)
 		if (CategoryIsFull) return null
 
-    try {
-      let DesiredRole = await fetchRoleFromRoleID(guild, DesiredReactionRole['role_id'])
-      console.log(DesiredRole)
-      assignRole(guildMember, DesiredRole, 'Sub-team setup.')
-    } catch (error) {
-      console.error(error)
-    }
+    fetchRoleFromRoleID(guild, DesiredReactionRole['role_id'])
+      .then((DesiredRole) => {
+        assignRole(guildMember, DesiredRole, 'Sub-team setup.')
+        console.log(`Successfully added role: ${DesiredRole.name} to user: ${user.name}`)
+      })
+      .catch((error) => console.error(error))
 	}
 }

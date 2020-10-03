@@ -1,3 +1,5 @@
+import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+
 const assignRole = require('../helper_modules/assign_role').default
 const cleanseOldVIPRoles = require('../helper_modules/cleanse_old_vip_roles')
 const { max_role_name_length } = require('../config.json')
@@ -36,7 +38,7 @@ const custom_role: Command = {
 
   guildOnly: true,
   guildSpecific: ['442001192655257620'],
-  execute ({client, message,  args, MessageEmbed, Debugging}) {
+  execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean) {
 		const { guild } = message
 		if (!guild.available) throw new Error('Guild not available.')
 		const guildMember = guild.member(message.author)

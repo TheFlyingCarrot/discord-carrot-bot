@@ -1,6 +1,15 @@
+import Discord, { Message, MessageEmbed, Collection } from '../internal'
+import { ExtendedClient } from '../typings'
+
 const invalid_command = { command: null, args: {} }
 
-export function validate_command({ client, message, prefix, developers, cooldowns, Discord }) {
+export function validate_command({ client, message, prefix, developers, cooldowns }: {
+  client: ExtendedClient,
+  message: Message,
+  prefix: string,
+  developers: string[],
+  cooldowns: Collection<any, any>
+}): { command: any, args: any | null } {
 	if (!message.content.startsWith(prefix) || message.author.bot || message.tts || message.system) {
 		return invalid_command
 	}
@@ -14,7 +23,7 @@ export function validate_command({ client, message, prefix, developers, cooldown
 		}
 		// Developer Command Check
 		if (command.developerOnly && !developers.includes(`${message.author.id}`)) {
-			message.channel.send(`${message.author}, that command can only be used by developers. Sorry!`)
+      message.channel.send(`${message.author}, that command can only be used by developers. Sorry!`)
 			return invalid_command
 		}
 		// Guild-Only Command Check

@@ -1,3 +1,5 @@
+import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+
 const guild_info: Command = {
   name: 'guild-info',
   description: 'Generate a JSON list of information for a server.',
@@ -8,7 +10,7 @@ const guild_info: Command = {
   developerOnly: true,
 
 
-  execute({ message }) {
+  execute({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean) {
     console.log(message.guild)
   }
 }

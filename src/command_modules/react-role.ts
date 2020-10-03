@@ -1,3 +1,5 @@
+import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+
 const team_discord = require('../guilds/team_discord.json')
 
 const react_role: Command = {
@@ -9,10 +11,10 @@ const react_role: Command = {
 
   developerOnly: true,
 
-  execute({ client, message, args, templateEmbed }) {
+  execute({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean) {
 		if (team_discord.role_categories.includes(args[0])) {
-			const newEmbed = templateEmbed
-        .setTitle(`${args[0].toUpperCase()} ROLES`)
+			const newEmbed = new MessageEmbed
+      newEmbed.setTitle(`${args[0].toUpperCase()} ROLES`)
       let ReactionRole: any
 			for (ReactionRole of Object.values(team_discord.reaction_roles)) {
 				if (ReactionRole.category == args[0].toLowerCase()) {

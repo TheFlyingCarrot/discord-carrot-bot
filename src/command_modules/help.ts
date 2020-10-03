@@ -1,3 +1,5 @@
+import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+import { ExtendedClient } from '../typings.js'
 const { prefix, developers } = require('../config.json')
 
 const help: Command = {
@@ -9,7 +11,7 @@ const help: Command = {
   aliases: ['commands', 'usage'],
 	usage: '(command)',
 
-  execute({client, message,  args, MessageEmbed, Debugging}) {
+  execute({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }, Debugging: boolean) {
 		const commands = client.commands
 		if (args.length == 0) {
       const newEmbed = new MessageEmbed
@@ -18,12 +20,14 @@ const help: Command = {
 				.setThumbnail('https://i.ibb.co/MhzStmL/user-inquiry.png')
 				.setTimestamp()
 				.setTitle('Help Command')
-			commands.forEach(command => {
-				if ((!command.developerOnly)) {
-					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}**`), `${command.description}`, true)
-				} else if (developers.includes(message.author.id)) {
-					newEmbed.addField((`**${(command.name).replace(/^\w/, c => c.toUpperCase())}** (dev-only)`), `${command.description}`, true)
-				}
+      commands.forEach(command => {
+        if (command && command.name) {
+          if (!command.developerOnly) {
+            newEmbed.addField((`**${(command.name).replace(/^\w/u, character => character.toUpperCase())}**`), `${command.description}`, true)
+          } else if (developers.includes(message.author.id)) {
+            newEmbed.addField((`**${(command.name).replace(/^\w/u, character => character.toUpperCase())}** (dev-only)`), `${command.description}`, true)
+          }
+        }
 			})
 			newEmbed.addField('Additional Information', `\nYou can use \`${prefix}help [command name]\` to get info on a specific command.`)
 			message.author.send(newEmbed)

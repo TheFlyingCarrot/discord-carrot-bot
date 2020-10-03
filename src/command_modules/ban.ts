@@ -1,3 +1,5 @@
+import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+
 const ban: Command = {
 	name: 'ban',
   description: 'Ban a user.',
@@ -7,12 +9,11 @@ const ban: Command = {
   usage: '[user mention]',
   args: true,
   cooldown: 10,
-
   guildOnly: true,
   permission: 'BAN_MEMBERS',
 
-  execute({client, message,  args, MessageEmbed, Debugging}) {
-    if (!message.member.hasPermission(`${this.permission}`, false, true, true)) {
+  execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean) {
+    if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
       message.channel.send(`${message.author}, you do not have permission to use that command.`)
       return null
     }
@@ -25,19 +26,19 @@ const ban: Command = {
       message.channel.send(`${message.author}, I can't ban that user.`)
       return null
     }
-    targetUser.ban(`Banned by: ${message.author.tag}`)
+    targetUser.ban({reason: `Banned by: ${message.author.tag}`})
       .then(() => {
         const newEmbed = new MessageEmbed
-          .setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+        newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
           .setThumbnail('https://i.ibb.co/QjCW2nx/user-banned.png')
           .setTimestamp()
           .setTitle('Ban Command')
           .addField(`**${targetUser}**`, `Banned by ${message.author}`)
         message.channel.send(newEmbed)
       })
-      .catch((err) => {
+      .catch((error) => {
         message.channel.send(`${message.author}, ${targetUser} could not be banned.`)
-        return err
+        return error
       })
   }
 
