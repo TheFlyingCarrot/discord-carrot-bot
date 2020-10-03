@@ -48,7 +48,7 @@ const lock_down: Command = {
 							}, `Lockdown by: ${message.author.tag}`)
 						}
 					})
-					.catch((err) => console.log(err))
+					.catch((error) => console.error(error))
 			} else {
 				console.log(`Skipping channel: [${channel.name}]:[${channel.id}]`)
 			}

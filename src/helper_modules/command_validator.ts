@@ -55,8 +55,8 @@ export function validate_command({ client, message, prefix, developers, cooldown
 		if (!cooldowns.has(command.name)) {
 			cooldowns.set(command.name, new Discord.Collection())
 		}
-	} catch (err) {
-		console.log(err)
+	} catch (error) {
+		console.error(error)
 		message.channel.send(`${message.author}, \`${command.name}\` caused an internal error and has been cancelled.`)
 		return invalid_command
 	}

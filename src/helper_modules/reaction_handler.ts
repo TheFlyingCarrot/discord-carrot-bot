@@ -9,14 +9,12 @@ const team_discord = require('../guilds/team_discord.json')
 function matchRoleWithEmojiTag (emojiName, emojiID) {
   for (const reaction_role of Object.values(team_discord.reaction_roles)) {
     if (`<:${emojiName}:${emojiID}>` == reaction_role['emoji_tag']) {
-      console.log(reaction_role)
 			return reaction_role
 		}
 	}
 }
 
 function fetchRoleFromRoleID(guild, roleID): Promise<Role | null> {
-  console.log(roleID)
 	return new Promise((resolve) => {
     resolve(guild.roles.fetch(roleID))
   })
@@ -38,7 +36,6 @@ export async function handle_reaction(client, reaction, user) {
     fetchRoleFromRoleID(guild, DesiredReactionRole['role_id'])
       .then((DesiredRole) => {
         assignRole(guildMember, DesiredRole, 'Sub-team setup.')
-        console.log(`Successfully added role: ${DesiredRole.name} to user: ${user.name}`)
       })
       .catch((error) => console.error(error))
 	}
