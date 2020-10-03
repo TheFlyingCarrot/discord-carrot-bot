@@ -55,7 +55,7 @@ client.on('message', async (message: Discord.Message) => {
   // Command Validation
   const commandArray = { client, message, prefix, developers, cooldowns }
   const { command, args } = validate_command(commandArray)
-	if (client.debugging) debug_log({ message, command, args, developers })
+	if (client.debugging && message.content.startsWith(prefix)) debug_log({ message, command, args, developers })
 	if (!command) return null
 
 	// Cooldown Handling
