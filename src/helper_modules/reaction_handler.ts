@@ -4,6 +4,8 @@ const roleChecker = require('../helper_modules/role_checker').default
 const assignRole = require('../helper_modules/assign_role').default
 const team_discord = require('../guilds/team_discord.json')
 
+// TODO: REFACTOR FUNCTIONS
+
 function matchRoleWithEmojiTag (emojiName, emojiID) {
   for (const reaction_role of Object.values(team_discord.reaction_roles)) {
     if (`<:${emojiName}:${emojiID}>` == reaction_role['emoji_tag']) {
