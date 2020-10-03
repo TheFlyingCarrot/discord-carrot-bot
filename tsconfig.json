@@ -5,11 +5,13 @@
 		"resolveJsonModule": true,
 		"target": "ESNext",
 		"outDir": "./dist",
-		"watch": true,
+		"watch": false,
 		"removeComments": true,
 		"pretty": true,
 		"allowJs": true,
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"downlevelIteration": true,
+		"importHelpers": true
 	},
 	"exclude": [
 		"./dist"
