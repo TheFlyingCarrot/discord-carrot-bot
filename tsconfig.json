@@ -8,7 +8,8 @@
 		"watch": true,
 		"removeComments": true,
 		"pretty": true,
-		"allowJs": true
+		"allowJs": true,
+		"esModuleInterop": true
 	},
 	"exclude": [
 		"./dist"

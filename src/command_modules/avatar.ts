@@ -1,12 +1,12 @@
 const avatar: Command = {
 	name: 'avatar',
 	description: 'Get a user\'s avatar.',
-	aliases: ['icon', 'pfp'],
-
 	enabled: true,
-	toggleable: true,
+  toggleable: true,
+  
+	aliases: ['icon', 'pfp'],
 	
-  execute(_client, message, _args, MessageEmbed) {
+  execute({client, message,  args, MessageEmbed, Debugging}) {
     const newEmbed = new MessageEmbed
     if (!message.mentions.users.size) {
 			newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')

@@ -1,4 +1,6 @@
-function validate_command ({ client, message, prefix, developers, cooldowns, Discord }) {
+const invalid_command = { command: null, args: {} }
+
+export function validate_command({ client, message, prefix, developers, cooldowns, Discord }) {
 	if (!message.content.startsWith(prefix) || message.author.bot || message.tts || message.system) {
 		return invalid_command
 	}

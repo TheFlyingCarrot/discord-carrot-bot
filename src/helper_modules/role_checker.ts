@@ -1,7 +1,7 @@
-// const team_discord = require('../guilds/team_discord.json')
+const team_discord = require('../guilds/team_discord.json')
 
 // Check if any other categorical roles exist
-function roleChecker(guildMember: { roles: { cache: any[]} } , desiredReactionRole: any) {
+const roleChecker = (guildMember: { roles: { cache: any[]} } , desiredReactionRole: any) => {
 	const categoricalRolesArray = Object.values(team_discord.reaction_roles).filter(reaction_role => reaction_role['category'] == desiredReactionRole.category)
 	let categoricalRoles: Object[] = []
 	for (const temporaryCategoryRole in categoricalRolesArray) {
@@ -10,7 +10,7 @@ function roleChecker(guildMember: { roles: { cache: any[]} } , desiredReactionRo
 			categoricalRoles.push(categoricalRole['name'])
 		}
 	}
-	const existingRoles: Array<Object> = guildMember.roles.cache.filter((role: { name: string} ) => categoricalRoles.indexOf(role.name) !== -1)
+	const existingRoles:Array<Object> = guildMember.roles.cache.filter((role: { name: string} ) => categoricalRoles.indexOf(role.name) !== -1)
 
 	if (existingRoles.length) {
 		return true
@@ -18,3 +18,4 @@ function roleChecker(guildMember: { roles: { cache: any[]} } , desiredReactionRo
 
 	return false
 }
+export default roleChecker

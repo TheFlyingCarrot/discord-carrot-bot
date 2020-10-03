@@ -1,17 +1,19 @@
+const { prefix, developers } = require('../config.json')
 
-module.exports = {
-	enabled: true,
-	canToggle: true,
-	name: 'help',
-	aliases: ['commands', 'usage'],
+const help: Command = {
+  name: 'help',
+  description: 'Commands or info about a specific command.',
+  enabled: true,
+  toggleable: true,
+
+  aliases: ['commands', 'usage'],
 	usage: '(command)',
-	description: 'Commands or info about a specific command.',
-	execute(dataTable) {
-		// eslint-disable-next-line no-unused-vars
-		const { client, message, args, templateEmbed } = dataTable
+
+  execute({client, message,  args, MessageEmbed, Debugging}) {
 		const commands = client.commands
 		if (args.length == 0) {
-			const newEmbed = templateEmbed
+      const newEmbed = new MessageEmbed
+      newEmbed
 				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 				.setThumbnail('https://i.ibb.co/MhzStmL/user-inquiry.png')
 				.setTimestamp()
@@ -39,7 +41,8 @@ module.exports = {
 				message.channel.send(`${message.author}, that's not a valid command.`)
 				return null
 			}
-			const newEmbed = templateEmbed
+      const newEmbed = new MessageEmbed
+      newEmbed
 				.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 				.setThumbnail('https://i.ibb.co/MhzStmL/user-inquiry.png')
 				.setTimestamp()
@@ -47,11 +50,11 @@ module.exports = {
 				.addField('**Name:**', `${command.name}`)
 			if (command.aliases) newEmbed.addField('**Aliases:**', `${command.aliases.join(', ')}`)
 			if (command.usage) newEmbed.addField('**Usage:**', `${prefix}${command.name} ${command.usage}`)
-			if (command.description) newEmbed.addField('**Description:**', `${command.description}`)
-			newEmbed.addField('**Cooldown:**', `${command.cooldown || 3} second(s)`)
+      if (command.description) newEmbed.addField('**Description:**', `${command.description}`)
+      newEmbed.addField('**Cooldown:**', `${command.cooldown || 3} second(s)`)
 			message.channel.send(newEmbed)
 		}
-		
-		return null
-	},
+	}
 }
+
+export default help as Command

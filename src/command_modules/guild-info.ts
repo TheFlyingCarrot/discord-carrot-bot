@@ -12,3 +12,5 @@ const guild_info: Command = {
     console.log(message.guild)
   }
 }
+
+export default guild_info as Command

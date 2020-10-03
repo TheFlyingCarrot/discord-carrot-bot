@@ -1,4 +1,4 @@
-function debug_log ({ message, command, args, developers }) {
+export function debug_log ({ message, command, args, developers }) {
 	console.log(`*new message with prefix recognized
 ---- message
 -------- author:

@@ -12,3 +12,5 @@ const debug: Command = {
     return 'Verbose debug info enabled.'
   }
 }
+
+export default debug as Command

@@ -4,14 +4,14 @@ const ban: Command = {
   enabled: true,
   toggleable: true,
 
-  usage: '',
+  usage: '[user mention]',
   args: true,
   cooldown: 10,
 
   guildOnly: true,
   permission: 'BAN_MEMBERS',
 
-  execute({ client, message, args, templateEmbed }) {
+  execute({client, message,  args, MessageEmbed, Debugging}) {
     if (!message.member.hasPermission(`${this.permission}`, false, true, true)) {
       message.channel.send(`${message.author}, you do not have permission to use that command.`)
       return null
@@ -27,7 +27,7 @@ const ban: Command = {
     }
     targetUser.ban(`Banned by: ${message.author.tag}`)
       .then(() => {
-        const newEmbed = templateEmbed
+        const newEmbed = new MessageEmbed
           .setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
           .setThumbnail('https://i.ibb.co/QjCW2nx/user-banned.png')
           .setTimestamp()

@@ -1,3 +1,5 @@
+const team_discord = require('../guilds/team_discord.json')
+
 const react_role: Command = {
   name: 'react-role',
   description: 'Add a message for reaction roles.',
@@ -23,3 +25,5 @@ const react_role: Command = {
 		}
   }
 }
+
+export default react_role as Command

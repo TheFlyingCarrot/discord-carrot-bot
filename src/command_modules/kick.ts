@@ -34,13 +34,12 @@ const kick: Command = {
 					.setTitle('Kick Command')
 					.addField(`**${targetUser}**`, `Kicked by ${message.author}`)
 				message.channel.send(newEmbed)
-				return null
 			})
 			.catch((err) => {
 				message.channel.send(`${message.author}, ${targetUser} could not be kicked.`)
 				return err
 			})
-	
-		return null
 	}
 }
+
+export default kick as Command
