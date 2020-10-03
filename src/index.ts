@@ -47,7 +47,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			return null
 		}
 	}
-  console.log(typeof reaction.emoji.id)
 	handle_reaction(client, reaction, user)
 })
 
