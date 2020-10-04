@@ -47,7 +47,7 @@ Host-based firewalls restrict customer applications from establishing localhost 
 
 #### DDoS Mitigation
 
-Our infrastructure provides DDoS mitigation techniques including TCP Syn cookies and connection rate limiting in addition to maintaining multiple backbone connections and internal bandwidth capacity that exceeds the Internet carrier supplied bandwidth.  We work closely with our providers to quickly respond to events and enable advanced DDoS mitigation controls when needed.
+Our (Heroku) infrastructure provides DDoS mitigation techniques including TCP Syn cookies and connection rate limiting in addition to maintaining multiple backbone connections and internal bandwidth capacity that exceeds the Internet carrier supplied bandwidth.  We work closely with our providers to quickly respond to events and enable advanced DDoS mitigation controls when needed.
 
 #### Spoofing and Sniffing Protections
 
