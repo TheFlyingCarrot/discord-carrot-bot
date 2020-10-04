@@ -15,7 +15,7 @@ Carrot Bot collects data from the Discord API for the purposes of helping the de
 
 ## Heroku
 
-Discord Bot is deployed on **[Heroku]**(https://www.heroku.com/policy/security).
+Discord Bot is deployed on **[Heroku](https://www.heroku.com/policy/security)**.
 
 ### Security Assessments and Compliance
 
