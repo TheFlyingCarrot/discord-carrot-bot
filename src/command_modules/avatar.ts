@@ -12,7 +12,6 @@ const avatar: Command = {
     execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
         const newEmbed = new MessageEmbed()
         const user = message.mentions.users.map(userObject => userObject).shift()
-        console.log(user)
         const userAvatar = message.mentions.users.size ? user.displayAvatarURL({ format: 'png', dynamic: true, size: 4096 }) : message.author.displayAvatarURL({ format: 'png', dynamic: true, size: 4096 })
         newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
             .setThumbnail('https://i.ibb.co/xXQbnn5/user-menu.png')

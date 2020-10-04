@@ -64,6 +64,8 @@ client.on('message', async (message: Discord.Message) => {
     if (client.debugging && message.content.startsWith(prefix)) debug_log({ message, command, args, developers })
     if (!command) return null
 
+    message.channel.startTyping()
+
     // Cooldown Handling
     if (!handle_cooldown({ message, command, cooldowns, developers })) return null
 
@@ -74,6 +76,8 @@ client.on('message', async (message: Discord.Message) => {
     } catch (error) {
         message.channel.send(`${message.author}, \`${command.name}\` produced an unknown error.`)
         console.error(error)
+    } finally {
+        message.channel.stopTyping()
     }
 })
 

@@ -15,17 +15,17 @@ const mod_mail: Command = {
 
     execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
         const { guild } = message
-
         if (!guild.available) return `Guild: ${guild} - Not Available`
+        const { publicUpdatesChannel } = guild
+        if (!publicUpdatesChannel) return `Guild: ${guild} - No publicUpdatesChannel`
 
-        if (message.guild.id == '750480529765171302') {
-            try {
-                message.delete({ reason: 'Mod-mail.' })
-                const modMail = args.join(' ')
-                guild.publicUpdatesChannel.send(`<@&750486984987770881>, ${message.author} sent: ${modMail}`)
-            } catch (error) {
-                return error
-            }
+        const modMail = args.join(' ')
+
+        try {
+            message.delete({ reason: 'Mod-mail.' })
+            publicUpdatesChannel.send(`\`(Mod-mail)\` ${message.author} sent:\n'${modMail}'`)
+        } catch (error) {
+            return error
         }
     }
 }
