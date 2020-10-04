@@ -10,7 +10,7 @@ const guild_info: Command = {
   developerOnly: true,
 
 
-  execute({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean) {
+  execute({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
     console.log(message.guild)
   }
 }

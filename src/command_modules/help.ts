@@ -11,7 +11,7 @@ const help: Command = {
   aliases: ['commands', 'usage'],
 	usage: '(command)',
 
-  execute({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }, Debugging: boolean) {
+  execute({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }, Debugging: boolean): string | null | void {
 		const commands = client.commands
 		if (args.length == 0) {
       const newEmbed = new MessageEmbed

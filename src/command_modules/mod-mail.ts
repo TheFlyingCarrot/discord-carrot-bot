@@ -12,7 +12,7 @@ const mod_mail: Command = {
   cooldown: 45,
   guildOnly: true,
   
-  execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | void {
+  execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
     const { guild } = message
     
     if (!guild.available) return `Guild: ${guild} - Not Available`

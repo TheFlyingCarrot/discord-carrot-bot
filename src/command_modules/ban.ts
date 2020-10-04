@@ -12,7 +12,7 @@ const ban: Command = {
   guildOnly: true,
   permission: 'BAN_MEMBERS',
 
-  execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean) {
+  execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
     if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
       message.channel.send(`${message.author}, you do not have permission to use that command.`)
       return null

@@ -38,7 +38,7 @@ const custom_role: Command = {
 
   guildOnly: true,
   guildSpecific: ['442001192655257620'],
-  execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean) {
+  execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
 		const { guild } = message
 		if (!guild.available) throw new Error('Guild not available.')
 		const guildMember = guild.member(message.author)

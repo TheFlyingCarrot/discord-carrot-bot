@@ -7,7 +7,7 @@ const ping: Command = {
 	enabled: true,
 	toggleable: true,
 
-    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean) {
+    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
       message.channel.send('Pong!')
     }
 }

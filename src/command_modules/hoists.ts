@@ -15,5 +15,5 @@ class Command {
 
 	developerOnly?: boolean
 
-  execute?: (client: any, message: any, args: any[] | void, MessageEmbed?: any, Debugging?: any) => string | void
+  execute?: (client: any, message: any, args: any[] | void, MessageEmbed?: any, Debugging?: any) => string | null | void
 }

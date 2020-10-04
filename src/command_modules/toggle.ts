@@ -34,9 +34,9 @@ const toggle: Command = {
 
 		if (query) {
 			message.channel.send(`${message.author}, the command \`${commandName}\` is currently \`${command.enabled ? 'enabled' : 'disabled'}\`.`)
-		} else if (!command.canToggle) {
+		} else if (!command.toggleable) {
 			message.channel.send(`${message.author}, the command \`${commandName}\` cannot be toggled.`)
-		} else if ((command.canToggle) && ((command.enabled) || (!command.enabled))) {
+		} else if ((command.toggleable) && ((command.enabled) || (!command.enabled))) {
 			try {
 				command.enabled = !command.enabled
 				message.channel.send(`${message.author}, the command \`${commandName}\` is now \`${command.enabled ? 'enabled' : 'disabled'}\`.`)

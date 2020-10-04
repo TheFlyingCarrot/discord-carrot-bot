@@ -8,7 +8,7 @@ const source: Command = {
 
   aliases: ['sourcecode', 'github', 'repository'],
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | void {
+	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
     const newEmbed = new MessageEmbed
     try {
       newEmbed.setAuthor('TheFlyingCarrot', 'https://avatars2.githubusercontent.com/u/32348022?s=460&u=8ae440138c2f4e729ca6f41fc9e057732da3a177&v=4')

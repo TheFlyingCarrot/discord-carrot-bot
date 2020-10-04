@@ -3,12 +3,12 @@ import Discord, { Client, Message, MessageEmbed } from '../internal.js'
 const avatar: Command = {
 	name: 'avatar',
 	description: 'Get a user\'s avatar.',
-	enabled: true,
+  enabled: true,
   toggleable: true,
   
 	aliases: ['icon', 'pfp'],
 	
-  execute({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean) {
+  execute({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
     const newEmbed = new MessageEmbed
     if (!message.mentions.users.size) {
 			newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')

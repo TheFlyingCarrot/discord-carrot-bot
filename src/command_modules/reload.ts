@@ -9,7 +9,7 @@ const reload: Command = {
 
 	developerOnly: true,
 
-  execute({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }, Debugging: boolean) {
+  execute({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }, Debugging: boolean): string | null | void {
 		if (!args.length) {
 			message.channel.send(`${message.author}, you didn't give me anything to reload.`)
 			return null
