@@ -34,7 +34,7 @@ console.log(`Debugging: ${client.debugging.toString().replace(/^\w/u, character 
 client.once('ready', () => {
     console.log('Bot Client: Ready')
     client.user.setStatus('online')
-    client.user.setActivity('Listening for .help', { type: 'CUSTOM_STATUS' })
+    client.user.setActivity('.help', { type: 'LISTENING' })
         .then(presence => console.log(`Activity set to: ${presence.activities[0].name}`))
         .catch(console.error)
 })
