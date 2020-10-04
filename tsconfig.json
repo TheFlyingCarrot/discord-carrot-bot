@@ -11,7 +11,7 @@
 		"allowJs": true,
 		"esModuleInterop": true,
 		"downlevelIteration": true,
-		"importHelpers": true,
+		"importHelpers": true
 	},
 	"exclude": [
 		"dist",
@@ -20,5 +20,5 @@
 	"include": [
 		"src/**/*",
 		"src/**/*.json"
-	],
+	]
 }
