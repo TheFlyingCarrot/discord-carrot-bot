@@ -12,7 +12,7 @@ const guild_info: Command = {
 
 
     execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
-        console.log(message.guild)
+        console.log('[Guild Info]', message.guild)
     }
 }
 
