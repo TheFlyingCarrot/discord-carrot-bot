@@ -7,7 +7,7 @@ import { handle_reaction } from './helper_modules/reaction_handler'
 import { validate_command } from './helper_modules/command_validator'
 const { developers, prefix } = require('./config.json')
 
-// Discord Initialization
+// Discord Client Set-up
 const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 client.login(process.env.BOT_TOKEN)
 client.commands = new Discord.Collection()
@@ -32,7 +32,11 @@ console.log(`Debugging: ${client.debugging.toString().replace(/^\w/u, character 
 
 // Triggers when the client (bot) is ready.
 client.once('ready', () => {
-    console.log('Bot Client State: Ready')
+    console.log('Bot Client: Ready')
+    client.user.setStatus('online')
+    client.user.setActivity('Listening for .help', { type: 'CUSTOM_STATUS' })
+        .then(presence => console.log(`Activity set to: ${presence.activities[0].name}`))
+        .catch(console.error)
 })
 
 // Triggers when any message in any guild has a reaction added to it.
@@ -41,7 +45,7 @@ client.on('messageReactionAdd', async (reaction: Discord.MessageReaction, user: 
         try {
             await reaction.fetch()
         } catch (error) {
-            console.log('Something went wrong when fetching the message reaction: ', error)
+            console.error(error)
             return null
         }
     }
@@ -49,7 +53,7 @@ client.on('messageReactionAdd', async (reaction: Discord.MessageReaction, user: 
         try {
             await user.fetch()
         } catch (error) {
-            console.log('Something went wrong when fetching the user: ', error)
+            console.error(error)
             return null
         }
     }
@@ -63,13 +67,10 @@ client.on('message', async (message: Discord.Message) => {
     const { command, args } = validate_command(commandArray)
     if (client.debugging && message.content.startsWith(prefix)) debug_log({ message, command, args, developers })
     if (!command) return null
-
-    message.channel.startTyping()
-
     // Cooldown Handling
     if (!handle_cooldown({ message, command, cooldowns, developers })) return null
-
     // Command Execution
+    message.channel.startTyping()
     try {
         const command_execution_logs = await command.execute({ client, message, args }, client.debugging)
         if (command_execution_logs) console.error(command_execution_logs)
@@ -81,4 +82,6 @@ client.on('message', async (message: Discord.Message) => {
     }
 })
 
-process.on('uncaughtException', (err) => console.log(err))
+client
+    .on('debug', console.log)
+    .on('warn', console.log)
