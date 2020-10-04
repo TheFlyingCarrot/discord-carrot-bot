@@ -1,5 +1,5 @@
 import { Command, ExtendedClient } from '../typings.js'
-import Discord, { User, Client, Message, MessageEmbed } from '../internal.js'
+import Discord, { Client, Message, MessageEmbed, User } from '../internal.js'
 
 const avatar: Command = {
     name: 'avatar',
