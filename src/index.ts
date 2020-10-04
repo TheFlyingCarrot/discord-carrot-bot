@@ -28,14 +28,18 @@ for (const file of filesys.readdirSync(`${__dirname}/command_modules/`)) {
 
 // Debug
 client.debugging = false
-console.log(`[Debugging] ${client.debugging.toString().replace(/^\w/u, character => character.toUpperCase())}`)
+console.log(`[Debug] [Status] ${client.debugging.toString().replace(/^\w/u, character => character.toUpperCase())}`)
+
+// Shackling
+client.shackled = false
+console.log(`[Shackle] [Status] ${client.shackled.toString().replace(/^\w/u, character => character.toUpperCase())}`)
 
 // Triggers when the client is ready.
 client.once('ready', () => {
-    console.log('[Client State] Ready')
+    console.log('[Client] [State] Ready')
     client.user.setStatus('online')
     client.user.setActivity('.help', { type: 'LISTENING' })
-        .then(presence => console.log(`[Client Activity] ${presence.activities[0].name}`))
+        .then(presence => console.log(`[Client] [Activity] ${presence.activities[0].name}`))
         .catch(console.error)
 })
 

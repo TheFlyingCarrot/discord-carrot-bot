@@ -26,6 +26,10 @@ export function validate_command ({ client, message, prefix, developers, cooldow
             message.channel.send(`${message.author}, that command can only be used by developers. Sorry!`)
             return invalid_command
         }
+        // Shackle Check
+        if (client.shackled && !developers.includes(`${message.author.id}`)) {
+            return invalid_command
+        }
         // Guild-Only Command Check
         if (command.guildOnly && message.channel.type !== 'text') {
             message.channel.send(`${message.author}, that command is reserved for servers only. Sorry!`)

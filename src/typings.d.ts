@@ -7,7 +7,8 @@ declare module '*.json' {
 
 interface ExtendedClient extends Discord.Client {
     commands?: Discord.Collection<any, any>
-    debugging?: boolean
+    debugging?: boolean,
+    shackled?: boolean
 }
 
 interface Command {
