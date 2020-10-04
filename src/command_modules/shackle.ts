@@ -11,6 +11,7 @@ const shackle: Command = {
 
     execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }, Debugging: boolean): string | null | void {
         client.shackled = !client.shackled
+        client.user.setStatus('dnd')
         console.log(`[Shackle] [Status] ${client.shackled.toString().replace(/^\w/u, character => character.toUpperCase())}`)
     }
 }
