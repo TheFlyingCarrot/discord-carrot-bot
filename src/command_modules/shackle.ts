@@ -15,3 +15,5 @@ const shackle: Command = {
         console.log(`[Shackle] [Status] ${client.shackled.toString().replace(/^\w/u, character => character.toUpperCase())}`)
     }
 }
+
+export default shackle as Command
