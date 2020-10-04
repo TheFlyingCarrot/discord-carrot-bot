@@ -3,7 +3,7 @@ import Discord, { Client, Message, MessageEmbed } from '../internal.js'
 
 const reload: Command = {
     name: 'reload',
-    description: 'Reloads a command.',
+    description: 'Reload a command.',
     enabled: true,
     toggleable: false,
 
@@ -21,25 +21,22 @@ const reload: Command = {
             return null
         }
         delete require.cache[require.resolve(`./${command.name}.js`)]
+        const newEmbed = new MessageEmbed()
+        newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+            .setThumbnail('https://i.ibb.co/sJ4CyGj/admin-check.png')
+            .setTimestamp()
+            .setTitle('Reload Command')
         try {
             const newCommand = require(`./${command.name}`)
             client.commands.set(newCommand.default.name, newCommand.default)
-            console.log(`[Command Loading] [Reload] Command: ${newCommand.default.name.replace(/^\w/u, character => character.toUpperCase())} reloaded.`)
-            const newEmbed = new MessageEmbed()
-            newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
-                .setThumbnail('https://i.ibb.co/sJ4CyGj/admin-check.png')
-                .setTimestamp()
-                .setTitle('Reload Command')
-                .addField('Command Success', `Command \`${commandName}\` was reloaded!`)
+
+            newEmbed.addField('Command Success', `Command \`${commandName}\` was reloaded!`)
             message.channel.send(newEmbed)
+            console.log('[Command] [Reload] [Success]', `Command: ${newCommand.default.name.replace(/^\w/u, character => character.toUpperCase())} reloaded.`)
         } catch (error) {
-            const newEmbed = new MessageEmbed()
-            newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
-                .setThumbnail('https://i.ibb.co/8bCYm1p/admin-warning.png')
-                .setTimestamp()
-                .setTitle('Reload Command')
-                .addField('Command Error', `There was an error while reloading a command \`${commandName}\`:\n\`${error}\``)
+            newEmbed.addField('Command Error', `There was an error while reloading a command: \`${commandName}\`\n\`${error}\``)
             message.channel.send(newEmbed)
+            console.error('[Command] [Reload] [Fail]', error)
             return error
         }
     }

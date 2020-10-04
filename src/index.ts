@@ -19,27 +19,27 @@ for (const file of filesys.readdirSync(`${__dirname}/command_modules/`)) {
     try {
         if (file != 'hoists.js') {
             client.commands.set(command.name, command)
-            console.log(`[Command Loading] ${file.replace(/^\w/u, character => character.toUpperCase())}: Command: ${command && command.name ? `'${command.name}'` : '\'Unknown\''} set.`)
+            console.log('[Command] [Load] [Success]', `${file.replace(/^\w/u, character => character.toUpperCase())}: Command: ${command && command.name ? `'${command.name}'` : '\'Unknown\''} set.`)
         }
     } catch (error) {
-        console.error(`[Command Loading] ${file.replace(/^\w/u, character => character.toUpperCase())}: Command: ${command && command.name ? `'${command.name}'` : '\'Unknown\''} could not be loaded. Error: ${error}`)
+        console.error('[Command] [Load] [Fail]', `${file.replace(/^\w/u, character => character.toUpperCase())}: Command: ${command && command.name ? `'${command.name}'` : '\'Unknown\''} could not be loaded. Error: ${error}`)
     }
 }
 
 // Debug
 client.debugging = false
-console.log(`[Debug] [Status] ${client.debugging.toString().replace(/^\w/u, character => character.toUpperCase())}`)
+console.log('[Debug] [Status]', `${client.debugging.toString().replace(/^\w/u, character => character.toUpperCase())}`)
 
 // Shackling
 client.shackled = false
-console.log(`[Shackle] [Status] ${client.shackled.toString().replace(/^\w/u, character => character.toUpperCase())}`)
+console.log('[Shackle] [Status]', `${client.shackled.toString().replace(/^\w/u, character => character.toUpperCase())}`)
 
 // Triggers when the client is ready.
 client.once('ready', () => {
     console.log('[Client] [State] Ready')
     client.user.setStatus('online')
     client.user.setActivity('.help', { type: 'LISTENING' })
-        .then(presence => console.log(`[Client] [Activity] ${presence.activities[0].name}`))
+        .then(presence => console.log('[Client] [Activity]', `${presence.activities[0].name}`))
         .catch(console.error)
 })
 
@@ -77,10 +77,10 @@ client.on('message', async (message: Discord.Message) => {
     message.channel.startTyping()
     try {
         const command_execution_logs = await command.execute({ client, message, args }, client.debugging)
-        if (command_execution_logs) console.error(command_execution_logs)
+        if (command_execution_logs) console.error('[Command] [Execution] [_Logs]', command_execution_logs)
     } catch (error) {
         message.channel.send(`${message.author}, \`${command.name}\` produced an unknown error.`)
-        console.error(error)
+        console.error('[Command] [Execution] [Erorr]', error)
     } finally {
         message.channel.stopTyping()
     }
