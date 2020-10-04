@@ -24,7 +24,7 @@ const reload: Command = {
         try {
             const newCommand = require(`./${command.name}`)
             client.commands.set(newCommand.default.name, newCommand.default)
-            console.log(`Command: ${newCommand.default.name.replace(/^\w/u, character => character.toUpperCase())} was reloaded.`)
+            console.log(`[Reload] Command: ${newCommand.default.name.replace(/^\w/u, character => character.toUpperCase())} was reloaded.`)
             const newEmbed = new MessageEmbed()
             newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
                 .setThumbnail('https://i.ibb.co/sJ4CyGj/admin-check.png')

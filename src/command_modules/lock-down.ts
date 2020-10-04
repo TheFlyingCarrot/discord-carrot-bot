@@ -51,7 +51,7 @@ const lock_down: Command = {
                     })
                     .catch((error) => console.error(error))
             } else {
-                console.log(`Skipping channel: [${channel.name}]:[${channel.id}]`)
+                console.log(`[Lockdown] Skipping channel: [${channel.name}]:[${channel.id}]`)
             }
         })
     }

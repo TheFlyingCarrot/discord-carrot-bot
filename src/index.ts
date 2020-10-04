@@ -19,23 +19,23 @@ for (const file of filesys.readdirSync(`${__dirname}/command_modules/`)) {
     try {
         if (file != 'hoists.js') {
             client.commands.set(command.name, command)
-            console.log(`${file}: Command: ${command && command.name ? `'${command.name.replace(/^\w/u, character => character.toUpperCase())}'` : '\'Unknown\''} set.`)
+            console.log(`[Command Loading] ${file.replace(/^\w/u, character => character.toUpperCase())}: Command: ${command && command.name ? `'${command.name}'` : '\'Unknown\''} set.`)
         }
     } catch (error) {
-        console.error(`${file}: Command: ${command && command.name ? `'${command.name.replace(/^\w/u, character => character.toUpperCase())}'` : '\'Unknown\''} could not be loaded. Error: ${error}`)
+        console.error(`[Command Loading] ${file.replace(/^\w/u, character => character.toUpperCase())}: Command: ${command && command.name ? `'${command.name}'` : '\'Unknown\''} could not be loaded. Error: ${error}`)
     }
 }
 
 // Debug
 client.debugging = false
-console.log(`Debugging: ${client.debugging.toString().replace(/^\w/u, character => character.toUpperCase())}`)
+console.log(`[Debugging] ${client.debugging.toString().replace(/^\w/u, character => character.toUpperCase())}`)
 
-// Triggers when the client (bot) is ready.
+// Triggers when the client is ready.
 client.once('ready', () => {
-    console.log('Bot Client: Ready')
+    console.log('[Client State] Ready')
     client.user.setStatus('online')
     client.user.setActivity('.help', { type: 'LISTENING' })
-        .then(presence => console.log(`Activity set to: ${presence.activities[0].name}`))
+        .then(presence => console.log(`[Client Activity] ${presence.activities[0].name}`))
         .catch(console.error)
 })
 

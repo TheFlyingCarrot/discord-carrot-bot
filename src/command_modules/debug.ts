@@ -12,7 +12,7 @@ const debug: Command = {
 
     execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }, Debugging: boolean): string {
         client.debugging = !client.debugging
-        return `Verbose debug info ${client.debugging ? 'enabled' : 'disabled'}.`
+        return `[Debugging] ${client.debugging.toString().replace(/^\w/u, character => character.toUpperCase())}`
     }
 }
 
