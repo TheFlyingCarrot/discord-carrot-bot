@@ -10,9 +10,9 @@ const debug: Command = {
 
     developerOnly: true,
 
-    execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }, Debugging: boolean): string {
+    execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }, Debugging: boolean): void {
         client.debugging = !client.debugging
-        return `[Debug] [Status] ${client.debugging.toString().replace(/^\w/u, character => character.toUpperCase())}`
+        console.debug(`[Debug] [Status] ${client.debugging}`)
     }
 }
 

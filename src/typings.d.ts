@@ -31,11 +31,18 @@ interface Command {
     execute?: (client: any, message: any, args: any[] | void, MessageEmbed?: any, Debugging?: any) => string | null | void
 }
 
+interface ReactionRoleConfig {
+    title: string
+    guild_id: string
+    role_channel_id: string
+    reaction_roles: ReactionRole[]
+}
+
 interface ReactionRole {
-    name?: string
-    category?: string
-    role_id?: string
-    emoji_name?: string
-    emoji_id?: string
-    emoji_tag?: string
+    name: string
+    category: string
+    role_id: string
+    emoji_name: string
+    emoji_id: string
+    emoji_tag: string
 }

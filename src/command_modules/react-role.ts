@@ -1,7 +1,7 @@
 import { Command, ExtendedClient } from '../typings.js'
 import Discord, { Client, Message, MessageEmbed } from '../internal.js'
 
-const team_discord = require('../guilds/team_discord.json')
+const team_discord = require('../guilds/750480529765171302.json')
 
 const react_role: Command = {
     name: 'react-role',

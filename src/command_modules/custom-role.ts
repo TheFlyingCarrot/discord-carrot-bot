@@ -2,7 +2,7 @@ import { Command, ExtendedClient } from '../typings.js'
 import Discord, { Client, Message, MessageEmbed } from '../internal.js'
 
 const assignRole = require('../helper_modules/assign_role').default
-const cleanseOldVIPRoles = require('../helper_modules/cleanse_old_vip_roles')
+const clearVIPRoles = require('../helper_modules/clear_vip_roles')
 const { max_role_name_length } = require('../config.json')
 const HexColorRegExp = /^[A-Fa-f0-9]{3}(?:[A-Fa-f0-9]{3})?$/iu
 
@@ -51,7 +51,7 @@ const custom_role: Command = {
         } else {
             try {
                 const newRole = createRole(guild, roleColor, roleName, 'New VIP role.')
-                cleanseOldVIPRoles(guild, guildMember, 'Old VIP role.')
+                clearVIPRoles(guild, guildMember, 'Old VIP role.')
                 assignRole(guildMember, newRole, 'New VIP role.')
             } catch (err) {
                 if (err == 'StringLengthError') {

@@ -3,7 +3,7 @@ import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.
 
 const invalid_command = { command: null, args: {} }
 
-export function validate_command ({ client, message, prefix, developers, cooldowns }: {
+export function validateCommand ({ client, message, prefix, developers, cooldowns }: {
     client: ExtendedClient,
     message: Message,
     prefix: string,

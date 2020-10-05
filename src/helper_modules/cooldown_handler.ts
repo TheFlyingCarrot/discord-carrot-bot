@@ -1,7 +1,7 @@
 const ms_to_s_multiplier = 1000
 const default_cooldown = 3
 
-export function handle_cooldown ({ message, command, cooldowns, developers }) {
+export function handleCooldown ({ message, command, cooldowns, developers }) {
     const now = Date.now()
     const timestamps = cooldowns.get(command.name)
     const cooldownAmount = (command.cooldown || default_cooldown) * ms_to_s_multiplier
