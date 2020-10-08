@@ -2,9 +2,9 @@ import Discord, { Role } from '../internal.js'
 import { ExtendedClient, ReactionRole, ReactionRoleConfig } from '../typings.js'
 const TeamDiscord = require('../guilds/750480529765171302.json')
 
-function fetchPartial (partial) {
+async function fetchPartial (partial) {
     try {
-        partial.fetch()
+        await partial.fetch()
     } catch (error) {
         console.error(error)
         return null
@@ -12,13 +12,13 @@ function fetchPartial (partial) {
     return partial
 }
 
-export function handleReaction (client: ExtendedClient, reaction: Discord.MessageReaction, user: Discord.User) {
+export function handleReaction (client: ExtendedClient, reaction: Discord.MessageReaction, user: Discord.User): null | void {
     if (reaction.partial) fetchPartial(reaction)
     if (user.partial) fetchPartial(user)
 
     if (reaction.message.channel.type == 'dm') return null
-    if (reaction.message.author != client.user) return null
     if (reaction.message.channel.name != 'role-request') return null
+    if (!reaction.message.author.equals(client.user)) return null
 
     const { guild } = reaction.message
 
