@@ -13,7 +13,7 @@ const prune: Command = {
     guildOnly: true,
     permission: 'MANAGE_MESSAGES',
 
-    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
+    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
         if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
             message.channel.send(`${message.author}, you do not have permission to use this command.`)
             return null

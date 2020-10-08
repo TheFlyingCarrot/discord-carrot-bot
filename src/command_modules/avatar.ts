@@ -9,7 +9,7 @@ const avatar: Command = {
 
     aliases: ['icon', 'pfp'],
 
-    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
+    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
         const newEmbed = new MessageEmbed()
         const user = message.mentions.users.map(userObject => userObject).shift()
         const userAvatar = message.mentions.users.size ? user.displayAvatarURL({ format: 'png', dynamic: true, size: 4096 }) : message.author.displayAvatarURL({ format: 'png', dynamic: true, size: 4096 })

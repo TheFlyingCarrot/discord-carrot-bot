@@ -9,7 +9,7 @@ const stop_client: Command = {
 
     developerOnly: true,
 
-    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
+    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
         console.log(`=== ===STOP COMMAND CALLED, ENDING OPEN PROCESSES=== ===\nCALLER: ${message.author.tag}`)
         process.exit(0)
     }

@@ -1,3 +1,4 @@
+import { PermissionString } from 'discord.js'
 import Discord from './internal'
 
 declare module '*.json' {
@@ -7,7 +8,6 @@ declare module '*.json' {
 
 interface ExtendedClient extends Discord.Client {
     commands?: Discord.Collection<any, any>
-    debugging?: boolean,
     shackled?: boolean
 }
 
@@ -23,12 +23,12 @@ interface Command {
     cooldown?: number
 
     guildOnly?: boolean
-    permission?: string
+    permission?: PermissionString
     guildSpecific?: string[]
 
     developerOnly?: boolean
 
-    execute?: (client: any, message: any, args: any[] | void, MessageEmbed?: any, Debugging?: any) => string | null | void
+    execute?: (client: any, message: any, args: any[] | void, MessageEmbed?: any, Debugging?: any) => string | null | void | Promise<any>
 }
 
 interface ReactionRoleConfig {

@@ -12,7 +12,7 @@ const toggle: Command = {
     usage: '[command]',
     developerOnly: true,
 
-    execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }, Debugging: boolean): string | null | void {
+    execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }): void {
         if (!args.length) {
             message.channel.send(`${message.author}, you didn't give me any command to toggle.`)
             return null
@@ -40,9 +40,9 @@ const toggle: Command = {
             try {
                 command.enabled = !command.enabled
                 message.channel.send(`${message.author}, the command \`${commandName}\` is now \`${command.enabled ? 'enabled' : 'disabled'}\`.`)
-            } catch (err) {
+            } catch (error) {
                 message.channel.send(`${message.author}, toggling the command \`${commandName}\` produced an error.`)
-                return err
+                console.error(error)
             }
         }
     }

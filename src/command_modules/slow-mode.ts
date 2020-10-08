@@ -13,7 +13,7 @@ const slow_mode: Command = {
     guildOnly: true,
     permission: 'MANAGE_CHANNELS',
 
-    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
+    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
         if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
             message.channel.send(`${message.author}, you do not have permission to use that command.`)
             return null

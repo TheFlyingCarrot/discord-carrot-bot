@@ -20,7 +20,7 @@ const lock_down: Command = {
     guildOnly: true,
     permission: 'ADMINISTRATOR',
 
-    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
+    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
         if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
             message.channel.send(`${message.author}, you do not have permission to use that command.`)
             return null
@@ -33,20 +33,12 @@ const lock_down: Command = {
         const channels = message.guild.channels.cache.filter(ch => ch.type !== 'category')
         channels.forEach(channel => {
             if (!Ignored_Channels.has(channel.id)) {
-                channel.updateOverwrite(message.guild.roles.everyone.id, {
-                    SEND_MESSAGES: flag === null ? null : !flag
-                }, `Lockdown by: ${message.author.tag}`)
+                channel.updateOverwrite(message.guild.roles.everyone.id, { SEND_MESSAGES: flag === null ? null : !flag }, `Lockdown by: ${message.author.tag}`)
                     .then(guildChannel => {
                         if (flag) {
-                            if (!guildChannel.name.endsWith('🔒')) {
-                                guildChannel.edit({
-                                    name: `${guildChannel.name} 🔒`
-                                }, `Lockdown by: ${message.author.tag}`)
-                            }
+                            if (!guildChannel.name.endsWith('🔒')) guildChannel.edit({ name: `${guildChannel.name} 🔒` }, `Lockdown by: ${message.author.tag}`)
                         } else {
-                            guildChannel.edit({
-                                name: guildChannel.name.replace(/\s*🔒/u, '')
-                            }, `Lockdown by: ${message.author.tag}`)
+                            guildChannel.edit({ name: guildChannel.name.replace(/\s*🔒/u, '') }, `Lockdown by: ${message.author.tag}`)
                         }
                     })
                     .catch((error) => console.error(error))

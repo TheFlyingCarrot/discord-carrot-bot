@@ -9,7 +9,7 @@ const shackle: Command = {
 
     developerOnly: true,
 
-    execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }, Debugging: boolean): string | null | void {
+    execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }): void {
         client.shackled = !client.shackled
         client.user.setStatus(client.shackled ? 'dnd' : 'online')
         console.log(`[Shackle] [Status] ${client.shackled.toString().replace(/^\w/u, character => character.toUpperCase())}`)

@@ -1,9 +1,11 @@
-.env
 .vscode
 .vs
-node_modules
-npm-debug.log
+.env
+
 .eslintrc.json
 .eslintrc.js
 .eslintignore
+
+node_modules
+npm-debug.log
 dist

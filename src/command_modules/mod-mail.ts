@@ -13,19 +13,19 @@ const mod_mail: Command = {
     cooldown: 45,
     guildOnly: true,
 
-    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }, Debugging: boolean): string | null | void {
+    execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
         const { guild } = message
-        if (!guild.available) return `Guild: ${guild} - Not Available`
+        if (!guild.available) console.error('[mod-mail.ts] [Error] Guild not available:', guild)
         const { publicUpdatesChannel } = guild
-        if (!publicUpdatesChannel) return `Guild: ${guild} - No publicUpdatesChannel`
+        if (!publicUpdatesChannel) console.error('[mod-mail.ts] [Error] publicUpdatesChannel does not exist:', guild)
 
         const modMail = args.join(' ')
 
         try {
             message.delete({ reason: 'Mod-mail.' })
-            publicUpdatesChannel.send(`\`(Mod-mail)\` ${message.author} sent:\n'${modMail}'`)
+            publicUpdatesChannel.send(`${message.author} sent:\n'${modMail}'`)
         } catch (error) {
-            return error
+            console.error(error)
         }
     }
 }
