@@ -18,7 +18,7 @@ export function handleReaction (client: ExtendedClient, reaction: Discord.Messag
 
     if (reaction.message.channel.type == 'dm') return null
     if (reaction.message.channel.name != 'role-request') return null
-    if (!reaction.message.author.equals(client.user)) return null
+    if (reaction.message && reaction.message.author && !reaction.message.author.equals(client.user)) return null
 
     const { guild } = reaction.message
 
