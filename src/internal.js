@@ -1,4 +1,3 @@
-// index.js
 export * from 'fs'
 export * from 'discord.js'
 

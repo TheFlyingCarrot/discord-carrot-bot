@@ -6,12 +6,12 @@ declare module '*.json' {
     export default value
 }
 
-interface ExtendedClient extends Discord.Client {
+declare interface ExtendedClient extends Discord.Client {
     commands?: Discord.Collection<any, any>
     shackled?: boolean
 }
 
-interface Command {
+declare interface Command {
     name: string
     description: string
     enabled: boolean
@@ -31,14 +31,14 @@ interface Command {
     execute?: (client: any, message: any, args: any[] | void, MessageEmbed?: any, Debugging?: any) => string | null | void | Promise<any>
 }
 
-interface ReactionRoleConfig {
+declare interface ReactionRoleConfig {
     title: string
     guild_id: string
     role_channel_id: string
     reaction_roles: ReactionRole[]
 }
 
-interface ReactionRole {
+declare interface ReactionRole {
     name: string
     category: string
     role_id: string

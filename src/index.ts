@@ -5,7 +5,6 @@ import { cooldown } from './helper_modules/cooldown_handler'
 import { handleReaction } from './helper_modules/reaction_handler'
 import { validateCommand } from './helper_modules/command_validator'
 const { developers, prefix } = require('./config.json')
-let presenceMessage: Presence = null
 
 // Client Set-up
 const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
@@ -28,11 +27,10 @@ client
     .once('ready', () => {
         console.debug('[Client] [State] Ready')
         client.user.setStatus('online')
-        client.user.setActivity('.help', { type: 'LISTENING' })
-            .then((presence) => {
-                presenceMessage = presence
-            })
-            .catch(console.error)
+        setInterval(() => {
+            client.user.setActivity('.help', { type: 'LISTENING' })
+                .catch(console.error)
+        }, 600000)
     })
     .on('debug', console.debug)
     .on('warn', console.warn)
@@ -60,7 +58,7 @@ client
     .on('presenceUpdate', (newPresence) => {
         if (newPresence && newPresence.user) {
             if (newPresence.user.equals(client.user)) {
-                if (client.user.presence.equals(presenceMessage)) {
+                if (client.user.presence) {
                     client.user.setActivity('.help', { type: 'LISTENING' })
                         .catch(console.error)
                 }
