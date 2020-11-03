@@ -19,7 +19,7 @@
 		"npm-dependencies-merge": "^1.0.5",
 		"qrcode": "^1.4.4",
 		"request": "2.88.2",
-		"systemjs": "^6.7.0",
+		"systemjs": "^6.7.1",
 		"tslib": "^2.0.3"
 	},
 	"devDependencies": {
