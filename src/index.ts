@@ -1,7 +1,6 @@
 import { Command, ExtendedClient } from './typings'
 import filesys from 'fs'
 import Discord, { Activity, Presence } from 'discord.js'
-import { cooldown } from './helper_modules/cooldown_handler'
 import { handleReaction } from './helper_modules/reaction_handler'
 import { validateCommand } from './helper_modules/command_validator'
 const { developers, prefix } = require('./config.json')
@@ -39,9 +38,8 @@ client
     .on('disconnect', console.error)
     .on('message', (message: Discord.Message) => {
         const { command, args } = validateCommand({ client, message, prefix, developers, cooldowns })
-        if (!command) return null
 
-        if (cooldown({ message, command, cooldowns, developers })) return null
+        if (!command) return null
 
         message.channel.startTyping()
         try {
@@ -53,15 +51,8 @@ client
         }
     })
     .on('messageReactionAdd', (reaction: Discord.MessageReaction, user: Discord.User) => {
-        handleReaction(client, reaction, user)
+        handleReaction(client, reaction, user, 'add')
     })
-    .on('presenceUpdate', (newPresence) => {
-        if (newPresence && newPresence.user) {
-            if (newPresence.user.equals(client.user)) {
-                if (client.user.presence) {
-                    client.user.setActivity('.help', { type: 'LISTENING' })
-                        .catch(console.error)
-                }
-            }
-        }
+    .on('messageReactionRemove', (reaction: Discord.MessageReaction, user: Discord.User) => {
+        handleReaction(client, reaction, user, 'remove')
     })
