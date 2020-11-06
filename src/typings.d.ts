@@ -1,4 +1,4 @@
-import { PermissionString } from 'discord.js'
+import { Client, Message, PermissionString } from 'discord.js'
 import Discord from './internal'
 
 declare module '*.json' {
@@ -28,7 +28,7 @@ declare interface Command {
 
     developerOnly?: boolean
 
-    execute?: (client: any, message: any, args: any[] | void, MessageEmbed?: any, Debugging?: any) => string | null | void | Promise<any>
+    execute?: ({ client, message, args }: { client: Client, message: Message, args: string[] }) => string | null | void | Promise<any>
 }
 
 declare interface ReactionRoleConfig {
