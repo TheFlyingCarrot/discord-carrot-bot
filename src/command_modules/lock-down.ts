@@ -21,10 +21,6 @@ const lock_down: Command = {
     permission: 'ADMINISTRATOR',
 
     execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
-        if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
-            message.channel.send(`${message.author}, you do not have permission to use that command.`)
-            return null
-        }
         if (!validateFlag(args[0].toLowerCase)) {
             message.channel.send(`${message.author}, you did not provide a valid flag.`)
             return null
