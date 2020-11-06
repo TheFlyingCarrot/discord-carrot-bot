@@ -37,19 +37,20 @@ client
     .on('invalidated', console.error)
     .on('disconnect', console.error)
     .on('message', (message: Discord.Message) => {
-        // Get command from provided args, or a empty object | future: (otherwise declare an empty object (nullish coalescing operator: ??) -- else, this would result in an error)
+        // Get command from provided args, or a empty object | future: declare an empty object instead of a null object (nullish coalescing operator: ??)
         const { command, args } = getCommand({ client, message, prefix, developers, cooldowns }) || {}
 
         if (!command) return null
 
         message.channel.startTyping()
+
         try {
             command.execute({ client, message, args })
         } catch (error) {
             console.error(error)
-        } finally {
-            message.channel.stopTyping()
         }
+
+        message.channel.stopTyping()
     })
     .on('messageReactionAdd', (reaction: Discord.MessageReaction, user: Discord.User) => {
         handleReaction(client, reaction, user, 'add')
