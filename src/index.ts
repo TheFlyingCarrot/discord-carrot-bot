@@ -37,8 +37,8 @@ client
     .on('invalidated', console.error)
     .on('disconnect', console.error)
     .on('message', (message: Discord.Message) => {
-        // Get command from provided args, otherwise declare an empty object (nullish coalescing operator: ??) -- else, this would result in an error
-        const { command, args } = getCommand({ client, message, prefix, developers, cooldowns }) ?? {}
+        // Get command from provided args, or a empty object | future: (otherwise declare an empty object (nullish coalescing operator: ??) -- else, this would result in an error)
+        const { command, args } = getCommand({ client, message, prefix, developers, cooldowns }) || {}
 
         if (!command) return null
 
