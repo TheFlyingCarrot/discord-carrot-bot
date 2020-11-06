@@ -2,7 +2,7 @@ import { Command, ExtendedClient } from './typings'
 import filesys from 'fs'
 import Discord, { Activity, Presence } from 'discord.js'
 import { handleReaction } from './helper_modules/reaction_handler'
-import { validateCommand } from './helper_modules/command_validator'
+import { getCommand } from './helper_modules/command_handler'
 const { developers, prefix } = require('./config.json')
 
 // Client Set-up
@@ -37,7 +37,8 @@ client
     .on('invalidated', console.error)
     .on('disconnect', console.error)
     .on('message', (message: Discord.Message) => {
-        const { command, args } = validateCommand({ client, message, prefix, developers, cooldowns })
+        // Get command from provided args, otherwise declare an empty object (nullish coalescing operator: ??) -- else, this would result in an error
+        const { command, args } = getCommand({ client, message, prefix, developers, cooldowns }) ?? {}
 
         if (!command) return null
 

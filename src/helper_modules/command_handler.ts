@@ -2,7 +2,7 @@ import { Command, ExtendedClient } from '../typings.js'
 import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.js'
 import { cooldown } from './cooldown_handler'
 
-export function validateCommand ({ client, message, prefix, developers, cooldowns }: { client: ExtendedClient, message: Message, prefix: string, developers: string[], cooldowns: Collection<any, any> }): { command: Command, args: any | null } | null {
+export function getCommand ({ client, message, prefix, developers, cooldowns }: { client: ExtendedClient, message: Message, prefix: string, developers: string[], cooldowns: Collection<any, any> }): { command: Command, args: any | null } | null {
     if (!message.content.startsWith(prefix) || message.author.bot || message.tts || message.system) {
         return null
     }
@@ -10,23 +10,18 @@ export function validateCommand ({ client, message, prefix, developers, cooldown
     const commandName = args.shift().toLowerCase()
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
     try {
-        // Command Validity Check
+        // Command Presence Check
         if (!command) {
             return null
         }
-        // Toggle Check
+        // Command Toggle Check
         if (!command.enabled) {
             message.channel.send(`${message.author}, ${command.name} is currently \`disabled\`. Sorry!`)
             return null
         }
-        // Arguments Check
+        // Command Arguments Check
         if (command.args && !args.length) {
             message.channel.send(`${message.author}, that command requires arguments.${command.usage ? `\nThe proper usage is: \`${prefix}${command.name} ${command.usage}\`` : null}`)
-            return null
-        }
-        // Guild-Only Command Check
-        if (command.guildOnly && message.channel.type !== 'text') {
-            message.channel.send(`${message.author}, that command is reserved for servers only. Sorry!`)
             return null
         }
         // Developer Command Check
@@ -34,8 +29,13 @@ export function validateCommand ({ client, message, prefix, developers, cooldown
             message.channel.send(`${message.author}, that command can only be used by developers. Sorry!`)
             return null
         }
-        // Shackle Check
+        // Client Shackle Check
         if (client.shackled && !developers.includes(`${message.author.id}`)) {
+            return null
+        }
+        // Guild-Only Command Check
+        if (command.guildOnly && message.channel.type !== 'text') {
+            message.channel.send(`${message.author}, that command is reserved for servers only. Sorry!`)
             return null
         }
         // Guild-Specific Command Check
