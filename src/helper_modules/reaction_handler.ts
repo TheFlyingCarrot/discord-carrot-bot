@@ -12,7 +12,7 @@ async function fetchPartial (partial) {
     return partial
 }
 
-export function handleReaction (client: ExtendedClient, reaction: Discord.MessageReaction, user: Discord.User): null | void {
+export function handleReaction (client: ExtendedClient, reaction: Discord.MessageReaction, user: Discord.User, operation: string): null | void {
     if (reaction.partial) fetchPartial(reaction)
     if (user.partial) fetchPartial(user)
 
@@ -32,7 +32,13 @@ export function handleReaction (client: ExtendedClient, reaction: Discord.Messag
         if (!reactionRole) return null
 
         new Promise((resolve) => resolve(guild.roles.fetch(reactionRole.role_id)))
-            .then((desiredRole: Role) => guild.member(user).roles.add(desiredRole, 'Sub-team selection.'))
+            .then((desiredRole: Role) => {
+                if (operation === 'add') {
+                    guild.member(user).roles.add(desiredRole, 'Sub-team selection.')
+                } else if (operation === 'remove') {
+                    guild.member(user).roles.remove(desiredRole, 'Sub-team removal.')
+                }
+            })
             .catch((error) => console.error(error))
     }
 }
