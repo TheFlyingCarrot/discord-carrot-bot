@@ -5,7 +5,7 @@
 	"main": "dist/index.js",
 	"type": "commonjs",
 	"dependencies": {
-		"@discordjs/opus": "^0.3.2",
+		"@discordjs/opus": "^0.3.3",
 		"@discordjs/uws": "^10.149.0",
 		"@hapi/cryptiles": "^5.1.0",
 		"@hapi/hoek": "^9.1.0",
