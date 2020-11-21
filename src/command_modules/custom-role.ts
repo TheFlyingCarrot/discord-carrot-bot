@@ -1,7 +1,7 @@
 import { Command, ExtendedClient } from '../typings.js'
 import Discord, { Client, Message, MessageEmbed, Role } from '../internal.js'
 
-const { max_role_name_length, personal_role_id } = require('../config.json')
+const { max_role_name_length, personal_role_ids } = require('../config.json')
 const HexColorRegExp = /^[A-Fa-f0-9]{3}(?:[A-Fa-f0-9]{3})?$/iu
 
 // eslint-disable-next-line require-await
@@ -26,9 +26,9 @@ async function createRole (guild: any, roleColor: string, roleName: string, reas
 }
 
 async function clearVIPRoles (guild: any, guildMember: any, reason: string) {
-    const personal_role = await guild.roles.fetch(personal_role_id)
+    const personalRole = await guild.roles.fetch(personal_role_ids[guild.id.toString()]['personal_role_id'])
     await guildMember.roles.cache.forEach((existingRole: { id: any, position: number, delete: (arg0: any, arg1: string) => void }) => {
-        if (existingRole.id !== guild.roles.everyone.id && existingRole.position < personal_role.position) {
+        if (existingRole.id !== guild.roles.everyone.id && existingRole.position < personalRole.position) {
             existingRole.delete(existingRole, reason)
         }
     })
@@ -46,7 +46,7 @@ const custom_role: Command = {
     cooldown: 10,
 
     guildOnly: true,
-    guildSpecific: ['442001192655257620'],
+    guildSpecific: ['442001192655257620', '701622386163712001'],
     async execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): Promise<void> {
         const { guild } = message
         if (!guild.available) throw new Error('Guild not available.')
@@ -54,24 +54,21 @@ const custom_role: Command = {
         const roleColor = args.shift()
         const roleName = args.join(' ')
 
-        if (!roleColor || !roleName) {
-            message.channel.send(`${message.author}, you must provide proper arguments.`)
-        } else {
-            try {
-                await clearVIPRoles(guild, guildMember, 'Old VIP role.')
-                await createRole(guild, roleColor, roleName, 'New VIP role.')
-                    .then((new_role) => {
-                        guildMember.roles.add(new_role, 'New VIP role.')
-                    })
-                    .catch(console.error)
-            } catch (error) {
-                if (error == 'StringLengthError') {
-                    message.channel.send(`${message.author}, your role name cannot be exceed ${max_role_name_length} characters.`)
-                } else if (error == 'RoleColorError') {
-                    message.channel.send(`${message.author}, you provided an invalid role color.`)
-                } else {
-                    console.error(error)
-                }
+        try {
+            await clearVIPRoles(guild, guildMember, 'Old VIP role.')
+            await createRole(guild, roleColor, roleName, 'New VIP role.')
+                .then((new_role) => {
+                    guildMember.roles.add(new_role, 'New VIP role.')
+                    message.reply(`Custom role created and assigned! ${new_role}`)
+                })
+                .catch(console.error)
+        } catch (error) {
+            if (error == 'StringLengthError') {
+                message.reply(`Your role name cannot be exceed ${max_role_name_length} characters.`)
+            } else if (error == 'RoleColorError') {
+                message.reply('You provided an invalid role color.')
+            } else {
+                console.error(error)
             }
         }
     }
