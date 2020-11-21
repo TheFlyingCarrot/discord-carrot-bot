@@ -15,7 +15,7 @@ const prune: Command = {
 
     execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
         if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
-            message.channel.send(`${message.author}, you do not have permission to use this command.`)
+            message.reply('You do not have permission to use this command.')
             return null
         }
         if (message.channel.type == 'dm') return null
@@ -24,18 +24,18 @@ const prune: Command = {
             message.channel.bulkDelete(2, true)
                 .catch((err) => {
                     console.error(err)
-                    message.channel.send(`${message.author}, there was an error executing that command. Error: ${err}`)
+                    message.reply(`there was an error executing that command. Error: ${err}`)
                 })
         } else if (amount < 1 || amount > 100) {
             if (Number.isInteger(amount)) {
-                message.channel.send(`${message.author}, you must input a number between 1 and 99.`)
+                message.reply('You must input a number between 1 and 99.')
             } else {
-                message.channel.send(`${message.author}, you must input a number between 1 and 99 that is also an integer.`)
+                message.reply('You must input a number between 1 and 99 that is also an integer.')
             }
         } else {
             message.channel.bulkDelete(amount + 1, true)
                 .catch((err) => {
-                    message.channel.send(`${message.author}, I encountered an error executing that command.`)
+                    message.reply('I encountered an error executing that command.')
                     return err
                 })
         }

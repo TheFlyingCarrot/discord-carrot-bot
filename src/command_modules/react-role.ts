@@ -24,7 +24,7 @@ const react_role: Command = {
             }
             message.channel.send(newEmbed)
         } else {
-            message.channel.send(`${message.author}, please provide valid arguments for \`${this.name}\`.`)
+            message.reply(`Please provide valid arguments for \`${this.name}\`.`)
         }
     }
 }

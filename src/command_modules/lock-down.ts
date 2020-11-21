@@ -22,7 +22,7 @@ const lock_down: Command = {
 
     execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
         if (!validateFlag(args[0].toLowerCase)) {
-            message.channel.send(`${message.author}, you did not provide a valid flag.`)
+            message.reply('You did not provide a valid flag.')
             return null
         }
         const flag = args[0].toLowerCase() === 'true' ? true : args[0].toLowerCase() === 'false' ? false : null

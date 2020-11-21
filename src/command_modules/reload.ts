@@ -11,13 +11,13 @@ const reload: Command = {
 
     execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }): void {
         if (!args.length) {
-            message.channel.send(`${message.author}, you didn't give me anything to reload.`)
+            message.reply('You didn\'t give me anything to reload.')
             return null
         }
         const commandName = args[0].toLowerCase()
         const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
         if (!command) {
-            message.channel.send(`${message.author}, no such command was found.`)
+            message.reply('No such command was found.')
             return null
         }
         delete require.cache[require.resolve(`./${command.name}.js`)]

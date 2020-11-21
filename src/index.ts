@@ -3,7 +3,7 @@ import filesys from 'fs'
 import Discord, { Activity, Presence } from 'discord.js'
 import { handleReaction } from './helper_modules/reaction_handler'
 import { getCommand } from './helper_modules/command_handler'
-const { developers, prefix } = require('./config.json')
+import { developers, prefix } from './config.json'
 
 // Client Set-up
 const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
@@ -23,7 +23,7 @@ for (const file of filesys.readdirSync(`${__dirname}/command_modules/`)) {
 }
 
 client
-    .once('ready', () => {
+    .on('ready', () => {
         console.debug('[Client] [State] Ready')
         client.user.setStatus('online')
         setInterval(() => {

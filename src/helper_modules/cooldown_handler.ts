@@ -10,7 +10,7 @@ export function cooldown ({ message, command, cooldowns, developers }): boolean 
         const expirationTime = timestamps.get(message.author.id) + cooldownAmount
         if (now < expirationTime) {
             const timeLeft = (expirationTime - now) / ms_to_s_multiplier
-            message.channel.send(`${message.author}, you cannot use that command for another \`${timeLeft.toFixed(1)}\` seconds`)
+            message.reply(`you cannot use that command for another \`${timeLeft.toFixed(1)}\` seconds`)
             return true
         }
     } else if (!timestamps.has(message.author.id) && !developers.includes(message.author.id)) {

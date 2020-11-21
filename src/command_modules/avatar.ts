@@ -18,7 +18,7 @@ const avatar: Command = {
             .setTimestamp()
             .setTitle(`${user ? user.username : message.author.username}'s Avatar`)
             .setThumbnail(userAvatar)
-        message.channel.send(newEmbed)
+        message.reply(newEmbed)
     }
 }
 

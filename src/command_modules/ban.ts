@@ -16,12 +16,12 @@ const ban: Command = {
 	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
 		const targetUser = message.mentions.members.first()
 		if (!targetUser.bannable) {
-			message.channel.send(`${message.author}, I can't ban that user.`)
+			message.reply('I can\'t ban that user.')
 			throw new Error('PermissionsError')
 		}
 		targetUser.ban({ reason: `Banned by: ${message.author.tag}` })
 			.then(() => {
-				message.channel.send(new MessageEmbed().setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+				message.reply(new MessageEmbed().setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 					.setThumbnail('https://i.ibb.co/QjCW2nx/user-banned.png')
 					.setTimestamp()
 					.setTitle('Ban Command')

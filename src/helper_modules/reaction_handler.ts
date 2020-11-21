@@ -1,6 +1,6 @@
 import Discord, { Role } from '../internal.js'
-import { ExtendedClient, ReactionRole, ReactionRoleConfig } from '../typings.js'
-const TeamDiscord = require('../guilds/750480529765171302.json')
+import { ExtendedClient, ReactionRole } from '../typings.js'
+import TeamDiscord from '../guilds/750480529765171302.json'
 
 async function fetchPartial (partial) {
     try {

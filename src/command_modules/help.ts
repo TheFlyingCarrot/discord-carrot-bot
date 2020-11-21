@@ -30,13 +30,13 @@ const help: Command = {
                 }
             })
             newEmbed.addField('More Info', `\nYou can use \`${prefix}help [command name]\` to get help on a specific command.`)
-            if (message.channel.type != 'dm') message.channel.send(newEmbed)
+            if (message.channel.type != 'dm') message.reply(newEmbed)
             else if (message.channel.type == 'dm') message.author.send(newEmbed)
         } else {
             const name = args[0].toLowerCase()
             const command = commands.get(name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))
             if (!command) {
-                message.channel.send(`${message.author}, that's not a valid command.`)
+                message.reply('That\'s not a valid command.')
                 return null
             }
             newEmbed.addField('**Name:**', `${command.name}`)
@@ -44,7 +44,7 @@ const help: Command = {
             if (command.aliases) newEmbed.addField('**Aliases:**', `${command.aliases.join(', ')}`)
             if (command.usage) newEmbed.addField('**Usage:**', `${prefix}${command.name} ${command.usage}`)
             newEmbed.addField('**Cooldown:**', `${command.cooldown || 3} second(s)`)
-            message.channel.send(newEmbed)
+            message.reply(newEmbed)
         }
     }
 }

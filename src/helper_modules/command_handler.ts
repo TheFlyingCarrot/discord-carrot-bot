@@ -16,17 +16,17 @@ export function getCommand ({ client, message, prefix, developers, cooldowns }: 
         }
         // Command Toggle Check
         if (!command.enabled) {
-            message.channel.send(`${message.author}, ${command.name} is currently \`disabled\`. Sorry!`)
+            message.reply(`\`${command.name}\` is currently \`disabled\`. Sorry!`)
             return null
         }
         // Command Arguments Check
         if (command.args && !args.length) {
-            message.channel.send(`${message.author}, that command requires arguments.${command.usage ? `\nThe proper usage is: \`${prefix}${command.name} ${command.usage}\`` : null}`)
+            message.reply(`That command requires arguments.\n${command.usage ? `The proper usage is: \`${prefix}${command.name} ${command.usage}\`` : null}`)
             return null
         }
         // Developer Command Check
         if (command.developerOnly && !developers.includes(`${message.author.id}`)) {
-            message.channel.send(`${message.author}, that command can only be used by developers. Sorry!`)
+            message.reply('That command can only be used by developers. Sorry!')
             return null
         }
         // Client Shackle Check
@@ -35,20 +35,20 @@ export function getCommand ({ client, message, prefix, developers, cooldowns }: 
         }
         // Guild-Only Command Check
         if (command.guildOnly && message.channel.type !== 'text') {
-            message.channel.send(`${message.author}, that command is reserved for servers only. Sorry!`)
+            message.reply('That command is reserved for servers only. Sorry!')
             return null
         }
         // Guild-Specific Command Check
         if (command.guildSpecific && !command.guildSpecific.includes(message.guild.id)) {
-            message.channel.send(`${message.author}, that command is reserved for certain servers only. Sorry!`)
+            message.reply('That command is reserved for certain servers only. Sorry!')
             return null
         }
         // Permissions Check
         if (command.permission && !message.guild.me.hasPermission(command.permission, { checkAdmin: true })) {
-            message.channel.send(`${message.author}, I lack the \`${command.permission}\` permission to execute that command.`)
+            message.reply(`I lack the \`${command.permission}\` permission to execute that command.`)
             return null
         } else if (message.member && !message.member.hasPermission(command.permission, { checkAdmin: true, checkOwner: true })) {
-            message.channel.send(`${message.author}, you do not have permission to use that command.`)
+            message.reply('You do not have permission to use that command.')
             return null
         }
         // Command Cooling
@@ -57,7 +57,7 @@ export function getCommand ({ client, message, prefix, developers, cooldowns }: 
         }
     } catch (error) {
         console.error(error)
-        message.channel.send(`${message.author}, \`${command.name}\` caused an internal error and has been cancelled.`)
+        message.reply(`\`${command.name}\` caused an internal error and has been cancelled.`)
         return null
     }
 
