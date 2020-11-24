@@ -26,7 +26,7 @@ async function createRole (guild: any, roleColor: string, roleName: string, reas
 }
 
 async function clearVIPRoles (guild: any, guildMember: any, reason: string) {
-    const personalRole = await guild.roles.fetch(personal_role_ids[guild.id.toString()]['personal_role_id'])
+    const personalRole = await guild.roles.fetch(personal_role_ids[guild.id]['personal_role_id'])
     await guildMember.roles.cache.forEach((existingRole: { id: any, position: number, delete: (arg0: any, arg1: string) => void }) => {
         if (existingRole.id !== guild.roles.everyone.id && existingRole.position < personalRole.position) {
             existingRole.delete(existingRole, reason)
