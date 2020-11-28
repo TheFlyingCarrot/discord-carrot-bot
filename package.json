@@ -11,7 +11,7 @@
 		"@hapi/hoek": "^9.1.0",
 		"acorn": "^7.4.1",
 		"concat-stream": "^2.0.0",
-		"discord-api-types": "^0.7.0",
+		"discord-api-types": "^0.8.0",
 		"discord.js": "github:monbrey/discord.js#inline-replies",
 		"dotenv": "^8.2.0",
 		"execution-time": "^1.4.1",
