@@ -30,12 +30,12 @@ function verifyDie (die: number): number {
 }
 
 const diceroll: Command = {
-	name: 'coinflip',
+	name: 'diceroll',
 	description: `Flip a coin.\nMax Faces: ${MaxFaces}\nMax Die: ${MaxDie}`,
 	enabled: true,
 	toggleable: true,
 
-	aliases: ['coin', 'coin-flip', 'flip', 'flipcoin', 'flip-coin'],
+	aliases: ['dice', 'dice-roll', 'die', 'die-roll', 'roll', 'roll-die'],
 	usage: '(number of faces) (number of die)',
 
 	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
