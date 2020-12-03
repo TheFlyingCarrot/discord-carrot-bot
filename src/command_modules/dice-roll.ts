@@ -39,7 +39,9 @@ const diceroll: Command = {
 	usage: '(number of faces) (number of die)',
 
 	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
-		message.reply(`it's a ${rollDice(verifyFaces(Number(args[0])), verifyDie(Number(args[1])))}.`)
+		const faces = verifyFaces(Number(args[0]))
+		const die = verifyDie(Number(args[1]))
+		message.reply(`it's a ${rollDice(faces, die)}.\n\`Faces: ${faces} | ${die > 1 ? 'Die' : 'Dice'}: ${die}\``)
 	}
 }
 
