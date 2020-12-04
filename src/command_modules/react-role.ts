@@ -6,7 +6,6 @@ const team_discord = require('../guilds/750480529765171302.json')
 const react_role: Command = {
 	name: 'react-role',
 	description: 'Add a message for reaction roles.',
-
 	enabled: true,
 	toggleable: true,
 

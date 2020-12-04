@@ -11,6 +11,7 @@ const mod_mail: Command = {
 	usage: '[message]',
 	args: true,
 	cooldown: 45,
+
 	guildOnly: true,
 
 	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {

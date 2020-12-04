@@ -10,6 +10,7 @@ const toggle: Command = {
 	toggleable: true,
 
 	usage: '[command]',
+
 	developerOnly: true,
 
 	execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }): void {

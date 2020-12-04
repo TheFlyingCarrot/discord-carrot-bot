@@ -7,9 +7,11 @@ const ban: Command = {
 	enabled: true,
 	toggleable: true,
 
+	aliases: ['icon', 'pfp'],
 	usage: '[user mention]',
 	args: true,
 	cooldown: 10,
+
 	guildOnly: true,
 	permission: 'BAN_MEMBERS',
 

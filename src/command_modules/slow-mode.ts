@@ -10,7 +10,9 @@ const slow_mode: Command = {
 	aliases: ['slownode', 'slow'],
 	usage: '(duration in seconds)',
 	cooldown: 10,
+
 	guildOnly: true,
+
 	permission: 'MANAGE_CHANNELS',
 
 	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {

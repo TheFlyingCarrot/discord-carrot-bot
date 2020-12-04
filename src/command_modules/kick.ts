@@ -10,7 +10,9 @@ const kick: Command = {
 	usage: '[user mention]',
 	args: true,
 	cooldown: 10,
+
 	guildOnly: true,
+
 	permission: 'KICK_MEMBERS',
 
 	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {

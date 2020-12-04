@@ -10,7 +10,9 @@ const prune: Command = {
 	aliases: ['purge', 'delete', 'erase'],
 	usage: '(number of messages to delete)',
 	cooldown: 5,
+
 	guildOnly: true,
+	
 	permission: 'MANAGE_MESSAGES',
 
 	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
