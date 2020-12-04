@@ -10,7 +10,6 @@ const DefaultDie = 1
 function rollDice (faces: number, die: number): number {
 	let sum = 0
 	for (let i = 0; i < die; i++) {
-		console.log('Dice roll!')
 		sum += Math.floor(faces * Math.random()) + 1
 	}
 	return sum
