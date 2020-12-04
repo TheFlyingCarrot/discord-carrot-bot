@@ -8,8 +8,9 @@ const DefaultFaces = 6
 const DefaultDie = 1
 
 function rollDice (faces: number, die: number): number {
-	let sum = Math.floor(faces * Math.random()) + 1
+	let sum = 0
 	for (let i = 0; i < die; i++) {
+		console.log('Dice roll!')
 		sum += Math.floor(faces * Math.random()) + 1
 	}
 	return sum
@@ -41,7 +42,7 @@ const diceroll: Command = {
 	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
 		const faces = verifyFaces(Number(args[0]))
 		const die = verifyDie(Number(args[1]))
-		message.reply(`it's a ${rollDice(faces, die)}.\n\`Faces: ${faces} | ${die > 1 ? 'Die' : 'Dice'}: ${die}\``)
+		message.reply(`it's a ${rollDice(faces, die)}.\n\`Faces: ${faces} | ${die > 1 ? 'Dice' : 'Die'}: ${die}\``)
 	}
 }
 
