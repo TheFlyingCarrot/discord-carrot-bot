@@ -41,7 +41,7 @@ const diceroll: Command = {
 	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
 		const faces = verifyFaces(Number(args[0]))
 		const die = verifyDie(Number(args[1]))
-		message.reply(`it's a ${rollDice(faces, die)}.\n\`Faces: ${faces} | ${die > 1 ? 'Dice' : 'Die'}: ${die}\``)
+		message.reply(`it's a ${rollDice(faces, die)}.\n\`${faces} Faces | ${die} ${die > 1 ? 'Dice' : 'Die'}\``)
 	}
 }
 
