@@ -1,11 +1,16 @@
-.vscode
-.vs
-.env
-
-.eslintrc.json
-.eslintrc.js
-.eslintignore
+dist
 
 node_modules
 npm-debug.log
-dist
+
+.eslintignore
+.eslintrc.js
+.eslintrc.json
+
+git
+.github
+
+.env
+
+.vs
+.vscode
