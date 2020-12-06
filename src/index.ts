@@ -12,12 +12,6 @@ client.commands = new Discord.Collection()
 client.shackled = false
 const cooldowns = new Discord.Collection()
 
-try {
-	console.log(null ?? "NCO WORKING!")
-} catch (error) {
-	console.log(error)
-}
-
 // Commands
 for (const file of filesys.readdirSync(`${__dirname}/command_modules/`)) {
 	const command: Command = require(`./command_modules/${file}`).default
