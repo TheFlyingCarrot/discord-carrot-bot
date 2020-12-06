@@ -12,6 +12,12 @@ client.commands = new Discord.Collection()
 client.shackled = false
 const cooldowns = new Discord.Collection()
 
+try {
+	console.log(null ?? "NCO WORKING!")
+} catch (error) {
+	console.log(error)
+}
+
 // Commands
 for (const file of filesys.readdirSync(`${__dirname}/command_modules/`)) {
 	const command: Command = require(`./command_modules/${file}`).default
@@ -38,19 +44,21 @@ client
 	.on('disconnect', console.error)
 	.on('message', (message: Discord.Message) => {
 		// Get command from provided args, or a empty object | future: declare an empty object instead of a null object (nullish coalescing operator: ??)
+
 		const { command, args } = getCommand({ client, message, prefix, developers, cooldowns }) || {}
 
-		if (!command) return null
+		if (command) {
+			message.channel.startTyping()
 
-		message.channel.startTyping()
+			try {
+				command.execute({ client, message, args })
+			} catch (error) {
+				console.error(error)
+			}
 
-		try {
-			command.execute({ client, message, args })
-		} catch (error) {
-			console.error(error)
+			message.channel.stopTyping()
 		}
 
-		message.channel.stopTyping()
 	})
 	.on('messageReactionAdd', (reaction: Discord.MessageReaction, user: Discord.User) => {
 		handleReaction(client, reaction, user, 'add')
