@@ -1,7 +1,8 @@
 import { Command, ExtendedClient } from '../typings.js'
 import Discord, { Client, Message, MessageEmbed } from '../internal.js'
 
-const validateFlag = Flag => Flag == 'true' || Flag == 'false' || Flag == 'null'
+const Valid_Flags = [true, false, null]
+
 const Ignored_Channels = new Set([
 	'750499239171457064', '750505158043107509', '750498579797377196',
 	'442002580764360715', '442004978111086592', '731313604493574145', '731299966341087273'
@@ -24,13 +25,7 @@ const lock_down: Command = {
 	permission: 'ADMINISTRATOR',
 
 	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
-		console.log(Boolean(args[0].toLowerCase))
-		console.log(validateFlag(Boolean(args[0].toLowerCase)))
-		if (!validateFlag(args[0].toLowerCase)) {
-			message.reply('You did not provide a valid flag.')
-			return null
-		}
-		const flag = args[0].toLowerCase() == 'true' ? true : args[0].toLowerCase() == 'false' ? false : null
+		const flag = args[0].toLowerCase() === 'true' ? true : args[0].toLowerCase() === 'false' ? false : null
 		const channels = message.guild.channels.cache.filter(ch => ch.type !== 'category')
 		channels.forEach(channel => {
 			if (!Ignored_Channels.has(channel.id)) {
