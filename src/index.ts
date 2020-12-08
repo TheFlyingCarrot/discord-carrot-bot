@@ -1,13 +1,14 @@
 import { Command, ExtendedClient } from './typings'
 import filesys from 'fs'
 import Discord, { Activity, Presence } from 'discord.js'
-import { handleReaction } from './handlers/messageReaction_Handler'
-import { handleDeletion } from './handlers/messageDelete_Handler'
+import { handleMessageReaction } from './handlers/messageReaction_Handler'
+import { handleMessageDeletion } from './handlers/messageDelete_Handler'
 import { getCommand } from './handlers/command_Handler'
 import { developers, prefix } from './config.json'
 import { handleGuildMemberRemove } from './handlers/guildMemberRemove_Handler'
 import { handleGuildBanAdd } from './handlers/guildBanAdd_Handler'
 import { handleGuildBanRemove } from './handlers/guildBanRemove_Handler'
+import { handleMessageUpdate } from './handlers/messageUpdate_Handler'
 
 // Client Set-up
 const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
@@ -58,9 +59,10 @@ client
 		}
 
 	})
-	.on('messageDelete', (message: Discord.Message) => handleDeletion(message))
-	.on('messageReactionAdd', (reaction: Discord.MessageReaction, user: Discord.User) => handleReaction(client, reaction, user, 'add'))
-	.on('messageReactionRemove', (reaction: Discord.MessageReaction, user: Discord.User) => handleReaction(client, reaction, user, 'remove'))
+	.on('messageUpdate', async (oldMessage: Discord.Message, newMessage: Discord.Message) => handleMessageUpdate(oldMessage, newMessage))
+	.on('messageDelete', (message: Discord.Message) => handleMessageDeletion(message))
+	.on('messageReactionAdd', async (reaction: Discord.MessageReaction, user: Discord.User) => handleMessageReaction(client, reaction, user, 'add'))
+	.on('messageReactionRemove', async (reaction: Discord.MessageReaction, user: Discord.User) => handleMessageReaction(client, reaction, user, 'remove'))
 	.on('guildMemberRemove', (member: Discord.GuildMember) => handleGuildMemberRemove(member))
 	.on('guildBanAdd', (guild: Discord.Guild, user: Discord.User) => handleGuildBanAdd(guild, user))
 	.on('guildBanRemove', (guild: Discord.Guild, user: Discord.User) => handleGuildBanRemove(guild, user))

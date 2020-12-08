@@ -12,24 +12,24 @@ async function fetchPartial (partial) {
 	return partial
 }
 
-export function handleReaction (client: ExtendedClient, reaction: Discord.MessageReaction, user: Discord.User, operation: string): null | void {
-	if (reaction.partial) fetchPartial(reaction)
-	if (user.partial) fetchPartial(user)
+export async function handleMessageReaction (client: ExtendedClient, reaction: Discord.MessageReaction, user: Discord.User, operation: string): Promise<void> {
+	if (reaction.partial) await fetchPartial(reaction)
+	if (user.partial) await fetchPartial(user)
 
-	if (reaction.message.channel.type == 'dm') return null
-	if (reaction.message.channel.name != 'role-request') return null
-	if (reaction.message && reaction.message.author && !reaction.message.author.equals(client.user)) return null
+	if (reaction.message.channel.type == 'dm') return
+	if (reaction.message.channel.name != 'role-request') return
+	if (reaction.message && reaction.message.author && !reaction.message.author.equals(client.user)) return
 
 	const { guild } = reaction.message
 
 	if (!guild.available) {
 		console.error('[Reaction Handler] [Error] Guild not available:', guild)
-		return null
+		return
 	}
 
 	if (guild.id == TeamDiscord.guild_id) {
 		const reactionRole: ReactionRole = TeamDiscord.reaction_roles.find((role) => role.emoji_tag == reaction.emoji.toString())
-		if (!reactionRole) return null
+		if (!reactionRole) return
 
 		new Promise((resolve) => resolve(guild.roles.fetch(reactionRole.role_id)))
 			.then((desiredRole: Role) => {

@@ -2,7 +2,7 @@ import { Command, ExtendedClient } from '../typings.js'
 import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.js'
 import { ClientUser } from 'discord.js'
 
-export async function handleDeletion (message: Message) {
+export async function handleMessageDeletion (message: Message) {
 	if (message.channel.type === "dm" || message.channel.name === "logs" || !message.guild.available) return
 
 	const logChannel = message.guild.channels.cache.find(channel => channel.name === "logs" && channel.type === "text") as Discord.TextChannel
