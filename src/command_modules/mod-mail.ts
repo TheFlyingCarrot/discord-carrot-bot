@@ -23,8 +23,8 @@ const mod_mail: Command = {
 		const modMail = args.join(' ')
 
 		try {
-			message.delete({ reason: 'Mod-mail.' })
-			publicUpdatesChannel.send(`${message.author} sent:\n'${modMail}'`)
+			message.delete({ reason: 'Mod-mail' })
+			publicUpdatesChannel.send(`\`[Mod-mail]\` ${message.author} sent:\n'${modMail}'`)
 		} catch (error) {
 			console.error(error)
 		}

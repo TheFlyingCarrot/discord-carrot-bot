@@ -1,0 +1,32 @@
+import { Command, ExtendedClient } from '../typings.js'
+import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.js'
+import { ClientUser } from 'discord.js'
+
+export async function handleGuildBanRemove (guild: Discord.Guild, user: Discord.User) {
+	if (!guild.available) return
+
+	const logChannel = guild.channels.cache.find(channel => channel.name === "logs" && channel.type === "text") as Discord.TextChannel
+	if (!logChannel) return
+
+	try {
+		const fetchedLogs = await guild.fetchAuditLogs({ limit: 1, type: "MEMBER_BAN_REMOVE" })
+		const banRemoveLog = fetchedLogs.entries.first()
+
+		const { executor, reason } = banRemoveLog
+
+		const newEmbed = new MessageEmbed()
+
+		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+			.setTimestamp()
+			.setColor("#00ff00")
+			.setTitle('User Unbanned')
+			.addField("Unbanned User", user.tag)
+			.addField("Executor", executor || "Unknown", true)
+			.addField("Reason", reason || "Unspecified", true)
+			.setFooter(`User ID: ${user.id} | Executor ID: ${executor.id}`)
+
+		logChannel.send(newEmbed)
+	} catch (error) {
+		console.error(error)
+	}
+}
