@@ -23,6 +23,7 @@ export async function handleMessageUpdate (oldMessage: Message, newMessage: Mess
 			.addField(`Channel`, `${newMessage.channel}`, true)
 			.addField(oldMessage.content != null ? 'Old Message' : 'Old Message | __Not Retrieved__', oldMessage.cleanContent)
 			.addField('New Message', newMessage.cleanContent)
+			.setFooter(process.env.ENV_TYPE == 'test' ? 'Test Build' : null)
 
 		logChannel.send(newEmbed)
 	} catch (error) {

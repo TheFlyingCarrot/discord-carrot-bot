@@ -26,7 +26,7 @@ export async function handleMessageDeletion (message: Message) {
 			.addField("Message", content || embeds.toString() || "")
 			.addField("Executor", executor || "Unknown", true)
 			.addField("Reason", reason || "Unspecified", true)
-			.setFooter(`Message ID: ${id} | Author ID: ${author.id}`)
+			.setFooter(`Message ID: ${id} | Author ID: ${author.id} | ${process.env.ENV_TYPE == 'test' ? 'Test Build' : null}`)
 
 		logChannel.send(newEmbed)
 	} catch (error) {

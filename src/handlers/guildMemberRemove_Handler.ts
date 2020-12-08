@@ -23,7 +23,7 @@ export async function handleGuildMemberRemove (member: Discord.GuildMember) {
 			.addField("Removed Member", member.user.tag)
 			.addField("Executor", executor || "Unknown", true)
 			.addField("Reason", reason || "Unspecified", true)
-			.setFooter(`User ID: ${member.id} | Executor ID: ${executor.id}`)
+			.setFooter(`User ID: ${member.id} | Executor ID: ${executor.id} | ${process.env.ENV_TYPE == 'test' ? 'Test Build' : null}`)
 
 		logChannel.send(newEmbed)
 	} catch (error) {
