@@ -5,12 +5,13 @@ import { Command, ExtendedClient } from './typings'
 import { getCommand } from './helper_modules/getCommand'
 import { developers, prefix } from './config.json'
 
-import { handleMessageReaction } from './event_handlers/messageReaction_Handler'
+import { handleMessageUpdate } from './event_handlers/messageUpdate_Handler'
 import { handleMessageDeletion } from './event_handlers/messageDelete_Handler'
+import { handleMessageReactionAdd } from './event_handlers/messageReactionAdd_Handler'
+import { handleMessageReactionRemove } from './event_handlers/messageReactionRemove_Handler'
 import { handleGuildMemberRemove } from './event_handlers/guildMemberRemove_Handler'
 import { handleGuildBanAdd } from './event_handlers/guildBanAdd_Handler'
 import { handleGuildBanRemove } from './event_handlers/guildBanRemove_Handler'
-import { handleMessageUpdate } from './event_handlers/messageUpdate_Handler'
 import { handleWebhookUpdate } from './event_handlers/webhookUpdate_Handler'
 
 // Client Set-up
@@ -48,27 +49,24 @@ client
 	.on('disconnect', console.error)
 	.on('message', async (message: Discord.Message) => {
 		// nullish coalescing operator: ??
-
 		const { command, args } = getCommand({ client, message, prefix, developers, cooldowns }) || {}
-
 		if (command) {
 			message.channel.startTyping()
-
 			try {
 				command.execute({ client, message, args })
 			} catch (error) {
 				console.error(error)
 			}
-
 			message.channel.stopTyping()
 		}
-
 	})
 	.on('messageUpdate', handleMessageUpdate)
 	.on('messageDelete', handleMessageDeletion)
-	.on('messageReactionAdd', async (reaction: Discord.MessageReaction, user: Discord.User) => handleMessageReaction(client, reaction, user, 'messageReactionAdd'))
-	.on('messageReactionRemove', async (reaction: Discord.MessageReaction, user: Discord.User) => handleMessageReaction(client, reaction, user, 'messageReactionRemove'))
+	.on('messageReactionAdd', handleMessageReactionAdd)
+	.on('messageReactionRemove', handleMessageReactionRemove)
 	.on('guildMemberRemove', handleGuildMemberRemove)
 	.on('guildBanAdd', handleGuildBanAdd)
 	.on('guildBanRemove', handleGuildBanRemove)
 	.on('webhookUpdate', handleWebhookUpdate)
+
+export { client }
