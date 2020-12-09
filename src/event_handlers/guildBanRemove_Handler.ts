@@ -24,7 +24,7 @@ export async function handleGuildBanRemove (guild: Discord.Guild, user: Discord.
 			.addField("Unbanned User", user.tag)
 			.addField("Executor", executor || "Unknown", true)
 			.addField("Reason", reason || "Unspecified", true)
-			.setFooter(`User ID: ${user.id} | Executor ID: ${executor.id} ${process.env.ENV_TYPE == 'test' ? '| Test Build' : ''}`)
+			.setFooter(`User ID: ${user.id} | Executor ID: ${executor.id}${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
 
 		logChannel.send(newEmbed)
 	} catch (error) {

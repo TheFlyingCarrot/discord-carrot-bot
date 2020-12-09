@@ -10,6 +10,8 @@ export async function handleMessageUpdate (oldMessage: Message, newMessage: Mess
 
 	try {
 
+		if (!newMessage.author || !newMessage.channel || !newMessage.cleanContent || !newMessage.id) return
+
 		if (oldMessage.partial) await oldMessage.fetch()
 		if (newMessage.partial) await newMessage.fetch()
 
@@ -24,9 +26,7 @@ export async function handleMessageUpdate (oldMessage: Message, newMessage: Mess
 			.addField(`Channel`, `${newMessage.channel}`, true)
 			.addField(oldMessage.content != null ? 'Old Message' : 'Old Message | __Not Retrieved__', oldMessage.cleanContent)
 			.addField('New Message', newMessage.cleanContent)
-		if (process.env.ENV_TYPE === 'test') {
-			newEmbed.setFooter('| Test Build')
-		}
+			.setFooter(`Message ID: ${newMessage.id} | Author ID: ${newMessage.author.id || 'Null'}${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
 
 		logChannel.send(newEmbed)
 	} catch (error) {
