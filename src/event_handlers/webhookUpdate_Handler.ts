@@ -1,6 +1,4 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.js'
-import { SystemChannelFlags } from 'discord.js'
+import Discord, { MessageEmbed } from '../internal.js'
 
 const webhookActions = [50, 51, 52]
 const webhookActionMap = { 'WEBHOOK_CREATE': 'Create Webhook', 'WEBHOOK_UPDATE': 'Update Webhook', 'WEBHOOK_DELETE': 'Delete Webhook' }
@@ -28,11 +26,12 @@ export async function handleWebhookUpdate (channel: Discord.TextChannel) {
 			return
 		}
 
-		const { executor, target, reason, action, changes, id } = webhookUpdateLog
+		const { executor, reason, changes, id } = webhookUpdateLog
 		const newEmbed = new MessageEmbed()
 
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setTimestamp()
+			.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))
 			.setColor(embedActions[webhookUpdateLog.actionType] || '#ff6400')
 			.setTitle('Webhook Updated')
 			.addField(`Executor`, `${executor}`, true)

@@ -10,13 +10,14 @@ export async function handleMessageUpdate (oldMessage: Message, newMessage: Mess
 
 	try {
 
-		if (oldMessage.partial) await oldMessage.fetch(true)
+		if (oldMessage.partial) await oldMessage.fetch()
 		if (newMessage.partial) await newMessage.fetch()
 
 		const newEmbed = new MessageEmbed()
 
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setTimestamp()
+			.setThumbnail(newMessage.author.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))
 			.setColor('#ff6400')
 			.setTitle('Message Updated')
 			.addField(`Author`, `${newMessage.author}`, true)

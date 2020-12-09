@@ -33,9 +33,9 @@ export async function handleMessageReaction (client: ExtendedClient, reaction: D
 
 		new Promise((resolve) => resolve(guild.roles.fetch(reactionRole.role_id)))
 			.then((desiredRole: Role) => {
-				if (operation === 'add') {
+				if (operation === 'messageReactionAdd') {
 					guild.member(user).roles.add(desiredRole, 'Sub-team selection.')
-				} else if (operation === 'remove') {
+				} else if (operation === 'messageReactionRemove') {
 					guild.member(user).roles.remove(desiredRole, 'Sub-team removal.')
 				}
 			})

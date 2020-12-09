@@ -1,6 +1,6 @@
 import { Command, ExtendedClient } from '../typings.js'
 import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.js'
-import { cooldown } from './cooldown_Handler'
+import { cooldown } from './cooldown'
 
 export function getCommand ({ client, message, prefix, developers, cooldowns }: { client: ExtendedClient, message: Message, prefix: string, developers: string[], cooldowns: Collection<any, any> }): { command: Command, args: any | null } | null {
 	if (!message.content.startsWith(prefix) || message.author.bot || message.tts || message.system) {
