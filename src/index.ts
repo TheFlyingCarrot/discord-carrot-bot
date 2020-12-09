@@ -18,6 +18,7 @@ const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANN
 client.login(process.env.BOT_TOKEN)
 client.commands = new Discord.Collection()
 client.shackled = false
+client.activity = '.help'
 const cooldowns = new Discord.Collection()
 
 // Commands
@@ -33,9 +34,9 @@ for (const file of filesys.readdirSync(`${__dirname}/command_modules/`)) {
 client
 	.on('ready', () => {
 		console.debug('[Client] [State] Ready')
-		client.user.setStatus('online')
+		client.shackled ? client.user.setStatus('online') : client.user.setStatus('dnd')
 		setInterval(() => {
-			client.user.setActivity('.help', { type: 'LISTENING' })
+			client.user.setActivity(client.activity, { type: 'LISTENING' })
 				.catch(console.error)
 		}, 600000)
 	})
@@ -45,7 +46,7 @@ client
 	.on('invalidated', console.error)
 	.on('disconnect', console.error)
 	.on('message', async (message: Discord.Message) => {
-		// Get command from provided args, or a empty object | future: declare an empty object instead of a null object (nullish coalescing operator: ??)
+		// nullish coalescing operator: ??
 
 		const { command, args } = getCommand({ client, message, prefix, developers, cooldowns }) || {}
 

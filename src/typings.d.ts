@@ -9,6 +9,7 @@ declare module '*.json' {
 declare interface ExtendedClient extends Discord.Client {
 	commands?: Discord.Collection<any, any>
 	shackled?: boolean
+	activity?: string
 }
 
 declare interface Command {
