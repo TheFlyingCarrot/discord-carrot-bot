@@ -12,7 +12,8 @@ export async function handleMessageDeletion (message: Message) {
 		const fetchedLogs = await message.guild.fetchAuditLogs({ limit: 1, type: "MESSAGE_DELETE" })
 		const deletionLog = fetchedLogs.entries.first()
 
-		const { author, channel, cleanContent, id } = message
+		const { author, channel, cleanContent, id: messageID } = message
+		const { id: authorID } = author
 		const { executor, reason } = deletionLog
 
 		const newEmbed = new MessageEmbed()
@@ -27,7 +28,7 @@ export async function handleMessageDeletion (message: Message) {
 			.addField('Executor', executor, true)
 			.addField("Reason", reason || 'Unspecified', true)
 			.addField("Message", cleanContent || '`Message was an embed.`')
-			.setFooter(`Message ID: ${id} | Author ID: ${author.id} ${process.env.ENV_TYPE == 'test' ? '| Test Build' : ''}`)
+			.setFooter(`Message ID: ${messageID} | Author ID: ${authorID} ${process.env.ENV_TYPE == 'test' ? '| Test Build' : ''}`)
 
 		logChannel.send(newEmbed)
 	} catch (error) {
