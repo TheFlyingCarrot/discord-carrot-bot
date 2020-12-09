@@ -15,7 +15,7 @@ const guild_info: Command = {
 	developerOnly: true,
 
 	async execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): Promise<void> {
-		const data = JSON.stringify(message.guild)
+		const data = JSON.stringify(message.guild, null, '	')
 		const filename = `${message.guild.id}.json`
 
 		filesys.writeFileSync(filename, data)
