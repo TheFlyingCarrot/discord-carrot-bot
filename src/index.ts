@@ -9,6 +9,7 @@ import { handleGuildMemberRemove } from './handlers/guildMemberRemove_Handler'
 import { handleGuildBanAdd } from './handlers/guildBanAdd_Handler'
 import { handleGuildBanRemove } from './handlers/guildBanRemove_Handler'
 import { handleMessageUpdate } from './handlers/messageUpdate_Handler'
+import { handleWebhookUpdate } from './handlers/webhookUpdate_Handler'
 
 // Client Set-up
 const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
@@ -66,3 +67,4 @@ client
 	.on('guildMemberRemove', (member: Discord.GuildMember) => handleGuildMemberRemove(member))
 	.on('guildBanAdd', (guild: Discord.Guild, user: Discord.User) => handleGuildBanAdd(guild, user))
 	.on('guildBanRemove', (guild: Discord.Guild, user: Discord.User) => handleGuildBanRemove(guild, user))
+	.on('webhookUpdate', (channel: Discord.TextChannel) => handleWebhookUpdate(channel))
