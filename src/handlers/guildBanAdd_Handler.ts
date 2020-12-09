@@ -23,7 +23,7 @@ export async function handleGuildBanAdd (guild: Discord.Guild, user: Discord.Use
 			.addField("Banned User", user.tag)
 			.addField("Executor", executor || "Unknown", true)
 			.addField("Reason", reason || "Unspecified", true)
-			.setFooter(`User ID: ${user.id} | Executor ID: ${executor.id} | ${process.env.ENV_TYPE == 'test' ? 'Test Build' : null}`)
+			.setFooter(`User ID: ${user.id} | Executor ID: ${executor.id} ${process.env.ENV_TYPE == 'test' ? '| Test Build' : ''}`)
 
 		logChannel.send(newEmbed)
 	} catch (error) {
