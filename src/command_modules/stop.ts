@@ -11,6 +11,7 @@ const stop_client: Command = {
 
 	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
 		console.log(`=== ===STOP COMMAND CALLED, ENDING OPEN PROCESSES=== ===\nCALLER: ${message.author.tag}`)
+		client.destroy()
 		process.exit(0)
 	}
 }
