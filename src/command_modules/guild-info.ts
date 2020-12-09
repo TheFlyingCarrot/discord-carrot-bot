@@ -1,4 +1,4 @@
-import filesys from 'fs'
+import filesys, { constants } from 'fs'
 import { Command, ExtendedClient } from '../typings.js'
 import Discord, { Client, Message, MessageEmbed } from '../internal.js'
 
@@ -15,9 +15,15 @@ const guild_info: Command = {
 	developerOnly: true,
 
 	async execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): Promise<void> {
-		await filesys.writeFile(`${message.guild.id}.json`, message.guild.toString(), console.error)
-		message.reply("Here's the info for this guild.", { files: [`${message.guild.id}.json`] })
-		filesys.unlink(`${message.guild.id}.json`, console.error)
+		const data = JSON.stringify(message.guild)
+		const filename = `${message.guild.id}.json`
+
+		filesys.writeFileSync(filename, data)
+		message.reply("Here's the info for this guild.", { files: [filename] })
+		setTimeout(() => {
+			if (filesys.existsSync(filename)) filesys.unlinkSync(filename)
+		}, 1000)
+		
 	}
 }
 
