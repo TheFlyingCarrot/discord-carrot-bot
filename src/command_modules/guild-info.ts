@@ -14,14 +14,10 @@ const guild_info: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
-		try {
-			filesys.writeFileSync(`${message.guild.id}.json`, message.guild.toString())
-			message.reply("Here's the info for this guild.", { files: [`${message.guild.id}.json`] })
-			if (filesys.existsSync(`${message.guild.id}.json`)) filesys.unlinkSync(`${message.guild.id}.json`)
-		} catch (error) {
-			console.error(error)
-		}
+	async execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): Promise<void> {
+		await filesys.writeFile(`${message.guild.id}.json`, message.guild.toString(), console.error)
+		message.reply("Here's the info for this guild.", { files: [`${message.guild.id}.json`] })
+		filesys.unlink(`${message.guild.id}.json`, console.error)
 	}
 }
 

@@ -23,6 +23,7 @@ const cooldowns = new Discord.Collection()
 
 // Commands
 for (const file of filesys.readdirSync(`${__dirname}/command_modules/`)) {
+	if (!file.endsWith('.js')) continue
 	const command: Command = require(`./command_modules/${file}`).default
 	try {
 		client.commands.set(command.name, command)
@@ -34,7 +35,7 @@ for (const file of filesys.readdirSync(`${__dirname}/command_modules/`)) {
 client
 	.on('ready', () => {
 		console.debug('[Client] [State] Ready')
-		client.shackled ? client.user.setStatus('online') : client.user.setStatus('dnd')
+		client.shackled ? client.user.setStatus('dnd') : client.user.setStatus('online')
 		setInterval(() => {
 			client.user.setActivity(client.activity, { type: 'LISTENING' })
 				.catch(console.error)
