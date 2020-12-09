@@ -3,7 +3,7 @@ import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.
 import { ClientUser } from 'discord.js'
 
 export async function handleMessageDeletion (message: Message) {
-	if (message.channel.type === "dm" || message.channel.name === "logs" || message.embeds || !message.guild.available) return
+	if (message.channel.type === "dm" || message.channel.name === "logs" || !message.guild.available) return
 
 	const logChannel = message.guild.channels.cache.find(channel => channel.name === "logs" && channel.type === "text") as Discord.TextChannel
 	if (!logChannel) return
@@ -19,10 +19,12 @@ export async function handleMessageDeletion (message: Message) {
 
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setTimestamp()
+			.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))
 			.setColor("#ff0000")
 			.setTitle('Message Deleted')
 			.addField(`Author`, `${author}`, true)
 			.addField(`Channel`, `${channel}`, true)
+			.addField('Executor', executor, true)
 			.addField("Reason", reason || 'Unspecified', true)
 			.addField("Message", cleanContent)
 			.setFooter(`Message ID: ${id} | Author ID: ${author.id} ${process.env.ENV_TYPE == 'test' ? '| Test Build' : ''}`)
