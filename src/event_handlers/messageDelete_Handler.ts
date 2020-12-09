@@ -26,7 +26,7 @@ export async function handleMessageDeletion (message: Message) {
 			.addField(`Channel`, `${channel}`, true)
 			.addField('Executor', executor, true)
 			.addField("Reason", reason || 'Unspecified', true)
-			.addField("Message", cleanContent)
+			.addField("Message", cleanContent || '`Message was an embed.`')
 			.setFooter(`Message ID: ${id} | Author ID: ${author.id} ${process.env.ENV_TYPE == 'test' ? '| Test Build' : ''}`)
 
 		logChannel.send(newEmbed)
