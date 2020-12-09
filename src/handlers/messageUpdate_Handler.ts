@@ -3,7 +3,7 @@ import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.
 import { ClientUser, NewsChannel } from 'discord.js'
 
 export async function handleMessageUpdate (oldMessage: Message, newMessage: Message) {
-	if (oldMessage.channel.type === "dm" || oldMessage.channel.name === "logs" || !oldMessage.guild.available) return
+	if (oldMessage.channel.type === "dm" || oldMessage.channel.name === "logs" || oldMessage.embeds || newMessage.embeds || !oldMessage.guild.available) return
 
 	const logChannel = oldMessage.guild.channels.cache.find(channel => channel.name === "logs" && channel.type === "text") as Discord.TextChannel
 	if (!logChannel) return
@@ -23,7 +23,9 @@ export async function handleMessageUpdate (oldMessage: Message, newMessage: Mess
 			.addField(`Channel`, `${newMessage.channel}`, true)
 			.addField(oldMessage.content != null ? 'Old Message' : 'Old Message | __Not Retrieved__', oldMessage.cleanContent)
 			.addField('New Message', newMessage.cleanContent)
-			.setFooter(process.env.ENV_TYPE == 'test' ? 'Test Build' : null)
+		if (process.env.ENV_TYPE === 'test') {
+			newEmbed.setFooter('| Test Build')
+		}
 
 		logChannel.send(newEmbed)
 	} catch (error) {
