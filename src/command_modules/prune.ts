@@ -36,9 +36,8 @@ const prune: Command = {
 			}
 		} else {
 			message.channel.bulkDelete(amount + 1, true)
-				.catch((err) => {
-					message.reply('I encountered an error executing that command.')
-					return err
+				.catch((error) => {
+					console.error(error)
 				})
 		}
 
