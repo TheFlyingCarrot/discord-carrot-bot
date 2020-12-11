@@ -2,6 +2,10 @@
 	"title": "Team 2996 - Cougars Gone Wired",
 	"guild_id": "750480529765171302",
 	"role_channel_id": "751241962534731867",
+	"role_categories": [
+		"Business",
+		"Technical"
+	],
 	"reaction_roles": [
 		{
 			"name": "Awards",

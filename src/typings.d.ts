@@ -1,4 +1,3 @@
-import { Client, Message, PermissionString } from 'discord.js'
 import Discord from './internal'
 
 declare module '*.json' {
@@ -24,12 +23,12 @@ declare interface Command {
 	cooldown?: number
 
 	guildOnly?: boolean
-	permission?: PermissionString
+	permission?: Discord.PermissionString
 	guildSpecific?: string[]
 
 	developerOnly?: boolean
 
-	execute?: ({ client, message, args }: { client: Client, message: Message, args: string[] }) => string | null | void | Promise<any>
+	execute?: ({ client, message, args }: { client: Discord.Client, message: Discord.Message, args: string[] }) => string | null | void | Promise<any>
 }
 
 declare interface ReactionRoleConfig {
