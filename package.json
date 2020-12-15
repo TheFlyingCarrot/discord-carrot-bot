@@ -15,7 +15,7 @@
 		"dotenv": "^8.2.0",
 		"execution-time": "^1.4.1",
 		"request": "2.88.2",
-		"systemjs": "^6.7.1",
+		"systemjs": "^6.8.1",
 		"tslib": "^2.0.3"
 	},
 	"devDependencies": {
