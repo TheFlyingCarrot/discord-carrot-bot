@@ -1,12 +1,12 @@
-import { Command, Config, Discord, ExtendedClient, fs, EventHandlers, HelperModules } from './internal'
+import { Command, Config, Discord, EventHandlers, ExtendedClient, fs, HelperModules } from './internal'
 
 // Client Set-up
 export const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 client.login(process.env.BOT_TOKEN)
 client.commands = new Discord.Collection()
 client.cooldowns = new Discord.Collection()
-client.commandsEnabled = true
-client.activity = '.help'
+client.commandsEnabled = Config.default_commands_enabled
+client.activity = client.commandsEnabled ? '.help' : 'nobody.'
 client.events = Config.client_events
 
 // Commands

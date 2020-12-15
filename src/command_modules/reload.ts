@@ -33,8 +33,6 @@ const reload: Command = {
 			message.channel.send(newEmbed)
 			console.log('[Command] [Reload] [Success]', `Command: ${newCommand.default.name.replace(/^\w/u, character => character.toUpperCase())} reloaded.`)
 		} catch (error) {
-			newEmbed.addField('Command Error', `There was an error while reloading a command: \`${commandName}\`\n\`${error}\``)
-			message.channel.send(newEmbed)
 			console.error('[Command] [Reload] [Fail]', error)
 			return error
 		}
