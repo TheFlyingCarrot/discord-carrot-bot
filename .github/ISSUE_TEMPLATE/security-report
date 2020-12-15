@@ -1,0 +1,17 @@
+---
+name: Report a Security Vulnerability
+about: Please review our Security Policy - Report a security vulnerability for support versions.
+title: "[Security]"
+labels: security
+assignees: ''
+
+---
+
+**What part of the repository is a security vulnerability?**
+A clear and concise description of where/what the vulnerability is.
+
+**Possible Solution**
+A clear and concise description of how you might solve the problem, or a solution you have found to patch the vulnerability.
+
+**Additional Information**
+Add any other information, screenshots, or examples concerning the feature request here.
