@@ -1,8 +1,8 @@
 import TeamDiscord from '../guilds/750480529765171302.json'
-import { client, isValidReaction, ReactionRole, Discord } from '../internal.js'
+import { client, ReactionRole, Discord, HelperModules } from '../internal.js'
 
 export async function handleMessageReactionAdd (messageReaction: Discord.MessageReaction, user: Discord.User): Promise<void> {
-	if (!isValidReaction(messageReaction, user)) return
+	if (!HelperModules.isValidReaction(messageReaction, user)) return
 
 	if (client.events.messageReactionAdd === false) return
 

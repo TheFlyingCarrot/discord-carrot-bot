@@ -1,6 +1,7 @@
 {
 	"prefix": ".",
 	"max_role_name_length": 32,
+	"ms_to_s_multiplier": 1000,
 	"default_cooldown": 3,
 	"developers": [
 		"238880608971915264"

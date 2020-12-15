@@ -1,9 +1,8 @@
-import { client, Discord } from '../internal.js'
-import { fetchPartial } from './fetchPartial'
+import { client, Discord, HelperModules } from '../internal.js'
 
 export async function isValidReaction (messageReaction: Discord.MessageReaction, user: Discord.User): Promise<boolean> {
-	if (messageReaction.partial) await fetchPartial(messageReaction)
-	if (user.partial) await fetchPartial(user)
+	if (messageReaction.partial) await HelperModules.fetchPartial(messageReaction)
+	if (user.partial) await HelperModules.fetchPartial(user)
 
 	if (messageReaction.message.channel.type == 'dm'
 		|| messageReaction.message.channel.name != 'role-request'
