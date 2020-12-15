@@ -1,4 +1,4 @@
-export async function fetchPartial (partial) {
+export async function fetchPartial (partial: Partial<any>) {
 	try {
 		await partial.fetch()
 	} catch (error) {

@@ -1,4 +1,4 @@
-import { Command, Config, Discord, ExtendedClient, fs, handleGuildBanAdd, handleGuildBanRemove, handleGuildMemberRemove, handleMessage, handleMessageDeletion, handleMessageReactionAdd, handleMessageReactionRemove, handleMessageUpdate, handleWebhookUpdate, onReady } from './internal'
+import { Command, Config, Discord, ExtendedClient, fs, EventHandlers, HelperModules } from './internal'
 
 // Client Set-up
 export const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
@@ -22,18 +22,18 @@ for (const file of fs.readdirSync(`${__dirname}/command_modules/`)) {
 
 // Client Events
 client
-	.on('ready', onReady)
+	.on('ready', HelperModules.onReady)
 	.on('debug', console.debug)
 	.on('warn', console.warn)
 	.on('error', console.error)
 	.on('invalidated', console.error)
 	.on('disconnect', console.error)
-	.on('guildBanAdd', handleGuildBanAdd)
-	.on('guildBanRemove', handleGuildBanRemove)
-	.on('guildMemberRemove', handleGuildMemberRemove)
-	.on('messageDelete', handleMessageDeletion)
-	.on('messageReactionAdd', handleMessageReactionAdd)
-	.on('messageReactionRemove', handleMessageReactionRemove)
-	.on('messageUpdate', handleMessageUpdate)
-	.on('message', handleMessage)
-	.on('webhookUpdate', handleWebhookUpdate)
+	.on('guildBanAdd', EventHandlers.handleGuildBanAdd)
+	.on('guildBanRemove', EventHandlers.handleGuildBanRemove)
+	.on('guildMemberRemove', EventHandlers.handleGuildMemberRemove)
+	.on('messageDelete', EventHandlers.handleMessageDeletion)
+	.on('messageReactionAdd', EventHandlers.handleMessageReactionAdd)
+	.on('messageReactionRemove', EventHandlers.handleMessageReactionRemove)
+	.on('messageUpdate', EventHandlers.handleMessageUpdate)
+	.on('message', EventHandlers.handleMessage)
+	.on('webhookUpdate', EventHandlers.handleWebhookUpdate)

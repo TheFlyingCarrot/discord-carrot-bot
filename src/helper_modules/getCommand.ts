@@ -1,4 +1,4 @@
-import { Command, cooldown, ExtendedClient, Discord } from '../internal.js'
+import { Command, ExtendedClient, Discord } from '../internal.js'
 
 export function getCommand ({ client, message, prefix, developers }: { client: ExtendedClient, message: Discord.Message, prefix: string, developers: string[] }): { command: Command, args: any | null } | null {
 	if (!message.content.startsWith(prefix) || message.author.bot || message.tts || message.system) {
