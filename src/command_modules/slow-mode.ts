@@ -14,7 +14,7 @@ const slow_mode: Command = {
 
 	permission: 'MANAGE_CHANNELS',
 
-	execute ({ message, args }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
+	execute ({ message, args }): void {
 		if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
 			message.reply('You do not have permission to use that command.')
 			return null

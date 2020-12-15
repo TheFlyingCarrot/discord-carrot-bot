@@ -13,7 +13,7 @@ const mod_mail: Command = {
 
 	guildOnly: true,
 
-	execute ({ message, args }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
+	execute ({ message, args }): void {
 		const { guild } = message
 		if (!guild.available) console.error('[mod-mail.ts] [Error] Guild not available:', guild)
 		const { publicUpdatesChannel } = guild

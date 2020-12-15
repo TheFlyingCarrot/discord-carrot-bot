@@ -8,7 +8,7 @@ const coinflip: Command = {
 
 	aliases: ['coin', 'coin-flip', 'flip', 'flipcoin', 'flip-coin'],
 
-	execute ({ message }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
+	execute ({ message }): void {
 		message.reply(`${Math.random() > 0.5 ? 'Heads' : 'Tails'}.`)
 	}
 }
