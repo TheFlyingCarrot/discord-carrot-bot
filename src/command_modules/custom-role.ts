@@ -2,10 +2,9 @@ import { Command, Discord, Config } from '../internal.js'
 
 const HexColorRegExp = /^[A-Fa-f0-9]{3}(?:[A-Fa-f0-9]{3})?$/iu
 
-// eslint-disable-next-line require-await
 async function createRole (guild: any, roleColor: string, roleName: string, reason: string): Promise<Discord.Role> {
 	return new Promise((resolve, reject) => {
-		if (roleName.length > Config.max_role_name_length) {
+		if (roleName.length > Config.maximum_role_name_length) {
 			reject(Error('StringLengthError'))
 		} else if (!HexColorRegExp.test(`${roleColor.replace('#', '')}`)) {
 			reject(Error('RoleColorError'))
@@ -63,7 +62,7 @@ const custom_role: Command = {
 				.catch(console.error)
 		} catch (error) {
 			if (error == 'StringLengthError') {
-				message.reply(`Your role name cannot be exceed ${Config.max_role_name_length} characters.`)
+				message.reply(`Your role name cannot be exceed ${Config.maximum_role_name_length} characters.`)
 			} else if (error == 'RoleColorError') {
 				message.reply('You provided an invalid role color.')
 			} else {
