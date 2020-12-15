@@ -8,7 +8,7 @@
 		"@discordjs/uws": "^10.149.0",
 		"@hapi/cryptiles": "^5.1.0",
 		"@hapi/hoek": "^9.1.0",
-		"acorn": "^7.4.1",
+		"acorn": "^8.0.4",
 		"concat-stream": "^2.0.0",
 		"discord-api-types": "^0.9.1",
 		"discord.js": "^12.5.1",
