@@ -1,9 +1,15 @@
+import { client, Command, Config, Discord } from '../internal'
+
 const ms_to_s_multiplier = 1000
 const default_cooldown = 3
 
-export function cooldown ({ message, command, cooldowns, developers }): boolean {
+export function cooldown ({ message, command }: { message: Discord.Message, command: Command }): boolean {
+	if (!client.cooldowns.has(command.name)) {
+		client.cooldowns.set(command.name, new Discord.Collection())
+	}
+
 	const now = Date.now()
-	const timestamps = cooldowns.get(command.name)
+	const timestamps = client.cooldowns.get(command.name)
 	const cooldownAmount = (command.cooldown || default_cooldown) * ms_to_s_multiplier
 
 	if (timestamps.has(message.author.id)) {
@@ -13,7 +19,7 @@ export function cooldown ({ message, command, cooldowns, developers }): boolean 
 			message.reply(`you cannot use that command for another \`${timeLeft.toFixed(1)}\` seconds`)
 			return true
 		}
-	} else if (!timestamps.has(message.author.id) && !developers.includes(message.author.id)) {
+	} else if (!timestamps.has(message.author.id) && !Config.developers.includes(message.author.id)) {
 		timestamps.set(message.author.id, now)
 		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)
 	}

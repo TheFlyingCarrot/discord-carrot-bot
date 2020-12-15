@@ -1,6 +1,6 @@
 import { Command, cooldown, ExtendedClient, Discord } from '../internal.js'
 
-export function getCommand ({ client, message, prefix, developers, cooldowns }: { client: ExtendedClient, message: Discord.Message, prefix: string, developers: string[], cooldowns: Discord.Collection<any, any> }): { command: Command, args: any | null } | null {
+export function getCommand ({ client, message, prefix, developers }: { client: ExtendedClient, message: Discord.Message, prefix: string, developers: string[] }): { command: Command, args: any | null } | null {
 	if (!message.content.startsWith(prefix) || message.author.bot || message.tts || message.system) {
 		return null
 	}
@@ -49,17 +49,11 @@ export function getCommand ({ client, message, prefix, developers, cooldowns }: 
 			message.reply('You do not have permission to use that command.')
 			return null
 		}
-		// Command Cooling
-		if (!cooldowns.has(command.name)) {
-			cooldowns.set(command.name, new Discord.Collection())
-		}
 	} catch (error) {
 		console.error(error)
 		message.reply(`\`${command.name}\` caused an internal error and has been cancelled.`)
 		return null
 	}
-
-	if (cooldown({ message, command, cooldowns, developers })) return null
 
 	return { command, args }
 }

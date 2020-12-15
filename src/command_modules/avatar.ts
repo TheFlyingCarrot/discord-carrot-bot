@@ -8,7 +8,7 @@ const avatar: Command = {
 
 	aliases: ['icon', 'pfp'],
 
-	execute ({ message }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
+	execute ({ message }): void {
 		const newEmbed = new Discord.MessageEmbed()
 		const user = message.mentions.users.map(userObject => userObject).shift()
 		const userAvatar = message.mentions.users.size ? user.displayAvatarURL({ dynamic: true, format: 'png', size: 4096 }) : message.author.displayAvatarURL({ format: 'png', dynamic: true, size: 4096 })

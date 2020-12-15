@@ -7,7 +7,7 @@ const ping: Command = {
 	enabled: true,
 	toggleable: true,
 
-	execute ({ message }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
+	execute ({ message }): void {
 		message.channel.send('Pong!')
 	}
 }

@@ -37,7 +37,7 @@ const diceroll: Command = {
 	aliases: ['dice', 'dice-roll', 'die', 'die-roll', 'roll', 'roll-die'],
 	usage: '(number of faces) (number of die)',
 
-	execute ({ message, args }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
+	execute ({ message, args }): void {
 		const faces = verifyFaces(Number(args[0]))
 		const die = verifyDie(Number(args[1]))
 		message.reply(`it's a ${rollDice(faces, die)}.\n\`${faces} Faces | ${die} ${die > 1 ? 'Dice' : 'Die'}\``)

@@ -14,7 +14,7 @@ const ban: Command = {
 	guildOnly: true,
 	permission: 'BAN_MEMBERS',
 
-	execute ({ message }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
+	execute ({ message }): void {
 		const targetUser = message.mentions.members.first()
 		if (!targetUser.bannable) {
 			message.reply('I can\'t ban that user.')
