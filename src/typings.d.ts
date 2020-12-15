@@ -1,4 +1,4 @@
-import Discord from './internal'
+import { Discord } from './internal'
 
 declare module '*.json' {
 	const value: any
@@ -6,9 +6,12 @@ declare module '*.json' {
 }
 
 declare interface ExtendedClient extends Discord.Client {
+	[x: string]: any
 	commands?: Discord.Collection<any, any>
-	shackled?: boolean
+	commandsEnabled?: boolean
+	reactionsEnabled?: boolean
 	activity?: string
+	events?: ClientEvents
 }
 
 declare interface Command {
@@ -45,4 +48,16 @@ declare interface ReactionRole {
 	emoji_name: string
 	emoji_id: string
 	emoji_tag: string
+}
+
+declare interface ClientEvents {
+	webhookUpdate: boolean
+	message: boolean
+	messageUpdate: boolean
+	messageDelete: boolean
+	messageReactionAdd: boolean
+	messageReactionRemove: boolean
+	guildMemberRemove: boolean
+	guildBanAdd: boolean
+	guildBanRemove: boolean
 }

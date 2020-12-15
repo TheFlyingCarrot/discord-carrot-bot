@@ -1,5 +1,4 @@
-import { Client, Message } from 'discord.js'
-import { Command } from '../typings'
+import { Command, Discord } from '../internal'
 
 const stop_client: Command = {
 	name: 'stop',
@@ -9,7 +8,7 @@ const stop_client: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
+	execute ({ client, message }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
 		console.log(`=== ===STOP COMMAND CALLED, ENDING OPEN PROCESSES=== ===\nCALLER: ${message.author.tag}`)
 		client.destroy()
 		process.exit(0)

@@ -1,11 +1,10 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+import { Command, ExtendedClient, Discord } from '../internal.js'
 
 const query_aliases = ['query', 'q']
 
 const toggle: Command = {
 	name: 'toggle',
-	description: 'Toggle usage of a command.',
+	description: 'Toggle usage of a specific command.',
 	enabled: true,
 	toggleable: true,
 
@@ -13,7 +12,7 @@ const toggle: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }): void {
+	execute ({ client, message, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }): void {
 		if (!args.length) {
 			message.reply('You didn\'t give me any command to toggle.')
 			return null

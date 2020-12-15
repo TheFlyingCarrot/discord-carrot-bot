@@ -1,5 +1,4 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed, User } from '../internal.js'
+import { Command, Discord } from '../internal.js'
 
 const MaxFaces = 20
 const MaxDie = 6
@@ -38,7 +37,7 @@ const diceroll: Command = {
 	aliases: ['dice', 'dice-roll', 'die', 'die-roll', 'roll', 'roll-die'],
 	usage: '(number of faces) (number of die)',
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
+	execute ({ message, args }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
 		const faces = verifyFaces(Number(args[0]))
 		const die = verifyDie(Number(args[1]))
 		message.reply(`it's a ${rollDice(faces, die)}.\n\`${faces} Faces | ${die} ${die > 1 ? 'Dice' : 'Die'}\``)

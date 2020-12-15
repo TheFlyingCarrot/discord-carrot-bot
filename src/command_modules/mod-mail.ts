@@ -1,5 +1,4 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+import { Command, Discord } from '../internal.js'
 
 const mod_mail: Command = {
 	name: 'mod-mail',
@@ -14,7 +13,7 @@ const mod_mail: Command = {
 
 	guildOnly: true,
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
+	execute ({ message, args }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
 		const { guild } = message
 		if (!guild.available) console.error('[mod-mail.ts] [Error] Guild not available:', guild)
 		const { publicUpdatesChannel } = guild

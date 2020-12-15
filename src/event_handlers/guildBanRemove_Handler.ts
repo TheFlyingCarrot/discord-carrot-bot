@@ -1,9 +1,9 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.js'
-import { ClientUser } from 'discord.js'
+import { client, Discord } from '../internal.js'
 
 export async function handleGuildBanRemove (guild: Discord.Guild, user: Discord.User) {
 	if (!guild.available) return
+
+	if (client.events.guildBanRemove === false) return
 
 	const logChannel = guild.channels.cache.find(channel => channel.name === "logs" && channel.type === "text") as Discord.TextChannel
 	if (!logChannel) return
@@ -14,7 +14,7 @@ export async function handleGuildBanRemove (guild: Discord.Guild, user: Discord.
 
 		const { executor, reason } = banRemoveLog
 
-		const newEmbed = new MessageEmbed()
+		const newEmbed = new Discord.MessageEmbed()
 
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setTimestamp()

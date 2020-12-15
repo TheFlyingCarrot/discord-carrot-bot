@@ -1,5 +1,4 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+import { Command, Discord } from '../internal.js'
 
 const team_discord = require('../guilds/750480529765171302.json')
 
@@ -11,9 +10,9 @@ const react_role: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
+	execute ({ client, message, args }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
 		if (team_discord.role_categories.includes(args[0])) {
-			const newEmbed = new MessageEmbed()
+			const newEmbed = new Discord.MessageEmbed()
 			newEmbed.setTitle(`${args[0].toUpperCase()} ROLES`)
 			let ReactionRole: any
 			for (ReactionRole of Object.values(team_discord.reaction_roles)) {

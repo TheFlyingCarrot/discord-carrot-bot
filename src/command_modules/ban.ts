@@ -1,5 +1,4 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+import { Command, Discord } from '../internal.js'
 
 const ban: Command = {
 	name: 'ban',
@@ -15,7 +14,7 @@ const ban: Command = {
 	guildOnly: true,
 	permission: 'BAN_MEMBERS',
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
+	execute ({ message }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
 		const targetUser = message.mentions.members.first()
 		if (!targetUser.bannable) {
 			message.reply('I can\'t ban that user.')
@@ -23,7 +22,7 @@ const ban: Command = {
 		}
 		targetUser.ban({ reason: `Banned by: ${message.author.tag}` })
 			.then(() => {
-				message.reply(new MessageEmbed().setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+				message.reply(new Discord.MessageEmbed().setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 					.setThumbnail('https://i.ibb.co/QjCW2nx/user-banned.png')
 					.setTimestamp()
 					.setTitle('Ban Command')

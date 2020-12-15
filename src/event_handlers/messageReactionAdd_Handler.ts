@@ -1,10 +1,10 @@
-import Discord, { Role } from '../internal.js'
-import { ReactionRole } from '../typings.js'
 import TeamDiscord from '../guilds/750480529765171302.json'
-import { isValidReaction } from '../helper_modules/isValidReaction'
+import { client, isValidReaction, ReactionRole, Discord } from '../internal.js'
 
 export async function handleMessageReactionAdd (messageReaction: Discord.MessageReaction, user: Discord.User): Promise<void> {
 	if (!isValidReaction(messageReaction, user)) return
+
+	if (client.events.messageReactionAdd === false) return
 
 	const { guild } = messageReaction.message
 
@@ -18,7 +18,7 @@ export async function handleMessageReactionAdd (messageReaction: Discord.Message
 		if (!reactionRole) return
 
 		new Promise((resolve) => resolve(guild.roles.fetch(reactionRole.role_id)))
-			.then((desiredRole: Role) => {
+			.then((desiredRole: Discord.Role) => {
 				guild.member(user).roles.add(desiredRole, 'Sub-team selection.')
 			})
 			.catch((error) => console.error(error))

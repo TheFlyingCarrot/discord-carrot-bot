@@ -1,7 +1,4 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed } from '../internal.js'
-
-const Valid_Flags = [true, false, null]
+import { Command, Discord } from '../internal.js'
 
 const Ignored_Channels = new Set([
 	'750499239171457064', '750505158043107509', '750498579797377196',
@@ -24,7 +21,7 @@ const lock_down: Command = {
 
 	permission: 'ADMINISTRATOR',
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
+	execute ({ message, args }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
 		const flag = args[0].toLowerCase() === 'true' ? true : args[0].toLowerCase() === 'false' ? false : null
 		const channels = message.guild.channels.cache.filter(ch => ch.type !== 'category')
 		channels.forEach(channel => {

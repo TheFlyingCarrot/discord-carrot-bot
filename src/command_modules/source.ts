@@ -1,5 +1,4 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+import { Command, Discord } from '../internal.js'
 
 const source: Command = {
 	name: 'source',
@@ -9,8 +8,8 @@ const source: Command = {
 
 	aliases: ['sourcecode', 'github', 'repository'],
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
-		const newEmbed = new MessageEmbed()
+	execute ({ message }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
+		const newEmbed = new Discord.MessageEmbed()
 		try {
 			newEmbed.setAuthor('TheFlyingCarrot', 'https://avatars2.githubusercontent.com/u/32348022?s=460&u=8ae440138c2f4e729ca6f41fc9e057732da3a177&v=4')
 				.setThumbnail('https://i.ibb.co/v3d9t9x/carrot-clip-art.png')

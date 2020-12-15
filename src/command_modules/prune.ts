@@ -1,5 +1,4 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+import { Command, Discord } from '../internal.js'
 
 const prune: Command = {
 	name: 'prune',
@@ -12,10 +11,10 @@ const prune: Command = {
 	cooldown: 5,
 
 	guildOnly: true,
-	
+
 	permission: 'MANAGE_MESSAGES',
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
+	execute ({ message, args }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
 		if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
 			message.reply('You do not have permission to use this command.')
 			return null

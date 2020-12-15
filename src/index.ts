@@ -1,29 +1,17 @@
-import filesys from 'fs'
-import Discord from 'discord.js'
-import { Command, ExtendedClient } from './typings'
-
-import { getCommand } from './helper_modules/getCommand'
-import { developers, prefix } from './config.json'
-
-import { handleMessageUpdate } from './event_handlers/messageUpdate_Handler'
-import { handleMessageDeletion } from './event_handlers/messageDelete_Handler'
-import { handleMessageReactionAdd } from './event_handlers/messageReactionAdd_Handler'
-import { handleMessageReactionRemove } from './event_handlers/messageReactionRemove_Handler'
-import { handleGuildMemberRemove } from './event_handlers/guildMemberRemove_Handler'
-import { handleGuildBanAdd } from './event_handlers/guildBanAdd_Handler'
-import { handleGuildBanRemove } from './event_handlers/guildBanRemove_Handler'
-import { handleWebhookUpdate } from './event_handlers/webhookUpdate_Handler'
+import { Command, Config, Discord, ExtendedClient, fs, getCommand, handleGuildBanAdd, handleGuildBanRemove, handleGuildMemberRemove, handleMessageDeletion, handleMessageReactionAdd, handleMessageReactionRemove, handleMessageUpdate, handleWebhookUpdate } from './internal'
 
 // Client Set-up
 const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 client.login(process.env.BOT_TOKEN)
 client.commands = new Discord.Collection()
-client.shackled = false
+client.commandsEnabled = true
+client.reactionsEnabled = true
 client.activity = '.help'
+client.events = Config.client_events
 const cooldowns = new Discord.Collection()
 
 // Commands
-for (const file of filesys.readdirSync(`${__dirname}/command_modules/`)) {
+for (const file of fs.readdirSync(`${__dirname}/command_modules/`)) {
 	if (!file.endsWith('.js')) continue
 	const command: Command = require(`./command_modules/${file}`).default
 	try {
@@ -33,10 +21,11 @@ for (const file of filesys.readdirSync(`${__dirname}/command_modules/`)) {
 	}
 }
 
+// Client Events
 client
 	.on('ready', () => {
 		console.debug('[Client] [State] Ready')
-		client.shackled ? client.user.setStatus('dnd') : client.user.setStatus('online')
+		client.commandsEnabled ? client.user.setStatus('online') : client.user.setStatus('dnd')
 		setInterval(() => {
 			client.user.setActivity(client.activity, { type: 'LISTENING' })
 				.catch(console.error)
@@ -48,8 +37,9 @@ client
 	.on('invalidated', console.error)
 	.on('disconnect', console.error)
 	.on('message', async (message: Discord.Message) => {
+		if (client.events.message === false) return
 		// nullish coalescing operator: ??
-		const { command, args } = getCommand({ client, message, prefix, developers, cooldowns }) || {}
+		const { command, args } = getCommand({ client, message, prefix: Config.prefix, developers: Config.developers, cooldowns }) || {}
 		if (command) {
 			message.channel.startTyping()
 			try {
@@ -70,3 +60,4 @@ client
 	.on('webhookUpdate', handleWebhookUpdate)
 
 export { client }
+

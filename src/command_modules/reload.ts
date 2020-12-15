@@ -1,5 +1,4 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+import { Command, Discord, ExtendedClient } from '../internal.js'
 
 const reload: Command = {
 	name: 'reload',
@@ -9,7 +8,7 @@ const reload: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message, args }: { client: ExtendedClient, message: Message, args: string[] }): void {
+	execute ({ client, message, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }): void {
 		if (!args.length) {
 			message.reply('You didn\'t give me anything to reload.')
 			return null
@@ -21,7 +20,7 @@ const reload: Command = {
 			return null
 		}
 		delete require.cache[require.resolve(`./${command.name}.js`)]
-		const newEmbed = new MessageEmbed()
+		const newEmbed = new Discord.MessageEmbed()
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setThumbnail('https://i.ibb.co/sJ4CyGj/admin-check.png')
 			.setTimestamp()

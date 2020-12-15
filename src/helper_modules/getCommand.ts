@@ -1,8 +1,6 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.js'
-import { cooldown } from './cooldown'
+import { Command, cooldown, ExtendedClient, Discord } from '../internal.js'
 
-export function getCommand ({ client, message, prefix, developers, cooldowns }: { client: ExtendedClient, message: Message, prefix: string, developers: string[], cooldowns: Collection<any, any> }): { command: Command, args: any | null } | null {
+export function getCommand ({ client, message, prefix, developers, cooldowns }: { client: ExtendedClient, message: Discord.Message, prefix: string, developers: string[], cooldowns: Discord.Collection<any, any> }): { command: Command, args: any | null } | null {
 	if (!message.content.startsWith(prefix) || message.author.bot || message.tts || message.system) {
 		return null
 	}
@@ -30,7 +28,7 @@ export function getCommand ({ client, message, prefix, developers, cooldowns }: 
 			return null
 		}
 		// Client Shackle Check
-		if (client.shackled && !developers.includes(`${message.author.id}`)) {
+		if (client.commandsEnabled && !developers.includes(`${message.author.id}`)) {
 			return null
 		}
 		// Guild-Only Command Check

@@ -1,13 +1,11 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed, Role } from '../internal.js'
+import { Command, Discord, Config } from '../internal.js'
 
-const { max_role_name_length, personal_role_ids } = require('../config.json')
 const HexColorRegExp = /^[A-Fa-f0-9]{3}(?:[A-Fa-f0-9]{3})?$/iu
 
 // eslint-disable-next-line require-await
-async function createRole (guild: any, roleColor: string, roleName: string, reason: string): Promise<Role> {
+async function createRole (guild: any, roleColor: string, roleName: string, reason: string): Promise<Discord.Role> {
 	return new Promise((resolve, reject) => {
-		if (roleName.length > max_role_name_length) {
+		if (roleName.length > Config.max_role_name_length) {
 			reject(Error('StringLengthError'))
 		} else if (!HexColorRegExp.test(`${roleColor.replace('#', '')}`)) {
 			reject(Error('RoleColorError'))
@@ -26,7 +24,7 @@ async function createRole (guild: any, roleColor: string, roleName: string, reas
 }
 
 async function clearVIPRoles (guild: any, guildMember: any, reason: string) {
-	const personalRole = await guild.roles.fetch(personal_role_ids[guild.id]['personal_role_id'])
+	const personalRole = await guild.roles.fetch(Config.personal_role_ids[guild.id]['personal_role_id'])
 	await guildMember.roles.cache.forEach((existingRole: { id: any, position: number, delete: (arg0: any, arg1: string) => void }) => {
 		if (existingRole.id !== guild.roles.everyone.id && existingRole.position < personalRole.position) {
 			existingRole.delete(existingRole, reason)
@@ -48,7 +46,7 @@ const custom_role: Command = {
 	guildOnly: true,
 	guildSpecific: ['442001192655257620', '701622386163712001'],
 
-	async execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): Promise<void> {
+	async execute ({ message, args }: { client: Discord.Client, message: Discord.Message, args: string[] }): Promise<void> {
 		const { guild } = message
 		if (!guild.available) throw new Error('Guild not available.')
 		const guildMember = guild.member(message.author)
@@ -65,7 +63,7 @@ const custom_role: Command = {
 				.catch(console.error)
 		} catch (error) {
 			if (error == 'StringLengthError') {
-				message.reply(`Your role name cannot be exceed ${max_role_name_length} characters.`)
+				message.reply(`Your role name cannot be exceed ${Config.max_role_name_length} characters.`)
 			} else if (error == 'RoleColorError') {
 				message.reply('You provided an invalid role color.')
 			} else {

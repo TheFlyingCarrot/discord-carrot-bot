@@ -1,9 +1,9 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.js'
-import { ClientUser } from 'discord.js'
+import { client, Discord } from '../internal.js'
 
-export async function handleMessageDeletion (message: Message) {
+export async function handleMessageDeletion (message: Discord.Message) {
 	if (message.channel.type === "dm" || message.channel.name === "logs" || !message.guild.available) return
+
+	if (client.events.messageDelete === false) return
 
 	const logChannel = message.guild.channels.cache.find(channel => channel.name === "logs" && channel.type === "text") as Discord.TextChannel
 	if (!logChannel) return
@@ -19,7 +19,7 @@ export async function handleMessageDeletion (message: Message) {
 		const { id: authorID } = author
 		if (!authorID) return
 
-		const newEmbed = new MessageEmbed()
+		const newEmbed = new Discord.MessageEmbed()
 
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setTimestamp()

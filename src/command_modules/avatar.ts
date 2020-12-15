@@ -1,5 +1,4 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed, User } from '../internal.js'
+import { Command, Discord } from '../internal.js'
 
 const avatar: Command = {
 	name: 'avatar',
@@ -9,8 +8,8 @@ const avatar: Command = {
 
 	aliases: ['icon', 'pfp'],
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
-		const newEmbed = new MessageEmbed()
+	execute ({ message }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
+		const newEmbed = new Discord.MessageEmbed()
 		const user = message.mentions.users.map(userObject => userObject).shift()
 		const userAvatar = message.mentions.users.size ? user.displayAvatarURL({ dynamic: true, format: 'png', size: 4096 }) : message.author.displayAvatarURL({ format: 'png', dynamic: true, size: 4096 })
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')

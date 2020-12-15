@@ -1,5 +1,4 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Message, MessageEmbed } from '../internal.js'
+import { Command, Discord } from '../internal.js'
 
 const slow_mode: Command = {
 	name: 'slow-mode',
@@ -15,7 +14,7 @@ const slow_mode: Command = {
 
 	permission: 'MANAGE_CHANNELS',
 
-	execute ({ client, message, args }: { client: Client, message: Message, args: string[] }): void {
+	execute ({ message, args }: { client: Discord.Client, message: Discord.Message, args: string[] }): void {
 		if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
 			message.reply('You do not have permission to use that command.')
 			return null

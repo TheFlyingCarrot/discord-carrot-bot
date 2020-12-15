@@ -1,4 +1,4 @@
-import Discord, { MessageEmbed } from '../internal.js'
+import { client, Discord } from '../internal.js'
 
 const webhookActions = [50, 51, 52]
 const webhookActionMap = { 'WEBHOOK_CREATE': 'Create Webhook', 'WEBHOOK_UPDATE': 'Update Webhook', 'WEBHOOK_DELETE': 'Delete Webhook' }
@@ -6,6 +6,8 @@ const embedActions = { 'CREATE': '#00ff00', 'DELETE': '#ff0000', 'UPDATE': '#ff6
 
 export async function handleWebhookUpdate (channel: Discord.TextChannel) {
 	if (!channel.guild.available) return
+
+	if (client.events.webhookUpdate === false) return
 
 	const logChannel = channel.guild.channels.cache.find(channel => channel.name === "logs" && channel.type === "text") as Discord.TextChannel
 	if (!logChannel) return
@@ -27,7 +29,7 @@ export async function handleWebhookUpdate (channel: Discord.TextChannel) {
 		}
 
 		const { executor, reason, changes, id } = webhookUpdateLog
-		const newEmbed = new MessageEmbed()
+		const newEmbed = new Discord.MessageEmbed()
 
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setTimestamp()

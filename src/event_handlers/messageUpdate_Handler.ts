@@ -1,9 +1,9 @@
-import { Command, ExtendedClient } from '../typings.js'
-import Discord, { Client, Collection, Message, MessageEmbed } from '../internal.js'
-import { ClientUser, NewsChannel } from 'discord.js'
+import { client, Discord } from '../internal.js'
 
-export async function handleMessageUpdate (oldMessage: Message, newMessage: Message) {
+export async function handleMessageUpdate (oldMessage: Discord.Message, newMessage: Discord.Message) {
 	if (oldMessage.channel.type === "dm" || oldMessage.channel.name === "logs" || oldMessage.embeds || newMessage.embeds || !oldMessage.guild.available) return
+
+	if (client.events.messageUpdate === false) return
 
 	const logChannel = oldMessage.guild.channels.cache.find(channel => channel.name === "logs" && channel.type === "text") as Discord.TextChannel
 	if (!logChannel) return
@@ -15,7 +15,7 @@ export async function handleMessageUpdate (oldMessage: Message, newMessage: Mess
 		if (oldMessage.partial) await oldMessage.fetch()
 		if (newMessage.partial) await newMessage.fetch()
 
-		const newEmbed = new MessageEmbed()
+		const newEmbed = new Discord.MessageEmbed()
 
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setTimestamp()

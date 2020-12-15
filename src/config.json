@@ -1,5 +1,7 @@
 {
 	"prefix": ".",
+	"max_role_name_length": 32,
+	"default_cooldown": 3,
 	"developers": [
 		"238880608971915264"
 	],
@@ -11,6 +13,15 @@
 			"personal_role_id": "779481881728385024"
 		}
 	},
-	"max_role_name_length": 32,
-	"default_cooldown": 3
+	"client_events": {
+		"message": true,
+		"messageUpdate": true,
+		"messageDelete": true,
+		"messageReactionAdd": true,
+		"messageReactionRemove": true,
+		"guildMemberRemove": true,
+		"guildBanAdd": true,
+		"guildBanRemove": true,
+		"webhookUpdate": true
+	}
 }
