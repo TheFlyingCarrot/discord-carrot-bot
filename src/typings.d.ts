@@ -9,7 +9,6 @@ declare interface ExtendedClient extends Discord.Client {
 	[x: string]: any
 	commands?: Discord.Collection<any, any>
 	commandsEnabled?: boolean
-	reactionsEnabled?: boolean
 	activity?: string
 	events?: ClientEvents
 }

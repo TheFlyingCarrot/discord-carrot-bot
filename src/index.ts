@@ -5,7 +5,6 @@ const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANN
 client.login(process.env.BOT_TOKEN)
 client.commands = new Discord.Collection()
 client.commandsEnabled = true
-client.reactionsEnabled = true
 client.activity = '.help'
 client.events = Config.client_events
 const cooldowns = new Discord.Collection()

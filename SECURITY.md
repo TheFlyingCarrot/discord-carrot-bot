@@ -4,8 +4,8 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 2.5.3+  | :white_check_mark: |
-| 2.5.2   | :x: |
+| 2.6.0   | :white_check_mark: |
+| 2.5.X   | :x: |
 | 2.4.X   | :x: |
 | 2.2.X   | :x: |
 | 2.0.X   | :x: |
