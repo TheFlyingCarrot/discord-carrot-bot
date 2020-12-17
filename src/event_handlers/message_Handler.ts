@@ -1,7 +1,7 @@
 import { client, Config, Discord, HelperModules } from '../internal.js'
 
 export function handleMessage (message: Discord.Message): Promise<void> {
-	if (client.events.message === false) return
+	if (client.events.message === false && !Config.developers.includes(message.author.id.toString())) return
 	// nullish coalescing operator: ??
 	const { command, args } = HelperModules.getCommand({ client, message, prefix: Config.prefix, developers: Config.developers }) || {}
 	if (command && !HelperModules.cooldown({ message, command })) {
