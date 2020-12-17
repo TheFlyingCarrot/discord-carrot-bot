@@ -1,4 +1,4 @@
-import { Command, Discord } from '../internal.js'
+import { Command } from '../internal.js'
 
 const Ignored_Channels = new Set([
 	'750499239171457064', '750505158043107509', '750498579797377196',

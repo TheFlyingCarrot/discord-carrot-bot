@@ -1,6 +1,7 @@
 import { Command, Discord } from '../internal.js'
 
-const team_discord = require('../guilds/750480529765171302.json')
+import team_discord from '../guilds/750480529765171302.json'
+import { ReactionRole } from '../typings.js'
 
 const react_role: Command = {
 	name: 'react-role',
@@ -10,11 +11,11 @@ const react_role: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message, args }): void {
+	execute ({ message, args }): void {
 		if (team_discord.role_categories.includes(args[0])) {
 			const newEmbed = new Discord.MessageEmbed()
 			newEmbed.setTitle(`${args[0].toUpperCase()} ROLES`)
-			let ReactionRole: any
+			let ReactionRole: ReactionRole
 			for (ReactionRole of Object.values(team_discord.reaction_roles)) {
 				if (ReactionRole.category == args[0].toLowerCase()) {
 					newEmbed.addField(ReactionRole.emoji_tag, ReactionRole.name)

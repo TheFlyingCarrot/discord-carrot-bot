@@ -22,11 +22,14 @@ const kick: Command = {
 		}
 		targetUser.ban({ reason: `Kicked by: ${message.author.tag}` })
 			.then(() => {
-				message.channel.send(new Discord.MessageEmbed().setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+				const newEmbed = new Discord.MessageEmbed()
+				newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 					.setThumbnail('https://i.ibb.co/QjCW2nx/user-banned.png')
 					.setTimestamp()
 					.setTitle('Kick Command')
-					.addField(`**${targetUser}**`, `Kicked by ${message.author}`))
+					.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
+					.addField(`**${targetUser}**`, `Kicked by ${message.author}`)
+				message.reply(newEmbed)
 			})
 			.catch(console.error)
 	}

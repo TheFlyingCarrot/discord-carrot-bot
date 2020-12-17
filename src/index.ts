@@ -12,6 +12,7 @@ client.events = Config.client_events
 // Commands
 for (const file of fs.readdirSync(`${__dirname}/command_modules/`)) {
 	if (!file.endsWith('.js')) continue
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const command: Command = require(`./command_modules/${file}`).default
 	try {
 		client.commands.set(command.name, command)

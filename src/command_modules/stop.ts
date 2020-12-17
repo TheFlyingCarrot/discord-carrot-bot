@@ -1,4 +1,4 @@
-import { Command, Discord } from '../internal'
+import { Command } from '../internal'
 
 const stop_client: Command = {
 	name: 'stop',

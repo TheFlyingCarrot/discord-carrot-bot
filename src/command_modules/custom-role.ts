@@ -2,7 +2,7 @@ import { Command, Discord, Config } from '../internal.js'
 
 const HexColorRegExp = /^[A-Fa-f0-9]{3}(?:[A-Fa-f0-9]{3})?$/iu
 
-async function createRole (guild: any, roleColor: string, roleName: string, reason: string): Promise<Discord.Role> {
+async function createRole (guild: Discord.Guild, roleColor: string, roleName: string, reason: string): Promise<Discord.Role> {
 	return new Promise((resolve, reject) => {
 		if (roleName.length > Config.maximum_role_name_length) {
 			reject(Error('StringLengthError'))
@@ -22,11 +22,11 @@ async function createRole (guild: any, roleColor: string, roleName: string, reas
 	})
 }
 
-async function clearVIPRoles (guild: any, guildMember: any, reason: string) {
+async function clearVIPRoles (guild: Discord.Guild, guildMember: Discord.GuildMember, reason: string) {
 	const personalRole = await guild.roles.fetch(Config.personal_role_ids[guild.id]['personal_role_id'])
-	await guildMember.roles.cache.forEach((existingRole: { id: any, position: number, delete: (arg0: any, arg1: string) => void }) => {
+	guildMember.roles.cache.forEach((existingRole: Discord.Role) => {
 		if (existingRole.id !== guild.roles.everyone.id && existingRole.position < personalRole.position) {
-			existingRole.delete(existingRole, reason)
+			existingRole.delete(reason)
 		}
 	})
 }

@@ -1,6 +1,6 @@
 import { Command, ExtendedClient, Discord } from '../internal.js'
 
-export function getCommand ({ client, message, prefix, developers }: { client: ExtendedClient, message: Discord.Message, prefix: string, developers: string[] }): { command: Command, args: any | null } | null {
+export function getCommand ({ client, message, prefix, developers }: { client: ExtendedClient, message: Discord.Message, prefix: string, developers: string[] }): { command: Command, args: string[] | null } | null {
 	if (!message.content.startsWith(prefix) || message.author.bot || message.tts || message.system) {
 		return null
 	}

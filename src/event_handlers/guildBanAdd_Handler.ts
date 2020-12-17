@@ -1,15 +1,15 @@
 import { client, Discord } from '../internal.js'
 
-export async function handleGuildBanAdd (guild: Discord.Guild, user: Discord.User) {
+export async function handleGuildBanAdd (guild: Discord.Guild, user: Discord.User): Promise<void> {
 	if (!guild.available) return
 
 	if (client.events.guildBanAdd === false) return
 
-	const logChannel = guild.channels.cache.find(channel => channel.name === "logs" && channel.type === "text") as Discord.TextChannel
+	const logChannel = guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as Discord.TextChannel
 	if (!logChannel) return
 
 	try {
-		const fetchedLogs = await guild.fetchAuditLogs({ limit: 1, type: "MEMBER_BAN_ADD" })
+		const fetchedLogs = await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_ADD' })
 		const banAddLog = fetchedLogs.entries.first()
 
 		const { executor, reason } = banAddLog
@@ -19,11 +19,11 @@ export async function handleGuildBanAdd (guild: Discord.Guild, user: Discord.Use
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setTimestamp()
 			.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))
-			.setColor("#ff0000")
+			.setColor('#ff0000')
 			.setTitle('User Banned')
-			.addField("Banned User", user.tag)
-			.addField("Executor", executor || "Unknown", true)
-			.addField("Reason", reason || "Unspecified", true)
+			.addField('Banned User', user.tag)
+			.addField('Executor', executor || 'Unknown', true)
+			.addField('Reason', reason || 'Unspecified', true)
 			.setFooter(`User ID: ${user.id} | Executor ID: ${executor.id}${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
 
 		logChannel.send(newEmbed)

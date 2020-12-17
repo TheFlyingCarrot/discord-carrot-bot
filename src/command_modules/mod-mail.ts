@@ -15,15 +15,23 @@ const mod_mail: Command = {
 
 	execute ({ message, args }): void {
 		const { guild } = message
-		if (!guild.available) console.error('[mod-mail.ts] [Error] Guild not available:', guild)
+		if (!guild.available) return
 		const { publicUpdatesChannel } = guild
-		if (!publicUpdatesChannel) console.error('[mod-mail.ts] [Error] publicUpdatesChannel does not exist:', guild)
+		if (!publicUpdatesChannel) return
 
 		const modMail = args.join(' ')
 
 		try {
 			message.delete({ reason: 'Mod-mail' })
-			publicUpdatesChannel.send(`\`[Mod-mail]\` ${message.author} sent:\n'${modMail}'`)
+			const newEmbed = new Discord.MessageEmbed()
+			newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+				.setThumbnail('https://i.ibb.co/xXQbnn5/user-menu.png')
+				.setTitle('Mod-Mail')
+				.setTimestamp()
+				.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
+				.addField('Author', message.author)
+				.addField('Message', modMail)
+			publicUpdatesChannel.send(newEmbed)
 		} catch (error) {
 			console.error(error)
 		}

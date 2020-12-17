@@ -1,4 +1,4 @@
-import { Command, Config, Discord, ExtendedClient } from '../internal.js'
+import { Command, Config, Discord } from '../internal.js'
 
 const help: Command = {
 	name: 'help',
@@ -16,6 +16,7 @@ const help: Command = {
 			.setThumbnail('https://i.ibb.co/MhzStmL/user-inquiry.png')
 			.setTimestamp()
 			.setTitle('Help Command')
+			.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
 		if (!args.length) {
 			commands.forEach((command: Command) => {
 				if (command.developerOnly && Config.developers.includes(message.author.id)) {

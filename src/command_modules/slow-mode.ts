@@ -1,4 +1,4 @@
-import { Command, Discord } from '../internal.js'
+import { Command } from '../internal.js'
 
 const slow_mode: Command = {
 	name: 'slow-mode',

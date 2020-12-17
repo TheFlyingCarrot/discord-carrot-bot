@@ -26,7 +26,9 @@ const reload: Command = {
 			.setTimestamp()
 			.setTitle('Reload Command')
 		try {
+			// eslint-disable-next-line @typescript-eslint/no-var-requires
 			const newCommand = require(`./${command.name}`)
+
 			client.commands.set(newCommand.default.name, newCommand.default)
 
 			newEmbed.addField('Command Success', `Command \`${commandName}\` was reloaded!`)

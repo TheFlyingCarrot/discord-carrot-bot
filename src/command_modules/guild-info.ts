@@ -1,4 +1,4 @@
-import { Command, Discord, fs } from '../internal.js'
+import { Command, fs } from '../internal.js'
 
 const guild_info: Command = {
 	name: 'guild-info',
@@ -17,7 +17,7 @@ const guild_info: Command = {
 		const filename = `${message.guild.id}.json`
 
 		fs.writeFileSync(filename, data)
-		message.reply("Here's the info for this guild.", { files: [filename] })
+		message.reply('Here\'s the info for this guild.', { files: [filename] })
 		setTimeout(() => {
 			if (fs.existsSync(filename)) fs.unlinkSync(filename)
 		}, 1000)

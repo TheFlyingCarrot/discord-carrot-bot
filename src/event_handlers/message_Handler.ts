@@ -1,6 +1,6 @@
 import { client, Config, Discord, HelperModules } from '../internal.js'
 
-export function handleMessage (message: Discord.Message) {
+export function handleMessage (message: Discord.Message): Promise<void> {
 	if (client.events.message === false) return
 	// nullish coalescing operator: ??
 	const { command, args } = HelperModules.getCommand({ client, message, prefix: Config.prefix, developers: Config.developers }) || {}

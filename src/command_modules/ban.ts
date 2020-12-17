@@ -22,11 +22,14 @@ const ban: Command = {
 		}
 		targetUser.ban({ reason: `Banned by: ${message.author.tag}` })
 			.then(() => {
-				message.reply(new Discord.MessageEmbed().setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+				const newEmbed = new Discord.MessageEmbed()
+				newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 					.setThumbnail('https://i.ibb.co/QjCW2nx/user-banned.png')
 					.setTimestamp()
-					.setTitle('Ban Command')
-					.addField(`**${targetUser}**`, `Banned by ${message.author}`))
+					.setTitle('Ban')
+					.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
+					.addField(`**${targetUser}**`, `Banned by ${message.author}`)
+				message.reply(newEmbed)
 			})
 			.catch(console.error)
 	}
