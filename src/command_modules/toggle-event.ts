@@ -19,6 +19,7 @@ const toggle_event: Command = {
 			for (const event in client.events) {
 				if (Object.prototype.hasOwnProperty.call(client.events, event)) {
 					client.events[event] = !client.events[event]
+					console.log(`[Event Status] ${event} ${client.events[event] ? 'Enabled' : 'Disabled'}`)
 				}
 			}
 		} else {

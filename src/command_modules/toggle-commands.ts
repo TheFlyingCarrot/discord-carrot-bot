@@ -21,7 +21,7 @@ const toggle_commands: Command = {
 		}
 		client.activity = client.commandsEnabled ? '.help' : 'nobody.'
 		client.user.setStatus(client.commandsEnabled ? 'online' : 'dnd')
-		console.log(`[Shackle] [Status] ${client.commandsEnabled.toString().replace(/^\w/u, character => character.toUpperCase())}`)
+		console.log(`[Command Status] Commands ${client.commandsEnabled ? 'Enabled' : 'Disabled'}`)
 	}
 }
 
