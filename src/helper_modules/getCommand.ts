@@ -23,7 +23,7 @@ export function getCommand ({ client, message, prefix, developers }: { client: E
 			return null
 		}
 		// Developer Command Check
-		if (command.developerOnly && !developers.includes(`${message.author.id}`)) {
+		if (command.developerOnly && !developers.includes(message.author.id.toString())) {
 			message.reply('That command can only be used by developers. Sorry!')
 			return null
 		}
