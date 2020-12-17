@@ -28,7 +28,7 @@ export function getCommand ({ client, message, prefix, developers }: { client: E
 			return null
 		}
 		// Client Shackle Check
-		if (client.commandsEnabled && !developers.includes(`${message.author.id}`)) {
+		if (!client.commandsEnabled && !developers.includes(`${message.author.id}`)) {
 			return null
 		}
 		// Guild-Only Command Check
