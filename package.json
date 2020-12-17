@@ -3,7 +3,7 @@
 	"version": "2.6.4",
 	"description": "Discord bot made with NodeJS and DiscordJS.",
 	"main": "dist/index.js",
-	"type": "commonjs",
+	"type": "module",
 	"dependencies": {
 		"discord.js": "^12.5.1",
 		"dotenv": "^8.2.0",
