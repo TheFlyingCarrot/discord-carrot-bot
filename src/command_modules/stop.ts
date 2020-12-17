@@ -6,6 +6,8 @@ const stop_client: Command = {
 	enabled: true,
 	toggleable: true,
 
+	aliases: ['kill','commit-sudoku'],
+
 	developerOnly: true,
 
 	execute ({ client, message }): void {
