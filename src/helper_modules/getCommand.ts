@@ -19,7 +19,7 @@ export function getCommand ({ client, message, prefix, developers }: { client: E
 		}
 		// Command Arguments Check
 		if (command.args && !args.length) {
-			message.reply(`That command requires arguments.\n${command.usage ? `The proper usage is: \`${prefix}${command.name} ${command.usage}\`` : null}`)
+			message.reply(`That command requires arguments.${command.usage ? `\nThe proper usage is: \`${prefix}${command.name} ${command.usage}\`` : ''}`)
 			return null
 		}
 		// Developer Command Check
