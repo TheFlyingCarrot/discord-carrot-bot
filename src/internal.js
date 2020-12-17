@@ -3,7 +3,9 @@ export * as fs from 'fs'
 export * as Config from './config.json'
 export { client } from './index'
 export { ClientEvents, Command, ExtendedClient, ReactionRole, ReactionRoleConfig } from './typings'
+export { fetch }
 
+import fetch from 'node-fetch'
 import { handleGuildBanAdd } from './event_handlers/guildBanAdd_Handler'
 import { handleGuildBanRemove } from './event_handlers/guildBanRemove_Handler'
 import { handleGuildMemberRemove } from './event_handlers/guildMemberRemove_Handler'
