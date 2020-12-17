@@ -1,4 +1,4 @@
-import { Command, Config, Discord, EventHandlers, ExtendedClient, fs, HelperModules } from './internal'
+import { Command, Config, Discord, EventHandlers, ExtendedClient, HelperModules, fs } from './internal'
 
 // Client Set-up
 export const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
@@ -17,7 +17,7 @@ for (const file of fs.readdirSync(`${__dirname}/command_modules/`)) {
 	try {
 		client.commands.set(command.name, command)
 	} catch (error) {
-		console.error('[Command] [Load] [Fail]', `${file}: Command: ${command && command.name ? `'${command.name}'` : '\'Unknown\''} could not be loaded. Error: ${error}`)
+		console.error('[Command Loading Error]', `${file}: Command: ${command && command.name ? `'${command.name}'` : '\'Unknown\''} could not be loaded.\nError: ${error}`)
 	}
 }
 
