@@ -28,12 +28,12 @@ function playGame (input: string): {outcome: string, playerChoice: string, compu
 }
 
 const rockpaperscissors: Command = {
-	name: 'rockpaperscissors',
+	name: 'rock-paper-scissors',
 	description: 'Play a game of rock, paper, scissors.',
 	enabled: true,
 	toggleable: true,
 
-	aliases: ['rps'],
+	aliases: ['rockpaperscissors','rps'],
 	usage: '(r/rock/p/paper/s/scissors)',
 	args: true,
 

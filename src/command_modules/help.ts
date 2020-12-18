@@ -10,7 +10,6 @@ const help: Command = {
 	usage: '(command)',
 
 	execute ({ client, message, args }): void {
-		const { commands } = client
 		const newEmbed = new Discord.MessageEmbed()
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setThumbnail('https://i.ibb.co/MhzStmL/user-inquiry.png')
@@ -18,21 +17,19 @@ const help: Command = {
 			.setTitle('Help Command')
 			.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
 		if (!args.length) {
-			commands.forEach((command: Command) => {
-				if (command.developerOnly && Config.developers.includes(message.author.id)) {
-					newEmbed.addField(`**${command.name.replace(/^\w/u, character => character.toUpperCase())}** (dev-only)`, `${command.description}`, true)
-				} else if (message.member && command.permission && message.member.hasPermission(command.permission, { checkAdmin: true, checkOwner: true })) {
-					newEmbed.addField(`**${command.name.replace(/^\w/u, character => character.toUpperCase())}** (restricted)`, `${command.description}`, true)
-				} else {
-					newEmbed.addField(`**${command.name.replace(/^\w/u, character => character.toUpperCase())}**`, `${command.description}`, true)
+			for (const [commandName, command] of client.commands) {
+				if (	(command.developerOnly	&& !Config.developers.includes(message.author.id))
+					||	(command.guildOnly		&& !message.guild)
+					||	(command.permission		&& (message.member && !message.member.hasPermission(command.permission, { checkAdmin: true, checkOwner: true })))) {
+					continue
 				}
-			})
+				newEmbed.addField(commandName, command.description, true)
+			}
 			newEmbed.addField('More Info', `\nYou can use \`${Config.prefix}help [command name]\` to get help on a specific command.`)
-			if (message.channel.type != 'dm') message.reply(newEmbed)
-			else if (message.channel.type == 'dm') message.author.send(newEmbed)
+			message.reply(newEmbed)
 		} else {
 			const name = args[0].toLowerCase()
-			const command = commands.get(name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))
+			const command: Command = client.commands.get(name) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))
 			if (!command) {
 				message.reply('That\'s not a valid command.')
 				return null

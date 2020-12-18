@@ -1,8 +1,8 @@
 {
 	"client_events": {
 		"message": true,
-		"messageUpdate": false,
-		"messageDelete": false,
+		"messageUpdate": true,
+		"messageDelete": true,
 		"messageReactionAdd": true,
 		"messageReactionRemove": true,
 		"guildMemberRemove": true,

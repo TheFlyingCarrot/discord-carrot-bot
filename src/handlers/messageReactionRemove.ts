@@ -1,10 +1,10 @@
 import TeamDiscord from '../guilds/750480529765171302.json'
 import { client, ReactionRole, Discord, HelperModules } from '../internal.js'
 
-export async function handleMessageReactionAdd (messageReaction: Discord.MessageReaction, user: Discord.User): Promise<void> {
+export async function onMessageReactionRemove (messageReaction: Discord.MessageReaction, user: Discord.User): Promise<void> {
 	if (!HelperModules.isValidReaction(messageReaction, user)) return
 
-	if (client.events.messageReactionAdd === false) return
+	if (client.events.messageReactionRemove === false) return
 
 	const { guild } = messageReaction.message
 
@@ -19,7 +19,7 @@ export async function handleMessageReactionAdd (messageReaction: Discord.Message
 
 		new Promise((resolve) => resolve(guild.roles.fetch(reactionRole.role_id)))
 			.then((desiredRole: Discord.Role) => {
-				guild.member(user).roles.add(desiredRole, 'Sub-team selection.')
+				guild.member(user).roles.remove(desiredRole, 'Sub-team removal.')
 			})
 			.catch((error) => console.error(error))
 	}

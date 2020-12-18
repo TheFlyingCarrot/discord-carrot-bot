@@ -7,7 +7,7 @@ declare module '*.json' {
 
 declare interface ExtendedClient extends Discord.Client {
 	activity?: string
-	commands?: Discord.Collection<any, any>
+	commands?: Discord.Collection<string, Command>
 	commandsEnabled?: boolean
 	cooldowns?: Discord.Collection<any, any>
 	events?: ClientEvents
@@ -31,6 +31,8 @@ declare interface Command {
 	developerOnly?: boolean
 
 	execute?: ({ client, message, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }) => any | Promise<any>
+
+	enabledForUser?: ({ user, member }: { user: Discord.User, member: Discord.GuildMember }) => boolean
 }
 
 declare interface ReactionRoleConfig {
