@@ -31,14 +31,13 @@ declare interface Command {
 	developerOnly?: boolean
 
 	execute?: ({ client, message, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }) => any | Promise<any>
-
-	enabledForUser?: ({ user, member }: { user: Discord.User, member: Discord.GuildMember }) => boolean
 }
 
 declare interface ReactionRoleConfig {
 	title: string
 	guild_id: string
 	role_channel_id: string
+	role_categories: string
 	reaction_roles: ReactionRole[]
 }
 
