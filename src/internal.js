@@ -20,7 +20,6 @@ import { cooldown } from './helper_modules/cooldown'
 import { fetchPartial } from './helper_modules/fetchPartial'
 import { getCommand } from './helper_modules/getCommand'
 import { isValidReaction } from './helper_modules/isValidReaction'
-import { setupCommands } from './helper_modules/setupCommands'
 
 export const HelperModules = { cooldown, fetchPartial, getCommand, isValidReaction, setupCommands }
 export const EventHandlers = { onGuildBanAdd, onGuildBanRemove, onGuildMemberRemove, onMessageDeletion, onMessageReactionAdd, onMessageReactionRemove, onMessageUpdate, onMessage, onReady, onWebhookUpdate }
