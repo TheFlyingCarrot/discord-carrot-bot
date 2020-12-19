@@ -9,7 +9,7 @@ export async function onMessageUpdate (oldMessage: Discord.Message, newMessage: 
 	if (oldMessage.partial) await oldMessage.fetch()
 	if (newMessage.partial) await newMessage.fetch()
 
-	if (!newMessage.cleanContent) return
+	if (!newMessage.cleanContent || oldMessage.cleanContent === newMessage.cleanContent) return
 
 	const newEmbed = new Discord.MessageEmbed()
 	newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
