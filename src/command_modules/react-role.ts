@@ -21,7 +21,7 @@ const react_role: Command = {
 					newEmbed.addField(ReactionRole.emoji_tag, ReactionRole.name)
 				}
 			}
-			message.channel.send(newEmbed)
+			message.reply(newEmbed)
 		} else {
 			message.reply(`Please provide valid arguments for \`${this.name}\`.`)
 		}

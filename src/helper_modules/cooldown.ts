@@ -13,7 +13,7 @@ export function cooldown ({ message, command }: { message: Discord.Message, comm
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now) / Config.ms_to_s_multiplier
-			message.reply(`you cannot use that command for another \`${timeLeft.toFixed(1)}\` seconds`)
+			message.reply(`you cannot use that command for another \`${timeLeft.toFixed(Config.time_decimals)}\` seconds`)
 			return true
 		}
 	} else if (!timestamps.has(message.author.id) && !Config.developers.includes(message.author.id)) {

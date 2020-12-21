@@ -27,7 +27,7 @@ const ban: Command = {
 					.setThumbnail('https://i.ibb.co/QjCW2nx/user-banned.png')
 					.setTimestamp()
 					.setTitle('Ban')
-					.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
+					.setFooter(`Carrot Bot${process.env.ENV_TYPE === 'test' ? ' | Test Build' : ''}`)
 					.addField(`**${targetUser}**`, `Banned by ${message.author}`)
 				message.reply(newEmbed)
 			})

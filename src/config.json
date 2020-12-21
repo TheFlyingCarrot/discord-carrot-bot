@@ -10,6 +10,7 @@
 		"guildBanRemove": true,
 		"webhookUpdate": true
 	},
+	"time_decimals": 1,
 	"default_commands_enabled": true,
 	"default_cooldown": 3,
 	"developers": [

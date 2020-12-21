@@ -8,7 +8,7 @@ const ping: Command = {
 	toggleable: true,
 
 	execute ({ message }): void {
-		message.channel.send('Pong!')
+		message.reply('Pong!')
 	}
 }
 
