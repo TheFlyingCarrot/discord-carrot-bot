@@ -21,7 +21,7 @@ export async function onGuildBanRemove (guild: Discord.Guild, user: Discord.User
 	newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 		.setTimestamp()
 		.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))
-		.setColor('#ff0000')
+		.setColor('#00ff00')
 		.setTitle('Member Unbanned')
 		.addField('Target', `${target}`, true)
 		.addField('Executor', `${executor}`, true)

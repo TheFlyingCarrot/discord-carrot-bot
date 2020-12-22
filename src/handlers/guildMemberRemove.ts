@@ -22,7 +22,7 @@ export async function onGuildMemberRemove (member: Discord.GuildMember): Promise
 		.setTimestamp()
 		.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))
 		.setColor('#ff0000')
-		.setTitle('Member Banned')
+		.setTitle('Member Kicked')
 		.addField('Target', `${target}`, true)
 		.addField('Executor', executor.id, true)
 		.setFooter(`Target User ID: ${target.id} | Executor ID: ${executor.id}${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
