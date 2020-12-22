@@ -9,6 +9,8 @@ const react_role: Command = {
 	enabled: true,
 	toggleable: true,
 
+	aliases: ['reactrole'],
+
 	developerOnly: true,
 
 	execute ({ message, args }): void {
