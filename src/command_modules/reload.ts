@@ -6,13 +6,11 @@ const reload: Command = {
 	enabled: true,
 	toggleable: false,
 
+	args: true,
+
 	developerOnly: true,
 
 	execute ({ client, message, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }): void {
-		if (!args.length) {
-			message.reply('You didn\'t give me anything to reload.')
-			return null
-		}
 		const commandName = args[0].toLowerCase()
 		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 		if (!command) {
@@ -20,24 +18,18 @@ const reload: Command = {
 			return null
 		}
 		delete require.cache[require.resolve(`./${command.name}.js`)]
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
+		const newCommand: Command = require(`./${command.name}.js`).default
+		client.commands.set(newCommand.name, newCommand)
+
 		const newEmbed = new Discord.MessageEmbed()
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setThumbnail('https://i.ibb.co/sJ4CyGj/admin-check.png')
 			.setTimestamp()
 			.setTitle('Reload Command')
-		try {
-			// eslint-disable-next-line @typescript-eslint/no-var-requires
-			const newCommand = require(`./${command.name}`)
-
-			client.commands.set(newCommand.default.name, newCommand.default)
-
-			newEmbed.addField('Command Success', `Command \`${commandName}\` was reloaded!`)
-			message.reply(newEmbed)
-			console.log('[Command] [Reload] [Success]', `Command: ${newCommand.default.name.replace(/^\w/u, character => character.toUpperCase())} reloaded.`)
-		} catch (error) {
-			console.error('[Command] [Reload] [Fail]', error)
-			return error
-		}
+			.setDescription(`Command \`${commandName}\` was reloaded.`)
+		message.reply(newEmbed)
+		console.log('[Command Reload]', `Command ${newCommand.name} reloaded.`)
 	}
 }
 
