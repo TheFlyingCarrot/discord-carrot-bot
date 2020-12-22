@@ -15,12 +15,12 @@ const help: Command = {
 			.setThumbnail('https://i.ibb.co/MhzStmL/user-inquiry.png')
 			.setTimestamp()
 			.setTitle('Help Command')
-			.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
+			.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
 		if (!args.length) {
 			for (const [commandName, command] of client.commands) {
-				if (	(command.developerOnly	&& !Config.developers.includes(message.author.id))
-					||	(command.guildOnly		&& !message.guild)
-					||	(command.permission		&& (message.member && !message.member.hasPermission(command.permission, { checkAdmin: true, checkOwner: true })))) {
+				if ((command.developerOnly && !Config.developers.includes(message.author.id))
+					|| (command.guildOnly && !message.guild)
+					|| (command.permission && (message.member && !message.member.hasPermission(command.permission, { checkAdmin: true, checkOwner: true })))) {
 					continue
 				}
 				newEmbed.addField(commandName, command.description, true)

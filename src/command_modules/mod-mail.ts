@@ -28,7 +28,7 @@ const mod_mail: Command = {
 				.setThumbnail('https://i.ibb.co/xXQbnn5/user-menu.png')
 				.setTitle('Mod-Mail')
 				.setTimestamp()
-				.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
+				.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
 				.addField('Author', message.author)
 				.addField('Message', modMail)
 			publicUpdatesChannel.send(newEmbed)

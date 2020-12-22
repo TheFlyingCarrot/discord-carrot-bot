@@ -16,7 +16,7 @@ const avatar: Command = {
 			.setTimestamp()
 			.setTitle(`${user ? user.username : message.author.username}'s Avatar`)
 			.setThumbnail(userAvatar)
-			.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
+			.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
 		message.reply(newEmbed)
 	}
 }

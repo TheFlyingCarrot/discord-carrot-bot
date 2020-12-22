@@ -21,7 +21,7 @@ export async function onMessageUpdate (oldMessage: Discord.Message, newMessage: 
 		.addField('Channel', `${newMessage.channel}`, true)
 		.addField(oldMessage.content ? 'Old Message' : 'Old Message __(Not Retrieved)__', oldMessage.cleanContent ? oldMessage.cleanContent : 'Unknown')
 		.addField('New Message', newMessage.cleanContent)
-		.setFooter(`Message ID: ${newMessage.id} | Author ID: ${newMessage.author.id || 'Null'}${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
+		.setFooter(`Message ID: ${newMessage.id} | Author ID: ${newMessage.author.id || 'Null'}${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
 
 	logChannel.send(newEmbed)
 }

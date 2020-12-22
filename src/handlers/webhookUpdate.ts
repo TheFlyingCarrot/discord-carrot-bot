@@ -29,7 +29,7 @@ export async function onWebhookUpdate (channel: Discord.TextChannel): Promise<vo
 		.addField('Executor', `${executor}`, true)
 		.addField('Channel', `${channel}`, true)
 		.addField('Action', webhookActionMap[eventLog.action] || 'Unknown')
-		.setFooter(`Executor ID: ${executor.id} ${process.env.ENV_TYPE === 'test' ? '| Test Build' : ''}`)
+		.setFooter(`Executor ID: ${executor.id} ${process.env.NODE_ENV === 'test' ? '| Test Build' : ''}`)
 	if (eventLog.reason) newEmbed.addField('Reason', eventLog.reason, true)
 	eventLog.changes.forEach(change => {
 		if (change.old && change.new) {

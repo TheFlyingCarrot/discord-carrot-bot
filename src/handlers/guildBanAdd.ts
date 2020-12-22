@@ -25,7 +25,7 @@ export async function onGuildBanAdd (guild: Discord.Guild, user: Discord.User): 
 		.setTitle('Member Banned')
 		.addField('Target', `${target}`, true)
 		.addField('Executor', executor.id, true)
-		.setFooter(`Target User ID: ${target.id} | Executor ID: ${executor.id}${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
+		.setFooter(`Target User ID: ${target.id} | Executor ID: ${executor.id}${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
 	if (eventLog.reason) newEmbed.addField('Reason', eventLog.reason, true)
 
 	logChannel.send(newEmbed)

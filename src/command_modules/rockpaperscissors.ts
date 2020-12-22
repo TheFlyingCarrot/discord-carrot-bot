@@ -17,7 +17,7 @@ function randomNumber (min: number, max: number) {
 	return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-function playGame (input: string): {outcome: string, playerChoice: string, computerChoice: string} {
+function playGame (input: string): { outcome: string, playerChoice: string, computerChoice: string } {
 	const playerChoice = 'rps'.indexOf(input.charAt(0))
 	const computerChoice = randomNumber(0, 2)
 	return {
@@ -33,7 +33,7 @@ const rockpaperscissors: Command = {
 	enabled: true,
 	toggleable: true,
 
-	aliases: ['rockpaperscissors','rps'],
+	aliases: ['rockpaperscissors', 'rps'],
 	usage: '(r/rock/p/paper/s/scissors)',
 	args: true,
 
@@ -52,7 +52,7 @@ const rockpaperscissors: Command = {
 			.setTimestamp()
 			.setTitle(results.outcome)
 			.setDescription(`You chose: ${results.playerChoice}\nComputer chose: ${results.computerChoice}`)
-			.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
+			.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
 		message.reply(newEmbed)
 
 	}

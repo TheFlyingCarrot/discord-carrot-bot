@@ -27,7 +27,7 @@ export async function onMessageDeletion (message: Discord.Message): Promise<void
 		.addField('Channel', `${message.channel}`, true)
 		.addField('Executor', target.id === message.author.id ? executor : `Unknown (${message.author})`, true)
 		.addField('Message', message.cleanContent || '`Message was an embed.`')
-		.setFooter(`Message ID: ${message.id} | Author ID: ${message.author.id}${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
+		.setFooter(`Message ID: ${message.id} | Author ID: ${message.author.id}${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
 	if (eventLog.reason) newEmbed.addField('Reason', eventLog.reason, true)
 
 	logChannel.send(newEmbed)

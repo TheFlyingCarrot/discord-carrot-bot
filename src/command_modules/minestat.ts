@@ -23,7 +23,7 @@ const minestat: Command = {
 				.addField('Status', fetchedData.status ? 'Online' : 'Offline', true)
 				.addField('Players', `${fetchedData.players.now}/${fetchedData.players.max}`, true)
 				.addField('MOTD', fetchedData.motd || '`No MOTD`')
-				.setFooter(`Carrot Bot${process.env.ENV_TYPE === 'test' ? ' | Test Build' : ''}`)
+				.setFooter(`Carrot Bot${process.env.NODE_ENV === 'test' ? ' | Test Build' : ''}`)
 			message.reply(newEmbed)
 		}
 	}
