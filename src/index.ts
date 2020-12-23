@@ -1,5 +1,11 @@
 import { Command, Config, Discord, EventHandlers, ExtendedClient, fs } from './internal'
 
+try {
+	const 
+} catch (error) {
+	
+}
+
 // Client Set-up
 export const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 client.commands = new Discord.Collection()
