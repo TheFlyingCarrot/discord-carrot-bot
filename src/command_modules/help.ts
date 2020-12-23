@@ -32,7 +32,7 @@ const help: Command = {
 			const command: Command = client.commands.get(name) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))
 			if (!command) {
 				message.reply('That\'s not a valid command.')
-				return null
+				return
 			}
 			newEmbed.addField('**Name:**', `${command.name}`)
 			if (command.description) newEmbed.addField('**Description:**', `${command.description}`)

@@ -7,7 +7,10 @@ export async function onWebhookUpdate (channel: Discord.TextChannel): Promise<vo
 	if (client.events.messageDelete === false || channel.name === 'logs' || !channel.guild || !channel.guild.available) return
 
 	const eventLog: Discord.GuildAuditLogsEntry = (await channel.guild.fetchAuditLogs({ limit: 1, type: 'WEBHOOK_UPDATE' })).entries.first()
-	if (!eventLog) return console.log('A webhook was updated, but no relevant audit logs were found.')
+	if (!eventLog) {
+		console.log('A webhook was updated, but no relevant audit logs were found.')
+		return
+	}
 	if (eventLog.action != 'MESSAGE_DELETE') return
 
 	const logChannel = channel.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as Discord.TextChannel

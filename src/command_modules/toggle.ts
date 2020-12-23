@@ -15,7 +15,7 @@ const toggle: Command = {
 	execute ({ client, message, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }): void {
 		if (!args.length) {
 			message.reply('You didn\'t give me any command to toggle.')
-			return null
+			return
 		}
 
 		let commandName = null
@@ -29,7 +29,7 @@ const toggle: Command = {
 		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 		if (!command) {
 			message.reply('No such command was found.')
-			return null
+			return
 		}
 
 		if (query) {

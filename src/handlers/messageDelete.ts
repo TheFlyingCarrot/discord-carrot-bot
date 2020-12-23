@@ -4,7 +4,10 @@ export async function onMessageDeletion (message: Discord.Message): Promise<void
 	if (client.events.messageDelete === false || message.channel.type === 'dm' || message.channel.name === 'logs' || !message.guild || !message.guild.available) return
 
 	const eventLog: Discord.GuildAuditLogsEntry = (await message.guild.fetchAuditLogs({ limit: 1, type: 'MESSAGE_DELETE' })).entries.first()
-	if (!eventLog) return console.log(`A message by ${message.author.tag} was deleted, but no relevant audit logs were found.`)
+	if (!eventLog) {
+		console.log(`A message by ${message.author.tag} was deleted, but no relevant audit logs were found.`)
+		return
+	}
 	if (eventLog.action != 'MESSAGE_DELETE') return
 
 	const logChannel = message.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as Discord.TextChannel

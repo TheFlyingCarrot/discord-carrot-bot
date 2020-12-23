@@ -17,9 +17,9 @@ const slow_mode: Command = {
 	execute ({ message, args }): void {
 		if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
 			message.reply('You do not have permission to use that command.')
-			return null
+			return
 		}
-		if (message.channel.type == 'dm' || message.channel.type == 'news') return null
+		if (message.channel.type == 'dm' || message.channel.type == 'news') return
 		if (message.channel.rateLimitPerUser > 0) {
 			message.channel.edit({ rateLimitPerUser: 0 })
 				.then(() => {
@@ -27,7 +27,7 @@ const slow_mode: Command = {
 				})
 				.catch((error) => {
 					message.reply('There was an error executing that command.')
-					return error
+					console.error(error)
 				})
 		} else {
 			const rateLimit: number = parseInt(args[0], 10) ? parseInt(args[0], 10) : 5
@@ -37,7 +37,7 @@ const slow_mode: Command = {
 				})
 				.catch((error) => {
 					message.reply('There was an error executing that command.')
-					return error
+					console.error(error)
 				})
 		}
 	}

@@ -4,7 +4,10 @@ export async function onGuildMemberRemove (member: Discord.GuildMember): Promise
 	if (client.events.messageDelete === false || !member.guild.available) return
 
 	const eventLog: Discord.GuildAuditLogsEntry = (await member.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_KICK' })).entries.first()
-	if (!eventLog) return console.log(`User: ${member.user.tag} was banned, but no relevant audit logs were found.`)
+	if (!eventLog) {
+		console.log(`User: ${member.user.tag} was banned, but no relevant audit logs were found.`)
+		return
+	}
 	if (eventLog.action != 'MEMBER_KICK') return
 
 	const logChannel = member.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as Discord.TextChannel

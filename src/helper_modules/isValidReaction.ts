@@ -8,7 +8,8 @@ export async function isValidReaction (messageReaction: Discord.MessageReaction,
 		|| messageReaction.message.channel.name != 'role-request'
 		|| (messageReaction.message
 			&& messageReaction.message.author
-			&& !messageReaction.message.author.equals(client.user)))
+			&& !messageReaction.message.author.equals(client.user))) {
 		return true
+	}
 	return false
 }

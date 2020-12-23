@@ -13,7 +13,7 @@ const unload: Command = {
 		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 		if (!command) {
 			message.reply('No such command was found.')
-			return null
+			return
 		}
 
 		delete require.cache[require.resolve(`./${command.name}.js`)]

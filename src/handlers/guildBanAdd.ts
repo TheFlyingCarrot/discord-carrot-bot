@@ -4,7 +4,10 @@ export async function onGuildBanAdd (guild: Discord.Guild, user: Discord.User): 
 	if (client.events.messageDelete === false || !guild.available) return
 
 	const eventLog: Discord.GuildAuditLogsEntry = (await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_ADD' })).entries.first()
-	if (!eventLog) return console.log(`User: ${user.tag} was banned, but no relevant audit logs were found.`)
+	if (!eventLog) {
+		console.log(`User: ${user.tag} was banned, but no relevant audit logs were found.`)
+		return
+	}
 	if (eventLog.action != 'MEMBER_BAN_ADD') return
 
 	const logChannel = guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as Discord.TextChannel
