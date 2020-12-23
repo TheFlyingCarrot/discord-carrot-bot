@@ -6,26 +6,28 @@ const MaxDie = 6
 const DefaultFaces = 6
 const DefaultDie = 1
 
-function rollDice (faces: number, die: number): number {
-	let sum = 0
-	for (let i = 0; i < die; i++) {
-		sum += Math.floor(faces * Math.random()) + 1
-	}
-	return sum
-}
-
-function verifyFaces (faces: number): number {
-	if (!faces || faces < 0 || faces > MaxFaces) {
+const boundFaces = (faces: number | string): number => {
+	faces = Number(faces)
+	if (faces === null || isNaN(Number(faces)) || faces < 1 || faces > MaxFaces) {
 		return DefaultFaces
 	}
 	return faces
 }
 
-function verifyDie (die: number): number {
-	if (!die || die < 0 || die > MaxDie) {
+const boundDice = (dice: number | string): number => {
+	dice = Number(dice)
+	if (dice === null || isNaN(Number(dice)) || dice < 1 || dice > MaxDie) {
 		return DefaultDie
 	}
-	return die
+	return dice
+}
+
+const rollDice = (faces: number, die: number): number => {
+	let sum = 0
+	for (let i = 0; i < die; i++) {
+		sum += Math.floor(faces * Math.random()) + 1
+	}
+	return sum
 }
 
 const diceroll: Command = {
@@ -38,9 +40,9 @@ const diceroll: Command = {
 	usage: '(number of faces) (number of die)',
 
 	execute ({ message, args }): void {
-		const faces = verifyFaces(Number(args[0]))
-		const die = verifyDie(Number(args[1]))
-		message.reply(`it's a ${rollDice(faces, die)}.\n\`${faces} Faces | ${die} ${die > 1 ? 'Dice' : 'Die'}\``)
+		const faces = boundFaces(args[0])
+		const die = boundDice(args[1])
+		message.reply(`It's a ${rollDice(faces, die)}.\n\`${faces} Faces | ${die} ${die > 1 ? 'Dice' : 'Die'}\``)
 	}
 }
 
