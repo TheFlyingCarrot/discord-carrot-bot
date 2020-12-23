@@ -30,7 +30,7 @@ declare interface Command {
 
 	developerOnly?: boolean
 
-	execute?: ({ client, message, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }) => any | Promise<any>
+	execute?: ({ client, message, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }) => void | Promise<void>
 }
 
 declare interface ReactionRoleConfig {
