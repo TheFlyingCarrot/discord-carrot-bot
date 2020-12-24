@@ -14,7 +14,9 @@ const load: Command = {
 			message.reply('That command is already loaded.')
 			return
 		}
-		if (!fs.existsSync(`dist\\command_modules\\${commandName}.js`)) {
+		// `./${commandName}.js`
+		// `dist\\command_modules\\${commandName}.js`
+		if (!fs.existsSync(`./${commandName}.js`)) {
 			message.reply('No file belonging to that command name was found.')
 			return
 		}
