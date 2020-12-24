@@ -1,4 +1,4 @@
-import { Command, Discord, fs } from '../internal.js'
+import { Command, Discord, fs, path } from '../internal.js'
 
 const load: Command = {
 	name: 'load',
@@ -14,15 +14,14 @@ const load: Command = {
 			message.reply('That command is already loaded.')
 			return
 		}
-		// `./${commandName}.js`
-		// `dist\\command_modules\\${commandName}.js`
-		if (!fs.existsSync(`./${commandName}.js`)) {
+		const commandPath = path.join(process.cwd(), 'dist/command_modules', `${commandName}.js`)
+		if (!fs.existsSync(commandPath)) {
 			message.reply('No file belonging to that command name was found.')
 			return
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		const newCommand: Command = require(`./${commandName}.js`).default
+		const newCommand: Command = require(commandPath).default
 		client.commands.set(newCommand.name, newCommand)
 
 		if (newCommand) {
