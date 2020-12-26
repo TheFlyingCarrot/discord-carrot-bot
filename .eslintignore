@@ -2,7 +2,10 @@ dist
 
 node_modules
 npm-debug.log
-npm-list.json
+
+.eslintignore
+.eslintrc.js
+.eslintrc.json
 
 git
 .github
@@ -11,3 +14,5 @@ git
 
 .vs
 .vscode
+
+*.d.ts
