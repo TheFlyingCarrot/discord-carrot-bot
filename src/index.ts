@@ -20,7 +20,6 @@ for (const file of fs.readdirSync(`${__dirname}/command_modules/`)) {
 		console.error('[Command Loading Error]', `${file}: Command: ${command && command.name ? `'${command.name}'` : '\'Unknown\''} could not be loaded.\nError: ${error}`)
 	}
 }
-// const command = client.commands.get(name) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))
 
 // Client Events
 client
