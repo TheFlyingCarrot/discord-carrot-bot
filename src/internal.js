@@ -6,8 +6,6 @@ export * as Config from './config.json'
 export { client } from './index'
 export { ClientEvents, Command, ExtendedClient, ReactionRole, ReactionRoleConfig } from './typings'
 
-export { slashCommands } from './helper_modules/slashCommands'
-
 import { onGuildBanAdd } from './handlers/guildBanAdd'
 import { onGuildBanRemove } from './handlers/guildBanRemove'
 import { onGuildMemberRemove } from './handlers/guildMemberRemove'
