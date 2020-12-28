@@ -1,4 +1,4 @@
-import { client, Command, Discord, fs, path } from '../internal'
+import { Command, Discord, fs, path } from '../internal'
 
 export function initalizeCommands (): Discord.Collection<string, Command> {
 	const commands = new Discord.Collection<string, Command>()
@@ -8,7 +8,10 @@ export function initalizeCommands (): Discord.Collection<string, Command> {
 		const commandPath = path.join(process.cwd(), 'dist/command_modules', `${file}`)
 		try {
 			const command: Command = require(commandPath).default
-			if (!commands.get(command.name)) commands.set(command.name, command)
+			if (!commands.get(command.name)
+				|| commands.find((command: Command) => command.aliases ? command.aliases.includes(command.name) : false)) {
+				commands.set(command.name, command)
+			}
 		} catch (error) {
 			console.error('[Command Loading Error]', `${file}: Command could not be loaded.\nError: ${error}`)
 		}
