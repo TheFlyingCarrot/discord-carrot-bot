@@ -16,10 +16,11 @@ import { onMessageReactionRemove } from './handlers/messageReactionRemove'
 import { onMessageUpdate } from './handlers/messageUpdate'
 import { onReady } from './handlers/ready'
 import { onWebhookUpdate } from './handlers/webhookUpdate'
+
 import { cooldown } from './helper_modules/cooldown'
 import { fetchPartial } from './helper_modules/fetchPartial'
 import { getCommand } from './helper_modules/getCommand'
 import { isValidReaction } from './helper_modules/isValidReaction'
 
-export const HelperModules = { cooldown, fetchPartial, getCommand, isValidReaction }
 export const EventHandlers = { onGuildBanAdd, onGuildBanRemove, onGuildMemberRemove, onMessageDeletion, onMessageReactionAdd, onMessageReactionRemove, onMessageUpdate, onMessage, onReady, onWebhookUpdate }
+export const HelperModules = { cooldown, fetchPartial, getCommand, isValidReaction }
