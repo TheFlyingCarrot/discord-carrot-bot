@@ -4,7 +4,13 @@ export * as path from 'path'
 export { fetch } from 'node-fetch'
 export * as Config from './config.json'
 export { client } from './index'
-export { ClientEvents, Command, ExtendedClient, ReactionRole, ReactionRoleConfig } from './typings'
+export { ClientEvents, Command, ReactionRole, ReactionRoleConfig } from './typings'
+
+export { ExtendedClient } from './client_modules/ExtendedClient'
+
+import { getClientCommand } from './client_modules/getClientCommand'
+import { hasCommand } from './client_modules/hasCommand'
+import { initalizeCommands } from './client_modules/initalizeCommands'
 
 import { onGuildBanAdd } from './handlers/guildBanAdd'
 import { onGuildBanRemove } from './handlers/guildBanRemove'
@@ -22,5 +28,6 @@ import { fetchPartial } from './helper_modules/fetchPartial'
 import { getCommand } from './helper_modules/getCommand'
 import { isValidReaction } from './helper_modules/isValidReaction'
 
+export const ClientModules = { getClientCommand, hasCommand, initalizeCommands }
 export const EventHandlers = { onGuildBanAdd, onGuildBanRemove, onGuildMemberRemove, onMessageDeletion, onMessageReactionAdd, onMessageReactionRemove, onMessageUpdate, onMessage, onReady, onWebhookUpdate }
 export const HelperModules = { cooldown, fetchPartial, getCommand, isValidReaction }

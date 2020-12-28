@@ -1,19 +1,8 @@
-import { Discord } from './internal'
+import { Discord, ExtendedClient } from './internal'
 
 declare module '*.json' {
 	const value: any
 	export default value
-}
-
-declare interface ExtendedClient extends Discord.Client {
-	hasCommand?: (arg0: string) => boolean
-	hasPermission?: (permissionString: string, guild: Discord.Guild) => boolean
-	getCommand?: (arg0: string) => Command
-	activity?: string
-	commands?: Discord.Collection<string, Command>
-	commandsEnabled?: boolean
-	cooldowns?: Discord.Collection<any, any>
-	events?: ClientEvents
 }
 
 declare interface Command {

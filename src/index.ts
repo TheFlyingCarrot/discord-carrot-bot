@@ -1,27 +1,10 @@
-import { Command, Config, Discord, EventHandlers, ExtendedClient, fs } from './internal'
+import { Config, EventHandlers, ExtendedClient } from './internal'
 
-// Client Set-up
-export const client: ExtendedClient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
-client.commands = new Discord.Collection()
-client.cooldowns = new Discord.Collection()
-client.commandsEnabled = Config.default_commands_enabled
-client.activity = client.commandsEnabled ? '.help' : 'nobody.'
-client.events = Config.client_events
+// Set-up
+export const client: ExtendedClient = new ExtendedClient(`${Config.default_commands_enabled ? `${Config.prefix}help` : 'nobody.'}`, { partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 client.login(process.env.BOT_TOKEN)
 
-// Commands
-for (const file of fs.readdirSync(`${__dirname}/command_modules/`)) {
-	if (!file.endsWith('.js')) continue
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	const command: Command = require(`./command_modules/${file}`).default
-	try {
-		client.commands.set(command.name, command)
-	} catch (error) {
-		console.error('[Command Loading Error]', `${file}: Command: ${command && command.name ? `'${command.name}'` : '\'Unknown\''} could not be loaded.\nError: ${error}`)
-	}
-}
-
-// Client Events
+// Events
 client
 	.on('ready', EventHandlers.onReady)
 	.on('debug', console.debug)
