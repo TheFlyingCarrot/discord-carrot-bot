@@ -20,7 +20,6 @@ const load: Command = {
 			return
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		const newCommand: Command = require(commandPath).default
 		client.commands.set(newCommand.name, newCommand)
 
@@ -31,7 +30,7 @@ const load: Command = {
 				.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
 				.setTitle('Command Load')
 				.setColor('#00ff00')
-				.setDescription(`Command ${commandName} was loaded.`)
+				.setDescription(`Command \`${commandName}\` was loaded.`)
 			message.reply(newEmbed)
 			console.log(`Command Loaded: ${commandName}`)
 		} else {
@@ -41,7 +40,7 @@ const load: Command = {
 				.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
 				.setTitle('Command Load')
 				.setColor('#ff0000')
-				.setDescription(`Command ${commandName} could not be loaded.`)
+				.setDescription(`Command \`${commandName}\` could not be loaded.`)
 			message.reply(newEmbed)
 		}
 	}

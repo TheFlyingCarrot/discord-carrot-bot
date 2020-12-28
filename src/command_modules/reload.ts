@@ -18,7 +18,6 @@ const reload: Command = {
 			return
 		}
 		delete require.cache[require.resolve(`./${command.name}.js`)]
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		const newCommand: Command = require(`./${command.name}.js`).default
 		client.commands.set(newCommand.name, newCommand)
 
