@@ -1,9 +1,8 @@
 import { client, Command } from '../internal'
 
-client.hasCommand = (commandName: string): boolean => {
-	if (client.commands.get(commandName))
-		return true
-	else if (client.commands.find((command: Command) => command.aliases.includes(commandName)))
+export function hasCommand (commandName: string): boolean {
+	if (client.commands.get(commandName)
+		|| client.commands.find((command: Command) => command.aliases ? command.aliases.includes(commandName) : false))
 		return true
 	else
 		return false
