@@ -14,7 +14,7 @@ const slow_mode: Command = {
 
 	permission: 'MANAGE_CHANNELS',
 
-	execute ({ message, args }): void {
+	execute ({ message, args }) {
 		if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
 			message.reply('You do not have permission to use that command.')
 			return

@@ -14,7 +14,7 @@ const kick: Command = {
 
 	permission: 'KICK_MEMBERS',
 
-	execute ({ message }): void {
+	execute ({ message }) {
 		const targetUser = message.mentions.members.first()
 		if (!targetUser.kickable) {
 			message.reply('I can\'t kick that user.')

@@ -7,7 +7,7 @@ const ping: Command = {
 	enabled: true,
 	toggleable: true,
 
-	execute ({ message }): void {
+	execute ({ message }) {
 		message.reply('Pong!')
 	}
 }

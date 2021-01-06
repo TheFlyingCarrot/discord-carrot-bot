@@ -12,7 +12,7 @@ const guild_info: Command = {
 
 	developerOnly: true,
 
-	async execute ({ message }): Promise<void> {
+	async execute ({ message }) {
 		const data = JSON.stringify(message.guild, null, '	')
 		const filename = `${message.guild.id}.json`
 

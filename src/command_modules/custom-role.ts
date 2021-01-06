@@ -45,7 +45,7 @@ const custom_role: Command = {
 	guildOnly: true,
 	guildSpecific: ['442001192655257620', '701622386163712001'],
 
-	async execute ({ message, args }): Promise<void> {
+	async execute ({ message, args }) {
 		const { guild } = message
 		if (!guild.available) throw new Error('Guild not available.')
 		const guildMember = guild.member(message.author)

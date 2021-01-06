@@ -8,7 +8,7 @@ const coinflip: Command = {
 
 	aliases: ['coin', 'coinflip', 'flip', 'flipcoin', 'flip-coin'],
 
-	execute ({ message }): void {
+	execute ({ message }) {
 		message.reply(`${Math.random() > 0.5 ? 'Heads' : 'Tails'}.`)
 	}
 }

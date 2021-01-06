@@ -10,7 +10,7 @@ const minestat: Command = {
 	usage: '[ip/address] (port)',
 	args: true,
 
-	async execute ({ message, args }): Promise<void> {
+	async execute ({ message, args }) {
 		const requestURL = `http://mcapi.us/server/status?ip=${args[0]}${args[1] ? `&port${args[1]}` : ''}`
 		const fetchedData = await (await fetch(requestURL, { method: 'get', headers: { 'Content-Type': 'application/json' } })).json()
 			.catch(console.error)

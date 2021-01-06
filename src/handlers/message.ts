@@ -1,6 +1,6 @@
 import { client, Config, Discord, HelperModules } from '../internal.js'
 
-export function onMessage (message: Discord.Message): Promise<void> {
+export function onMessage (message: Discord.Message) {
 	if (client.events.message === false && !Config.developers.includes(message.author.id.toString())) return
 	const { command, args } = HelperModules.getCommand({ client, message }) ?? {}
 	if (command && !HelperModules.cooldown({ message, command })) {

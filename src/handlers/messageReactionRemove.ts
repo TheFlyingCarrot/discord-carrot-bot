@@ -1,7 +1,7 @@
 import TeamDiscord from '../guilds/750480529765171302.json'
 import { client, ReactionRole, Discord, HelperModules } from '../internal.js'
 
-export async function onMessageReactionRemove (messageReaction: Discord.MessageReaction, user: Discord.User): Promise<void> {
+export async function onMessageReactionRemove (messageReaction: Discord.MessageReaction, user: Discord.User) {
 	if (!HelperModules.isValidReaction(messageReaction, user)) return
 
 	if (client.events.messageReactionRemove === false) return

@@ -1,6 +1,6 @@
 import { client, Discord } from '../internal.js'
 
-export async function onMessageUpdate (oldMessage: Discord.Message, newMessage: Discord.Message): Promise<void> {
+export async function onMessageUpdate (oldMessage: Discord.Message, newMessage: Discord.Message) {
 	if (client.events.messageUpdate === false || oldMessage.channel.type === 'dm' || oldMessage.channel.name === 'logs' || !newMessage.guild.available) return
 
 	const logChannel = oldMessage.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as Discord.TextChannel

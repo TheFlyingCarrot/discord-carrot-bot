@@ -8,7 +8,7 @@ const unload: Command = {
 
 	args: true,
 
-	execute ({ args, client, message }): void {
+	execute ({ args, client, message }) {
 		const commandName = args.shift().toLowerCase()
 		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 		if (!command) {

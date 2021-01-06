@@ -1,11 +1,11 @@
 import { client, Config, Discord } from '../internal.js'
 
-export async function onGuildMemberRemove (member: Discord.GuildMember): Promise<void> {
+export async function onGuildMemberRemove (member: Discord.GuildMember) {
 	const now = Date.now()
 
 	if (client.events.messageDelete === false || !member.guild.available) return
 
-	const eventLog: Discord.GuildAuditLogsEntry = (await member.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_KICK' })).entries.first()
+	const eventLog = (await member.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_KICK' })).entries.first()
 	
 	if (!eventLog) {
 		console.log(`User: ${member.user.tag} was removed, but no relevant audit logs were found.`)

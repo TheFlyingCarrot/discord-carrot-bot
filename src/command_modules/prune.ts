@@ -14,7 +14,7 @@ const prune: Command = {
 
 	permission: 'MANAGE_MESSAGES',
 
-	execute ({ message, args }): void {
+	execute ({ message, args }) {
 		if (message.channel.type === 'dm') return
 		if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
 			message.reply('You do not have permission to use this command.')

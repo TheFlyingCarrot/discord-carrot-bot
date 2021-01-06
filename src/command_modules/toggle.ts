@@ -12,7 +12,7 @@ const toggle: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }): void {
+	execute ({ client, message, args }) {
 		if (!args.length) {
 			message.reply('You didn\'t give me any command to toggle.')
 			return

@@ -4,9 +4,11 @@ const outcomes = ['It\'s a draw!', 'You win!', 'You lose!']
 const choices = ['rock', 'paper', 'scissors']
 
 const outcomesProxy = new Proxy(outcomes, {
-	get (target, index) {
-		index = Number(index)
-		if (index < 0) index += target.length
+	get (target, p: string) {
+		let index = parseInt(p)
+		if (index < 0) {
+			index += target.length
+		}
 		return target[index]
 	}
 })
@@ -37,7 +39,7 @@ const rockpaperscissors: Command = {
 	usage: '(r/rock/p/paper/s/scissors)',
 	args: true,
 
-	execute ({ args, message }): void {
+	execute ({ args, message }) {
 		const choice = choices.find(element => element.startsWith(args[0].charAt(0)))
 
 		if (!choice) {

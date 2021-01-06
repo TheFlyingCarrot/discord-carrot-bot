@@ -1,6 +1,6 @@
 import { client, Discord } from '../internal.js'
 
-export async function onMessageDeletion (message: Discord.Message): Promise<void> {
+export async function onMessageDeletion (message: Discord.Message) {
 	if (client.events.messageDelete === false || message.channel.type === 'dm' || message.channel.name === 'logs' || !message.guild || !message.guild.available) return
 
 	const eventLog: Discord.GuildAuditLogsEntry = (await message.guild.fetchAuditLogs({ limit: 1, type: 'MESSAGE_DELETE' })).entries.first()

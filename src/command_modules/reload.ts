@@ -10,7 +10,7 @@ const reload: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }): void {
+	execute ({ client, message, args }) {
 		const commandName = args[0].toLowerCase()
 		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 		if (!command) {

@@ -11,7 +11,7 @@ const toggle_commands: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }): void {
+	execute ({ client, args }) {
 		switch (args[0]) {
 		case 'true':
 			client.commandsEnabled = true

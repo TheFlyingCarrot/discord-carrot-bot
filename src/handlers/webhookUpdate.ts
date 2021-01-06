@@ -3,7 +3,7 @@ import { client, Discord } from '../internal.js'
 const webhookActionMap = { 'WEBHOOK_CREATE': 'Create Webhook', 'WEBHOOK_UPDATE': 'Update Webhook', 'WEBHOOK_DELETE': 'Delete Webhook' }
 const embedActions = { 'CREATE': '#00ff00', 'DELETE': '#ff0000', 'UPDATE': '#ff6400', 'ALL': '#ff00ff' }
 
-export async function onWebhookUpdate (channel: Discord.TextChannel): Promise<void> {
+export async function onWebhookUpdate (channel: Discord.TextChannel) {
 	if (client.events.messageDelete === false || channel.name === 'logs' || !channel.guild || !channel.guild.available) return
 
 	const eventLog: Discord.GuildAuditLogsEntry = (await channel.guild.fetchAuditLogs({ limit: 1, type: 'WEBHOOK_UPDATE' })).entries.first()

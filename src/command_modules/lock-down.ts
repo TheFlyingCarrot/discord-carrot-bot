@@ -21,7 +21,7 @@ const lock_down: Command = {
 
 	permission: 'ADMINISTRATOR',
 
-	execute ({ message, args }): void {
+	execute ({ message, args }) {
 		const flag = args[0].toLowerCase() === 'true' ? true : args[0].toLowerCase() === 'false' ? false : null
 		const channels = message.guild.channels.cache.filter(ch => ch.type !== 'category')
 		channels.forEach(channel => {

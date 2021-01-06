@@ -9,7 +9,7 @@ const help: Command = {
 	aliases: ['commands', 'usage'],
 	usage: '(command)',
 
-	execute ({ client, message, args }): void {
+	execute ({ client, message, args }) {
 		const newEmbed = new Discord.MessageEmbed()
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setThumbnail('https://i.ibb.co/MhzStmL/user-inquiry.png')

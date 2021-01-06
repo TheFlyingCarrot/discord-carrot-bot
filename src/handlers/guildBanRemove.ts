@@ -1,9 +1,9 @@
 import { client, Discord } from '../internal.js'
 
-export async function onGuildBanRemove (guild: Discord.Guild, user: Discord.User): Promise<void> {
+export async function onGuildBanRemove (guild: Discord.Guild, user: Discord.User) {
 	if (client.events.messageDelete === false || !guild.available) return
 
-	const eventLog: Discord.GuildAuditLogsEntry = (await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_REMOVE' })).entries.first()
+	const eventLog = (await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_REMOVE' })).entries.first()
 	if (!eventLog) {
 		console.log(`User: ${user.tag} was banned, but no relevant audit logs were found.`)
 		return

@@ -12,7 +12,7 @@ const toggle_event: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message, args }: { client: ExtendedClient, message: Discord.Message, args: string[] }): void {
+	execute ({ client, message, args }) {
 		if (args[0] in client.events) {
 			client.events[args[0]] = !client.events[args[0]]
 		} else if (args[0] == 'all') {
