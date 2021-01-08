@@ -16,9 +16,7 @@ export async function onMessageReactionAdd (messageReaction: Discord.MessageReac
 	}
 
 	if (guild.id == TeamDiscord.guild_id) {
-		console.log(messageReaction.emoji.toString())
 		const reactionRole: ReactionRole = TeamDiscord.reaction_roles.find((role) => role.emoji_tag == messageReaction.emoji.toString())
-		console.log(reactionRole)
 		if (!reactionRole) return
 
 		new Promise((resolve) => resolve(guild.roles.fetch(reactionRole.role_id)))
