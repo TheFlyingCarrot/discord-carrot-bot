@@ -14,13 +14,13 @@ const prune: Command = {
 
 	permission: 'MANAGE_MESSAGES',
 
-	execute ({ message, args }) {
+	execute ({ args, message }) {
 		if (message.channel.type === 'dm') return
 		if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
 			message.reply('You do not have permission to use this command.')
 			return
 		}
-		const amount = parseInt(args[0], 10)
+		const amount = parseInt(args.pop())
 		if (isNaN(amount)) {
 			message.channel.bulkDelete(2, true)
 				.catch((err) => {

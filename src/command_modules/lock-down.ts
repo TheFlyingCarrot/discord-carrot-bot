@@ -1,8 +1,8 @@
 import { Command } from '../internal.js'
 
 const Ignored_Channels = new Set([
-	'750499239171457064', '750505158043107509', '750498579797377196',
-	'442002580764360715', '442004978111086592', '731313604493574145', '731299966341087273'
+	'751250239897469049', '785786109208428564', '750498579797377196', '750499239171457064', '750505158043107509',
+	'442002580764360715', '442004978111086592', '731313604493574145', '743672339446628403'
 ])
 
 const lock_down: Command = {
@@ -21,8 +21,12 @@ const lock_down: Command = {
 
 	permission: 'ADMINISTRATOR',
 
-	execute ({ message, args }) {
-		const flag = args[0].toLowerCase() === 'true' ? true : args[0].toLowerCase() === 'false' ? false : null
+	execute ({ args, message }) {
+		let flag: boolean = null
+		{
+			const flagString = args.pop()
+			flagString.toLowerCase() === 'true' ? true : flagString.toLowerCase() === 'false' ? false : null
+		}
 		const channels = message.guild.channels.cache.filter(ch => ch.type !== 'category')
 		channels.forEach(channel => {
 			if (!Ignored_Channels.has(channel.id)) {

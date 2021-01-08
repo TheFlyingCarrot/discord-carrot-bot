@@ -13,7 +13,7 @@ const mod_mail: Command = {
 
 	guildOnly: true,
 
-	execute ({ message, args }) {
+	execute ({ args, message }) {
 		const { guild } = message
 		if (!guild.available) return
 		const { publicUpdatesChannel } = guild

@@ -13,13 +13,14 @@ const react_role: Command = {
 
 	developerOnly: true,
 
-	execute ({ message, args }) {
-		if (team_discord.role_categories.includes(args[0])) {
+	execute ({ args, message }) {
+		const desiredRoleCategory = args.pop()
+		if (team_discord.role_categories.includes(desiredRoleCategory)) {
 			const newEmbed = new Discord.MessageEmbed()
-			newEmbed.setTitle(`${args[0].toUpperCase()} ROLES`)
+			newEmbed.setTitle(`${desiredRoleCategory.toUpperCase()} ROLES`)
 			let ReactionRole: ReactionRole
 			for (ReactionRole of Object.values(team_discord.reaction_roles)) {
-				if (ReactionRole.category == args[0].toLowerCase()) {
+				if (ReactionRole.category === desiredRoleCategory.toLowerCase()) {
 					newEmbed.addField(ReactionRole.emoji_tag, ReactionRole.name)
 				}
 			}

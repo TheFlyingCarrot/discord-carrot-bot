@@ -39,9 +39,9 @@ const diceroll: Command = {
 	aliases: ['dice', 'diceroll', 'die', 'die-roll', 'roll', 'roll-die', 'roll-dice'],
 	usage: '(number of faces) (number of die)',
 
-	execute ({ message, args }) {
-		const faces = boundFaces(args[0])
-		const die = boundDice(args[1])
+	execute ({ args, message }) {
+		const faces = boundFaces(args.pop())
+		const die = boundDice(args.pop())
 		message.reply(`It's a ${rollDice(faces, die)}.\n\`${faces} Faces | ${die} ${die > 1 ? 'Dice' : 'Die'}\``)
 	}
 }
