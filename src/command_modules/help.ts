@@ -29,9 +29,9 @@ const help: Command = {
 			message.reply(newEmbed)
 		} else {
 			const name = args.pop().toLowerCase()
-			const command: Command = client.commands.get(name) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))
+			const command = client.commands.get(name) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))
 			if (!command) {
-				message.reply('That\'s not a valid command.')
+				message.reply('That\'s not a valid command.\n*It\'s possible that it may not be loaded.*')
 				return
 			}
 			newEmbed.addField('**Name:**', `${command.name}`)
