@@ -1,4 +1,4 @@
-import { Command, ExtendedClient, Discord } from '../internal.js'
+import { client, Command } from '../internal.js'
 
 const toggle_event: Command = {
 	name: 'toggle-event',
@@ -12,10 +12,11 @@ const toggle_event: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message, args }) {
-		if (args[0] in client.events) {
-			client.events[args[0]] = !client.events[args[0]]
-		} else if (args[0] == 'all') {
+	execute ({ args, message }) {
+		const desiredEvent = args.pop()
+		if (desiredEvent in client.events) {
+			client.events[desiredEvent] = !client.events[desiredEvent]
+		} else if (desiredEvent === 'all') {
 			for (const event in client.events) {
 				if (Object.prototype.hasOwnProperty.call(client.events, event)) {
 					client.events[event] = !client.events[event]

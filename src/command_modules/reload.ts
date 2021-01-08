@@ -1,4 +1,4 @@
-import { Command, Discord, ExtendedClient } from '../internal.js'
+import { client, Command, Discord } from '../internal.js'
 
 const reload: Command = {
 	name: 'reload',
@@ -10,8 +10,8 @@ const reload: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message, args }) {
-		const commandName = args[0].toLowerCase()
+	execute ({ args, message }) {
+		const commandName = args.pop().toLowerCase()
 		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 		if (!command) {
 			message.reply('No such command was found.')

@@ -1,4 +1,4 @@
-import { Command, Config, Discord } from '../internal.js'
+import { client, Command, Config, Discord } from '../internal.js'
 
 const help: Command = {
 	name: 'help',
@@ -9,7 +9,7 @@ const help: Command = {
 	aliases: ['commands', 'usage'],
 	usage: '(command)',
 
-	execute ({ client, message, args }) {
+	execute ({ args, message }) {
 		const newEmbed = new Discord.MessageEmbed()
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setThumbnail('https://i.ibb.co/MhzStmL/user-inquiry.png')
@@ -28,7 +28,7 @@ const help: Command = {
 			newEmbed.addField('More Info', `\nYou can use \`${Config.prefix}help [command name]\` to get help on a specific command.`)
 			message.reply(newEmbed)
 		} else {
-			const name = args[0].toLowerCase()
+			const name = args.pop().toLowerCase()
 			const command: Command = client.commands.get(name) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))
 			if (!command) {
 				message.reply('That\'s not a valid command.')

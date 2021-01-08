@@ -1,6 +1,6 @@
-import { Command, Config, Discord, ExtendedClient } from '../internal.js'
+import { client, Command, Config, Discord } from '../internal.js'
 
-export function getCommand ({ client, message }: { client: ExtendedClient, message: Discord.Message }): { command: Command, args: string[] | null } | null {
+export function getCommand ({ message }: { message: Discord.Message }): { command: Command, args: string[] | null } | null {
 	if (!message.content.startsWith(Config.prefix) || message.author.bot || message.tts || message.system) {
 		return
 	}

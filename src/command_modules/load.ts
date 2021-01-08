@@ -1,4 +1,4 @@
-import { Command, Discord, fs, path } from '../internal.js'
+import { client, Command, Discord, fs, path } from '../internal.js'
 
 const load: Command = {
 	name: 'load',
@@ -8,7 +8,7 @@ const load: Command = {
 
 	args: true,
 
-	execute ({ args, client, message }) {
+	execute ({ args, message }) {
 		const commandName = args.shift().toLowerCase()
 		if (client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))) {
 			message.reply('That command is already loaded.')

@@ -1,4 +1,4 @@
-import { Command, ExtendedClient, Discord } from '../internal.js'
+import { client, Command } from '../internal.js'
 
 const query_aliases = ['query', 'q']
 
@@ -8,24 +8,15 @@ const toggle: Command = {
 	enabled: true,
 	toggleable: true,
 
-	usage: '[command]',
+	usage: '[command] (query)',
+	args: true,
 
 	developerOnly: true,
 
-	execute ({ client, message, args }) {
-		if (!args.length) {
-			message.reply('You didn\'t give me any command to toggle.')
-			return
-		}
+	execute ({ args, message }) {
+		const commandName = args.pop().toLowerCase()
+		const query = args.length ? query_aliases.includes(args.pop().toLowerCase()) : false
 
-		let commandName = null
-		let query = false
-		if (query_aliases.includes(args[0].toLowerCase())) {
-			query = true
-			commandName = args[1].toLowerCase()
-		} else {
-			commandName = args[0].toLowerCase()
-		}
 		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 		if (!command) {
 			message.reply('No such command was found.')
@@ -33,15 +24,15 @@ const toggle: Command = {
 		}
 
 		if (query) {
-			message.reply(`the command \`${commandName}\` is currently \`${command.enabled ? 'enabled' : 'disabled'}\`.`)
+			message.reply(`The command \`${commandName}\` is currently \`${command.enabled ? 'enabled' : 'disabled'}\`.`)
 		} else if (!command.toggleable) {
-			message.reply(`the command \`${commandName}\` cannot be toggled.`)
-		} else if (command.toggleable && (command.enabled || !command.enabled)) {
+			message.reply(`The command \`${commandName}\` cannot be toggled.`)
+		} else if (command.toggleable) {
 			try {
 				command.enabled = !command.enabled
-				message.reply(`the command \`${commandName}\` is now \`${command.enabled ? 'enabled' : 'disabled'}\`.`)
+				message.reply(`The command \`${commandName}\` is now \`${command.enabled ? 'enabled' : 'disabled'}\`.`)
 			} catch (error) {
-				message.reply(`toggling the command \`${commandName}\` produced an error.`)
+				message.reply(`Toggling the command \`${commandName}\` produced an error.`)
 				console.error(error)
 			}
 		}

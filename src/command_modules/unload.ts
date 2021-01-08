@@ -1,4 +1,4 @@
-import { Command, Discord } from '../internal.js'
+import { client, Command, Discord } from '../internal.js'
 
 const unload: Command = {
 	name: 'unload',
@@ -8,7 +8,7 @@ const unload: Command = {
 
 	args: true,
 
-	execute ({ args, client, message }) {
+	execute ({ args, message }) {
 		const commandName = args.shift().toLowerCase()
 		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 		if (!command) {

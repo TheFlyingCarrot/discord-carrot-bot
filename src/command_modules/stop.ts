@@ -1,4 +1,4 @@
-import { Command } from '../internal'
+import { client, Command } from '../internal'
 
 const stop_client: Command = {
 	name: 'stop',
@@ -10,7 +10,7 @@ const stop_client: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, message }) {
+	execute ({ message }) {
 		console.log(`=== ===STOP COMMAND CALLED, ENDING OPEN PROCESSES=== ===\nCALLER: ${message.author.tag}`)
 		client.destroy()
 		process.exit(0)

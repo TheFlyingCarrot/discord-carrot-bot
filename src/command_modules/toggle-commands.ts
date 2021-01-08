@@ -1,4 +1,4 @@
-import { Command, Discord, ExtendedClient } from '../internal.js'
+import { client, Command } from '../internal.js'
 
 const toggle_commands: Command = {
 	name: 'toggle-commands',
@@ -11,24 +11,17 @@ const toggle_commands: Command = {
 
 	developerOnly: true,
 
-	execute ({ client, args }) {
-		switch (args[0]) {
-		case 'true':
-			client.commandsEnabled = true
-			break
-		case 'false':
-			client.commandsEnabled = false
-			break
-		default:
-			client.commandsEnabled = !client.commandsEnabled
-			break
-		}
-		if (args[0] == 'true') {
-			client.commandsEnabled = true
-		} else if (args[0] == 'false') {
-			client.commandsEnabled = false
-		} else {
-			client.commandsEnabled = !client.commandsEnabled
+	execute ({ args }) {
+		switch (args.pop()) {
+			case 'true':
+				client.commandsEnabled = true
+				break
+			case 'false':
+				client.commandsEnabled = false
+				break
+			default:
+				client.commandsEnabled = !client.commandsEnabled
+				break
 		}
 		client.activity = client.commandsEnabled ? '.help' : 'nobody.'
 		client.user.setStatus(client.commandsEnabled ? 'online' : 'dnd')
