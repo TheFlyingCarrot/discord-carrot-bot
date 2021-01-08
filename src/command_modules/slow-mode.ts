@@ -14,31 +14,15 @@ const slow_mode: Command = {
 
 	permission: 'MANAGE_CHANNELS',
 
-	execute ({ message, args }) {
-		if (!message.member.hasPermission(this.permission, { checkAdmin: true, checkOwner: true })) {
-			message.reply('You do not have permission to use that command.')
-			return
-		}
+	async execute ({ message, args }) {
 		if (message.channel.type == 'dm' || message.channel.type == 'news') return
 		if (message.channel.rateLimitPerUser > 0) {
-			message.channel.edit({ rateLimitPerUser: 0 })
-				.then(() => {
+			await message.channel.edit({ rateLimitPerUser: 0 })
 					message.reply('Slow-mode was disabled in this channel.')
-				})
-				.catch((error) => {
-					message.reply('There was an error executing that command.')
-					console.error(error)
-				})
 		} else {
-			const rateLimit: number = parseInt(args[0], 10) ? parseInt(args[0], 10) : 5
-			message.channel.edit({ rateLimitPerUser: rateLimit })
-				.then(() => {
-					message.reply(`Slow-mode was enabled in this channel for ${rateLimit} seconds per user.`)
-				})
-				.catch((error) => {
-					message.reply('There was an error executing that command.')
-					console.error(error)
-				})
+			const rateLimit: number = parseInt(args[0]) ? parseInt(args[0]) : 5
+			await message.channel.edit({ rateLimitPerUser: rateLimit })
+			message.reply(`Slow-mode was enabled in this channel for ${rateLimit} seconds per user.`)
 		}
 	}
 }
