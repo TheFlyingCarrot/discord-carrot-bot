@@ -1,7 +1,7 @@
 import { Config, EventHandlers, ExtendedClient } from './internal'
 
 // Set-up
-export const client: ExtendedClient = new ExtendedClient(`${Config.default_commands_enabled ? `${Config.prefix}help` : 'nobody.'}`, { partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
+export const client = new ExtendedClient(`${Config.default_commands_enabled ? `${Config.prefix}help` : 'nobody.'}`, { partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 client.login(process.env.BOT_TOKEN)
 
 // Events
