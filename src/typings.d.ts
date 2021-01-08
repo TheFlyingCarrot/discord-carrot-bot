@@ -37,8 +37,6 @@ declare interface ReactionRole {
 	name: string
 	category: string
 	role_id: string
-	emoji_name: string
-	emoji_id: string
 	emoji_tag: string
 }
 

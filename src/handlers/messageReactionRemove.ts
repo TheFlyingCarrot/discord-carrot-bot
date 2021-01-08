@@ -8,6 +8,8 @@ export async function onMessageReactionRemove (messageReaction: Discord.MessageR
 
 	const { guild } = messageReaction.message
 
+	if (!guild) return
+
 	if (!guild.available) {
 		console.error('[Reaction Handler] [Error] Guild not available:', guild)
 		return
