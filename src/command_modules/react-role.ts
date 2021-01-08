@@ -9,7 +9,7 @@ const react_role: Command = {
 	enabled: true,
 	toggleable: true,
 
-	aliases: ['reactrole'],
+	aliases: ['reactrole', 'reactroles', 'react-roles'],
 
 	developerOnly: true,
 
