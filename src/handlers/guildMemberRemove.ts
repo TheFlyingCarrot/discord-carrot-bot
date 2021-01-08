@@ -9,6 +9,7 @@ export async function onGuildMemberRemove (member: Discord.GuildMember) {
 	
 	if (!eventLog) {
 		console.log(`User: ${member.user.tag} was removed, but no relevant audit logs were found.`)
+		// TODO: Check: User left the Guild?
 		return
 	}
 	
