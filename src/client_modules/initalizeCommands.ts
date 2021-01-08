@@ -9,7 +9,7 @@ export function initalizeCommands (): Discord.Collection<string, Command> {
 		try {
 			const command: Command = require(commandPath).default
 			if (!commands.get(command.name)
-				|| commands.find((command: Command) => command.aliases ? command.aliases.includes(command.name) : false)) {
+				|| commands.find((command) => command.aliases ? command.aliases.includes(command.name) : false)) {
 				commands.set(command.name, command)
 			}
 		} catch (error) {
