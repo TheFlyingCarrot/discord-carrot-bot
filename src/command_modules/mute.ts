@@ -1,3 +1,4 @@
+import { connect } from 'http2'
 import { Command, Config } from '../internal.js'
 
 const mute: Command = {
@@ -16,7 +17,11 @@ const mute: Command = {
 		}
 		const mutedRoleID = Config.muted_role_ids[message.guild.id].muted_role_ids
 
-		targetUser.roles.add(message.guild.roles.cache.find((role) => role.id === mutedRoleID), args.join(' '))
+		const mutedRole = message.guild.roles.cache.find((role) => role.id === mutedRoleID)
+		console.log(mutedRole)
+		if (!mutedRole) return
+
+		targetUser.roles.add(mutedRole, args.join(' '))
 			.catch(console.error)
 
 		message.reply(`${targetUser.user.tag} was muted.`)
