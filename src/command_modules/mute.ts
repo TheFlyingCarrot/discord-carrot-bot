@@ -15,7 +15,7 @@ const mute: Command = {
 			message.reply('There is no configured muted role for this server.')
 			return
 		}
-		const mutedRoleID = Config.muted_role_ids[message.guild.id].muted_role_ids ?? -1
+		const mutedRoleID = Config.muted_role_ids[message.guild.id].muted_role_id ?? -1
 		console.log(Config.muted_role_ids[message.guild.id])
 		const mutedRole = message.guild.roles.cache.find((role) => role.id === mutedRoleID)
 		console.log(mutedRole)
