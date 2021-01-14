@@ -20,7 +20,7 @@ function randomNumber (min: number, max: number) {
 }
 
 function playGame (input: string): { outcome: string, playerChoice: string, computerChoice: string } {
-	const playerChoice = 'rps'.indexOf(input.charAt(0))
+	const playerChoice = 'rps'.indexOf(input)
 	const computerChoice = randomNumber(0, 2)
 	return {
 		outcome: outcomesProxy[playerChoice - computerChoice],
