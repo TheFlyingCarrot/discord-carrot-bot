@@ -40,7 +40,9 @@ const rockpaperscissors: Command = {
 	args: true,
 
 	execute ({ args, message }) {
-		const choice = choices.find(element => element.startsWith(args.pop().charAt(0)))
+		console.log(args)
+
+		const choice = choices.find(value => value.startsWith(args.pop().charAt(0)))
 
 		console.log(choice)
 
