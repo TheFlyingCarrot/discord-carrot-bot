@@ -20,6 +20,8 @@ function randomNumber (min: number, max: number) {
 }
 
 function playGame (input: string): { outcome: string, playerChoice: string, computerChoice: string } {
+	console.log(input)
+	console.log(input.charAt(0))
 	const playerChoice = 'rps'.indexOf(input)
 	console.log(playerChoice)
 	console.log(choices[playerChoice])
@@ -42,11 +44,10 @@ const rockpaperscissors: Command = {
 	args: true,
 
 	execute ({ args, message }) {
-		console.log(args)
-
 		const choice = choices.find(value => value.startsWith(args[0].charAt(0)))
 
-		console.log(choice)
+		console.log(args[0])
+		console.log(args.pop())
 
 		if (!choice) {
 			message.reply('That\'s not a possible choice!')
