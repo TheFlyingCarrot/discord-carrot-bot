@@ -42,6 +42,8 @@ const rockpaperscissors: Command = {
 	execute ({ args, message }) {
 		const choice = choices.find(element => element.startsWith(args.pop().charAt(0)))
 
+		console.log(choice)
+
 		if (!choice) {
 			message.reply('That\'s not a possible choice!')
 			return
