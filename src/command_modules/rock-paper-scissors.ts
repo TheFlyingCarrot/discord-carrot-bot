@@ -36,13 +36,13 @@ const rockpaperscissors: Command = {
 	toggleable: true,
 
 	aliases: ['rockpaperscissors', 'rps'],
-	usage: '(r/rock/p/paper/s/scissors)',
+	usage: '(rock/paper/scissors)',
 	args: true,
 
 	execute ({ args, message }) {
 		console.log(args)
 
-		const choice = choices.find(value => value.startsWith(args.pop().charAt(0)))
+		const choice = choices.find(value => value.startsWith(args[0].charAt(0)))
 
 		console.log(choice)
 
