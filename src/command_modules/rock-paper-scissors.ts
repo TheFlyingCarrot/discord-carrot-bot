@@ -20,11 +20,7 @@ function randomNumber (min: number, max: number) {
 }
 
 function playGame (input: string): { outcome: string, playerChoice: string, computerChoice: string } {
-	console.log(input)
-	console.log(input.charAt(0))
 	const playerChoice = 'rps'.indexOf(input)
-	console.log(playerChoice)
-	console.log(choices[playerChoice])
 	const computerChoice = randomNumber(0, 2)
 	return {
 		outcome: outcomesProxy[playerChoice - computerChoice],
@@ -44,10 +40,7 @@ const rockpaperscissors: Command = {
 	args: true,
 
 	execute ({ args, message }) {
-		const choice = choices.find(value => value.startsWith(args[0].charAt(0)))
-
-		console.log(args[0])
-		console.log(args.pop())
+		const choice = choices.find(value => value.startsWith(args.pop().charAt(0)))
 
 		if (!choice) {
 			message.reply('That\'s not a possible choice!')
