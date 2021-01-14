@@ -32,7 +32,7 @@ function playGame (input: string): { outcome: string, playerChoice: string, comp
 const rockpaperscissors: Command = {
 	name: 'rock-paper-scissors',
 	description: 'Play a game of rock, paper, scissors.',
-	enabled: true,
+	enabled: false,
 	toggleable: true,
 
 	aliases: ['rockpaperscissors', 'rps'],
