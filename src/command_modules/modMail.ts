@@ -1,12 +1,12 @@
 import { Command, Discord } from '../internal.js'
 
-const mod_mail: Command = {
-	name: 'mod-mail',
+const modMail: Command = {
+	name: 'modmail',
 	description: 'Message the admins.',
 	enabled: true,
 	toggleable: true,
 
-	aliases: ['mm', 'modmail', 'admin-mail', 'adminmail'],
+	aliases: ['mod-mail', 'admin-mail', 'adminmail'],
 	usage: '[message]',
 	args: true,
 	cooldown: 45,
@@ -38,4 +38,4 @@ const mod_mail: Command = {
 	}
 }
 
-export default mod_mail as Command
+export default modMail as Command

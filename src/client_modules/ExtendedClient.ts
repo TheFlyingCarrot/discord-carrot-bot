@@ -1,5 +1,4 @@
 import { Command, ClientEvents, Discord, ClientModules, Config } from '../internal'
-import { initalizeCommands } from './initalizeCommands'
 
 export class ExtendedClient extends Discord.Client {
 	activity: string
@@ -11,12 +10,12 @@ export class ExtendedClient extends Discord.Client {
 	constructor (activity: string, options: Discord.ClientOptions) {
 		super(options)
 		this.activity = activity
-		this.commands = initalizeCommands()
+		this.commands = new Discord.Collection()
 		this.commandsEnabled = Config.default_commands_enabled
 		this.cooldowns = new Discord.Collection()
 		this.events = Config.client_events
 	}
 
-	hasCommand = ClientModules.hasCommand
-	getClientCommand = ClientModules.getClientCommand
+	getCommand = ClientModules.getCommand
+	parseCommandFromMessage = ClientModules.parseCommandFromMessage
 }

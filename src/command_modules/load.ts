@@ -8,9 +8,11 @@ const load: Command = {
 
 	args: true,
 
+	developerOnly: true,
+
 	execute ({ args, message }) {
 		const commandName = args.shift().toLowerCase()
-		if (client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))) {
+		if (client.getCommand(commandName)) {
 			message.reply('That command is already loaded.')
 			return
 		}
@@ -23,26 +25,23 @@ const load: Command = {
 		const newCommand: Command = require(commandPath).default
 		client.commands.set(newCommand.name, newCommand)
 
+		const newEmbed = new Discord.MessageEmbed()
+		newEmbed
+			.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+			.setTimestamp()
+			.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
+			.setTitle('Command Load')
 		if (newCommand) {
-			const newEmbed = new Discord.MessageEmbed()
-			newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
-				.setTimestamp()
-				.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
-				.setTitle('Command Load')
+			newEmbed
 				.setColor('#00ff00')
 				.setDescription(`Command \`${commandName}\` was loaded.`)
-			message.reply(newEmbed)
-			console.log(`Command Loaded: ${commandName}`)
 		} else {
-			const newEmbed = new Discord.MessageEmbed()
-			newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
-				.setTimestamp()
-				.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
-				.setTitle('Command Load')
+			newEmbed
 				.setColor('#ff0000')
 				.setDescription(`Command \`${commandName}\` could not be loaded.`)
-			message.reply(newEmbed)
+			console.error(`Command could not load: ${commandName}`)
 		}
+		message.reply(newEmbed)
 	}
 }
 
