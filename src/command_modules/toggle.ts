@@ -15,7 +15,7 @@ const toggle: Command = {
 
 	execute ({ args, message }) {
 		const commandName = args.shift().toLowerCase()
-		const query = QueryAliases.includes(args.shift().toLowerCase())
+		const query = args.length ? QueryAliases.includes(args.shift().toLowerCase()) : false
 
 		const command = client.getCommand(commandName)
 		if (!command) {
