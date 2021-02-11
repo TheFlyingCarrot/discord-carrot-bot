@@ -1,12 +1,12 @@
 import { Command, fs } from '../internal.js'
 
-const guild_info: Command = {
-	name: 'guild-info',
+const guildInfo: Command = {
+	name: 'guildinfo',
 	description: 'Generate a JSON list of information for a server.',
 	enabled: true,
 	toggleable: true,
 
-	aliases: ['guildinfo'],
+	aliases: ['guild-info'],
 
 	guildOnly: true,
 
@@ -25,4 +25,4 @@ const guild_info: Command = {
 	}
 }
 
-export default guild_info as Command
+export default guildInfo as Command

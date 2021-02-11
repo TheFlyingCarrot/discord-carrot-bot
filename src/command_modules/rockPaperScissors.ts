@@ -3,44 +3,46 @@ import { Command, Discord } from '../internal.js'
 const outcomes = ['It\'s a draw!', 'You win!', 'You lose!']
 const choices = ['rock', 'paper', 'scissors']
 
-const outcomesProxy = new Proxy(outcomes, {
-	get (target, p: string) {
-		let index = parseInt(p)
-		if (index < 0) {
-			index += target.length
-		}
-		return target[index]
-	}
-})
+const randomIndex = (arr: Array<any>) => Math.floor(Math.random() * arr.length)
 
-function randomNumber (min: number, max: number) {
-	min = Math.ceil(min)
-	max = Math.floor(max)
-	return Math.floor(Math.random() * (max - min + 1)) + min
+function outcomesProxy (playerChoice: string, computerChoice: string): string {
+	if (playerChoice === computerChoice) return outcomes[0]
+	switch (playerChoice) {
+		case 'rock':
+			if (computerChoice === 'paper') return outcomes[2]
+			break
+		case 'paper':
+			if (computerChoice === 'scissors') return outcomes[2]
+			break
+		case 'scissors':
+			if (computerChoice === 'rock') return outcomes[2]
+			break
+	}
+	return outcomes[1]
 }
 
 function playGame (input: string): { outcome: string, playerChoice: string, computerChoice: string } {
-	const playerChoice = 'rps'.indexOf(input)
-	const computerChoice = randomNumber(0, 2)
+	const computerChoice = choices[randomIndex(choices)]
 	return {
-		outcome: outcomesProxy[playerChoice - computerChoice],
-		playerChoice: choices[playerChoice],
-		computerChoice: choices[computerChoice]
+		outcome: outcomesProxy(input, computerChoice),
+		playerChoice: input,
+		computerChoice
 	}
 }
 
 const rockpaperscissors: Command = {
-	name: 'rock-paper-scissors',
+	name: 'rockpaperscissors',
 	description: 'Play a game of rock, paper, scissors.',
 	enabled: false,
 	toggleable: true,
 
-	aliases: ['rockpaperscissors', 'rps'],
+	aliases: ['rock-paper-scissors', 'rps'],
 	usage: '(rock/paper/scissors)',
 	args: true,
 
 	execute ({ args, message }) {
-		const choice = choices.find(value => value.startsWith(args.pop().charAt(0)))
+		const input = args.pop().toLowerCase()
+		const choice = choices.find(choiceFromChoices => choiceFromChoices.startsWith(input))
 
 		if (!choice) {
 			message.reply('That\'s not a possible choice!')

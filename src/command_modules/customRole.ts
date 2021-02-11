@@ -31,13 +31,13 @@ async function clearVIPRoles (guild: Discord.Guild, guildMember: Discord.GuildMe
 	})
 }
 
-const custom_role: Command = {
-	name: 'custom-role',
+const customRole: Command = {
+	name: 'customrole',
 	description: 'Set a custom role.',
 	enabled: true,
 	toggleable: true,
 
-	aliases: ['customrole', 'crole', 'cr'],
+	aliases: ['custom-role', 'crole', 'cr'],
 	usage: '[hex color] [role name]',
 	args: true,
 	cooldown: 10,
@@ -55,9 +55,9 @@ const custom_role: Command = {
 		try {
 			await clearVIPRoles(guild, guildMember, 'Old VIP role.')
 			await createRole(guild, roleColor, roleName, 'New VIP role.')
-				.then((new_role) => {
-					guildMember.roles.add(new_role, 'New VIP role.')
-					message.reply(`Custom role created and assigned! ${new_role}`)
+				.then((newRole) => {
+					guildMember.roles.add(newRole, 'New VIP role.')
+					message.reply(`Custom role created and assigned! ${newRole}`)
 				})
 				.catch(console.error)
 		} catch (error) {
@@ -72,4 +72,4 @@ const custom_role: Command = {
 	}
 }
 
-export default custom_role as Command
+export default customRole as Command
