@@ -8,9 +8,11 @@ const unload: Command = {
 
 	args: true,
 
+	developerOnly: true,
+
 	execute ({ args, message }) {
 		const commandName = args.shift().toLowerCase()
-		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
+		const command = client.getCommand(commandName)
 		if (!command) {
 			message.reply('No such command was found.')
 			return
@@ -19,23 +21,19 @@ const unload: Command = {
 		delete require.cache[require.resolve(`./${command.name}.js`)]
 		client.commands.sweep((_value: Command, key: string) => key === commandName)
 
+		const newEmbed = new Discord.MessageEmbed()
+		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+			.setTimestamp()
+			.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
+			.setTitle('Command Unload')
+
 		if (!client.commands.has(commandName)) {
-			const newEmbed = new Discord.MessageEmbed()
-			newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
-				.setTimestamp()
-				.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
-				.setTitle('Command Unload')
-				.setColor('#00ff00')
+			newEmbed.setColor('#00ff00')
 				.setDescription(`Command \`${commandName}\` unloaded.`)
 			message.reply(newEmbed)
 			console.log(`Command Unloaded: ${commandName}`)
 		} else {
-			const newEmbed = new Discord.MessageEmbed()
-			newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
-				.setTimestamp()
-				.setFooter(`Carrot Bot${process.env.ENV_TYPE == 'test' ? ' | Test Build' : ''}`)
-				.setTitle('Command Unload')
-				.setColor('#ff0000')
+			newEmbed.setColor('#ff0000')
 				.setDescription(`Command \`${commandName}\` could not be unloaded.`)
 			message.reply(newEmbed)
 		}

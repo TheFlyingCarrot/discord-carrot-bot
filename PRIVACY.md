@@ -9,9 +9,9 @@ Carrot Bot collects data from the Discord API for the purposes of helping the de
 * User Discriminator
 * User Tag
 * Messages:
-  * Message Content
-  * Creation Date & Time
-  * Edit History
+	* Message Content
+	* Creation Date & Time
+	* Edit History
 
 ## Heroku
 
@@ -41,27 +41,27 @@ As a publicly traded company in the United States, salesforce.com is audited ann
 
 #### Firewalls
 
-Firewalls are utilized to restrict access to systems from external networks and between systems internally. By default, all access is denied and only explicitly allowed ports and protocols are allowed based on business need.  Each system is assigned to a firewall security group based on the system’s function. Security groups restrict access to only the ports and protocols required for a system’s specific function to mitigate risk.
+Firewalls are utilized to restrict access to systems from external networks and between systems internally. By default, all access is denied and only explicitly allowed ports and protocols are allowed based on business need. Each system is assigned to a firewall security group based on the system’s function. Security groups restrict access to only the ports and protocols required for a system’s specific function to mitigate risk.
 
 Host-based firewalls restrict customer applications from establishing localhost connections over the loopback network interface to further isolate customer applications. Host-based firewalls also provide the ability to further limit inbound and outbound connections as needed.
 
 #### DDoS Mitigation
 
-Our (Heroku) infrastructure provides DDoS mitigation techniques including TCP Syn cookies and connection rate limiting in addition to maintaining multiple backbone connections and internal bandwidth capacity that exceeds the Internet carrier supplied bandwidth.  We work closely with our providers to quickly respond to events and enable advanced DDoS mitigation controls when needed.
+Our (Heroku) infrastructure provides DDoS mitigation techniques including TCP Syn cookies and connection rate limiting in addition to maintaining multiple backbone connections and internal bandwidth capacity that exceeds the Internet carrier supplied bandwidth. We work closely with our providers to quickly respond to events and enable advanced DDoS mitigation controls when needed.
 
 #### Spoofing and Sniffing Protections
 
-Managed firewalls prevent IP, MAC, and ARP spoofing on the network and between virtual hosts to ensure spoofing is not possible. Packet sniffing is prevented by infrastructure including the hypervisor which will not deliver traffic to an interface which it is not addressed to.  Heroku utilizes application isolation, operating system restrictions, and encrypted connections to further ensure risk is mitigated at all levels.
+Managed firewalls prevent IP, MAC, and ARP spoofing on the network and between virtual hosts to ensure spoofing is not possible. Packet sniffing is prevented by infrastructure including the hypervisor which will not deliver traffic to an interface which it is not addressed to. Heroku utilizes application isolation, operating system restrictions, and encrypted connections to further ensure risk is mitigated at all levels.
 
 #### Port Scanning
 
-Port scanning is prohibited and every reported instance is investigated by our infrastructure provider.  When port scans are detected, they are stopped and access is blocked.
+Port scanning is prohibited and every reported instance is investigated by our infrastructure provider. When port scans are detected, they are stopped and access is blocked.
 
 ### Data Security
 
 #### Customer Applications
 
-Each application on the Heroku platform runs within its own isolated environment and cannot interact with other applications or areas of the system. This restrictive operating environment is designed to prevent security and stability issues.  These self-contained environments isolate processes, memory, and the file system using LXC while host-based firewalls restrict applications from establishing local network connections.
+Each application on the Heroku platform runs within its own isolated environment and cannot interact with other applications or areas of the system. This restrictive operating environment is designed to prevent security and stability issues. These self-contained environments isolate processes, memory, and the file system using LXC while host-based firewalls restrict applications from establishing local network connections.
 
 ### System Security
 
@@ -71,7 +71,7 @@ System configuration and consistency is maintained through standard, up-to-date 
 
 #### Customer Application Isolation
 
-Applications on the Heroku platform run within their own isolated environment and cannot interact with other applications or areas of the system to prevent security and stability issues.  These self-contained environments isolate processes, memory, and the file system while host-based firewalls restrict applications from establishing local network connections.
+Applications on the Heroku platform run within their own isolated environment and cannot interact with other applications or areas of the system to prevent security and stability issues. These self-contained environments isolate processes, memory, and the file system while host-based firewalls restrict applications from establishing local network connections.
 
 ### Privacy
 

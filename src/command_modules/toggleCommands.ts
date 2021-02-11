@@ -1,12 +1,12 @@
 import { client, Command } from '../internal.js'
 
-const toggle_commands: Command = {
-	name: 'toggle-commands',
+const toggleCommands: Command = {
+	name: 'togglecommands',
 	description: 'Toggles the ability for non-developers to use commands.',
 	enabled: true,
 	toggleable: false,
 
-	aliases: ['togglecommands', 'togglecmds'],
+	aliases: ['toggle-commands', 'togglecmds'],
 	usage: '(true/false)',
 
 	developerOnly: true,
@@ -29,4 +29,4 @@ const toggle_commands: Command = {
 	}
 }
 
-export default toggle_commands as Command
+export default toggleCommands as Command

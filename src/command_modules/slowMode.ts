@@ -1,12 +1,12 @@
 import { Command } from '../internal.js'
 
 const slow_mode: Command = {
-	name: 'slow-mode',
+	name: 'slowmode',
 	description: 'Enable slow-mode in the current channel.',
 	enabled: true,
 	toggleable: true,
 
-	aliases: ['slownode', 'slow'],
+	aliases: ['slow-node'],
 	usage: '(duration in seconds)',
 	cooldown: 10,
 
@@ -22,7 +22,7 @@ const slow_mode: Command = {
 		} else {
 			const rateLimit = args.length ? parseInt(args.pop()) : 5
 			await message.channel.edit({ rateLimitPerUser: rateLimit })
-			message.reply(`Slow-mode was enabled in this channel for ${rateLimit} seconds per user.`)
+			message.reply(`Slow-mode was enabled in this channel. Rate limit per user: ${rateLimit} seconds.`)
 		}
 	}
 }

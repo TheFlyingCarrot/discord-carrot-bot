@@ -1,17 +1,17 @@
 import { Command } from '../internal.js'
 
-const Ignored_Channels = new Set([
+const IgnoredChannels = new Set([
 	'751250239897469049', '785786109208428564', '750498579797377196', '750499239171457064', '750505158043107509',
 	'442002580764360715', '442004978111086592', '731313604493574145', '743672339446628403'
 ])
 
-const lock_down: Command = {
-	name: 'lock-down',
+const lockdown: Command = {
+	name: 'lockdown',
 	description: 'Lockdown the server.',
-	enabled: true,
+	enabled: false,
 	toggleable: true,
 
-	aliases: ['lockdown'],
+	aliases: ['lock-down'],
 	usage: '[true/false/null]',
 	args: true,
 	cooldown: 30,
@@ -29,7 +29,7 @@ const lock_down: Command = {
 		}
 		const channels = message.guild.channels.cache.filter(ch => ch.type !== 'category')
 		channels.forEach(channel => {
-			if (!Ignored_Channels.has(channel.id)) {
+			if (!IgnoredChannels.has(channel.id)) {
 				channel.updateOverwrite(message.guild.roles.everyone.id, { SEND_MESSAGES: flag === null ? null : !flag }, `Lockdown by: ${message.author.tag}`)
 					.then(guildChannel => {
 						if (flag) {
@@ -46,4 +46,4 @@ const lock_down: Command = {
 	}
 }
 
-export default lock_down as Command
+export default lockdown as Command

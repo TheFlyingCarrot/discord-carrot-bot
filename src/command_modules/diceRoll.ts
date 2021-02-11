@@ -30,13 +30,13 @@ const rollDice = (faces: number, die: number): number => {
 	return sum
 }
 
-const diceroll: Command = {
-	name: 'dice-roll',
+const diceRoll: Command = {
+	name: 'diceroll',
 	description: `Roll dice.\nMax Faces: ${MaxFaces}\nMax Die: ${MaxDie}`,
 	enabled: true,
 	toggleable: true,
 
-	aliases: ['dice', 'diceroll', 'die', 'die-roll', 'roll', 'roll-die', 'roll-dice'],
+	aliases: ['dice', 'dice-roll', 'die', 'die-roll', 'roll', 'roll-die', 'roll-dice'],
 	usage: '(number of faces) (number of die)',
 
 	execute ({ args, message }) {
@@ -46,4 +46,4 @@ const diceroll: Command = {
 	}
 }
 
-export default diceroll as Command
+export default diceRoll as Command

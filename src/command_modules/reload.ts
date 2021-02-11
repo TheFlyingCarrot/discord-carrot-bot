@@ -12,7 +12,7 @@ const reload: Command = {
 
 	execute ({ args, message }) {
 		const commandName = args.pop().toLowerCase()
-		const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
+		const command = client.getCommand(commandName)
 		if (!command) {
 			message.reply('No such command was found.')
 			return

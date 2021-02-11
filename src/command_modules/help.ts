@@ -28,8 +28,9 @@ const help: Command = {
 			newEmbed.addField('More Info', `\nYou can use \`${Config.prefix}help [command name]\` to get help on a specific command.`)
 			message.reply(newEmbed)
 		} else {
-			const name = args.pop().toLowerCase()
-			const command = client.commands.get(name) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))
+			const commandName = args.pop().toLowerCase()
+			
+			const command = client.getCommand(commandName)
 			if (!command) {
 				message.reply('That\'s not a valid command.\n*It\'s possible that it may not be loaded.*')
 				return

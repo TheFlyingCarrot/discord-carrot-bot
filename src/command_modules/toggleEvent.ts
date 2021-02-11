@@ -1,12 +1,12 @@
 import { client, Command } from '../internal.js'
 
-const toggle_event: Command = {
-	name: 'toggle-event',
+const toggleEvent: Command = {
+	name: 'toggleevent',
 	description: 'Toggles an event trigger.',
 	enabled: true,
 	toggleable: false,
 
-	aliases: ['toggleevent'],
+	aliases: ['toggle-event'],
 	usage: '[event/all]',
 	args: true,
 
@@ -29,4 +29,4 @@ const toggle_event: Command = {
 	}
 }
 
-export default toggle_event as Command
+export default toggleEvent as Command
