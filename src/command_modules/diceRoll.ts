@@ -40,8 +40,8 @@ const diceRoll: Command = {
 	usage: '(number of faces) (number of die)',
 
 	execute ({ args, message }) {
-		const faces = boundFaces(args.pop())
-		const die = boundDice(args.pop())
+		const faces = boundFaces(args.shift())
+		const die = boundDice(args.shift())
 		message.reply(`It's a ${rollDice(faces, die)}.\n\`${faces} Faces | ${die} ${die > 1 ? 'Dice' : 'Die'}\``)
 	}
 }
