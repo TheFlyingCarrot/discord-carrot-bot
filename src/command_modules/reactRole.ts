@@ -3,13 +3,13 @@ import { Command, Discord } from '../internal.js'
 import team_discord from '../guilds/750480529765171302.json'
 import { ReactionRole } from '../typings.js'
 
-const react_role: Command = {
-	name: 'react-role',
+const reactRole: Command = {
+	name: 'reactrole',
 	description: 'Add a message for reaction roles.',
 	enabled: true,
 	toggleable: true,
 
-	aliases: ['reactrole', 'reactroles', 'react-roles'],
+	aliases: ['react-role', 'reactroles', 'react-roles'],
 
 	developerOnly: true,
 
@@ -31,4 +31,4 @@ const react_role: Command = {
 	}
 }
 
-export default react_role as Command
+export default reactRole as Command
