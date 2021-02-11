@@ -28,7 +28,7 @@ const help: Command = {
 			newEmbed.addField('More Info', `\nYou can use \`${Config.prefix}help [command name]\` to get help on a specific command.`)
 			message.reply(newEmbed)
 		} else {
-			const commandName = args.pop().toLowerCase()
+			const commandName = args.shift().toLowerCase()
 			
 			const command = client.getCommand(commandName)
 			if (!command) {

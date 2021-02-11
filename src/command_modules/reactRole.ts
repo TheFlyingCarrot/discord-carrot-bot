@@ -14,7 +14,7 @@ const reactRole: Command = {
 	developerOnly: true,
 
 	execute ({ args, message }) {
-		const desiredRoleCategory = args.pop()
+		const desiredRoleCategory = args.shift()
 		if (team_discord.role_categories.includes(desiredRoleCategory)) {
 			const newEmbed = new Discord.MessageEmbed()
 			newEmbed.setTitle(`${desiredRoleCategory.toUpperCase()} ROLES`)

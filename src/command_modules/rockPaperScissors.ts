@@ -41,7 +41,7 @@ const rockpaperscissors: Command = {
 	args: true,
 
 	execute ({ args, message }) {
-		const input = args.pop().toLowerCase()
+		const input = args.shift().toLowerCase()
 		const choice = choices.find(choiceFromChoices => choiceFromChoices.startsWith(input))
 
 		if (!choice) {

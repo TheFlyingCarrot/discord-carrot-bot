@@ -13,7 +13,7 @@ const toggleEvent: Command = {
 	developerOnly: true,
 
 	execute ({ args, message }) {
-		const desiredEvent = args.pop()
+		const desiredEvent = args.shift()
 		if (desiredEvent in client.events) {
 			client.events[desiredEvent] = !client.events[desiredEvent]
 		} else if (desiredEvent === 'all') {

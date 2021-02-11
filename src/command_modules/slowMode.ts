@@ -20,7 +20,7 @@ const slow_mode: Command = {
 			await message.channel.edit({ rateLimitPerUser: 0 })
 			message.reply('Slow-mode was disabled in this channel.')
 		} else {
-			const rateLimit = args.length ? parseInt(args.pop()) : 5
+			const rateLimit = args.length ? parseInt(args.shift()) : 5
 			await message.channel.edit({ rateLimitPerUser: rateLimit })
 			message.reply(`Slow-mode was enabled in this channel. Rate limit per user: ${rateLimit} seconds.`)
 		}

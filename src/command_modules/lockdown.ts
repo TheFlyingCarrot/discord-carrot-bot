@@ -24,7 +24,7 @@ const lockdown: Command = {
 	execute ({ args, message }) {
 		let flag: boolean = null
 		{
-			const flagString = args.pop()
+			const flagString = args.shift()
 			flagString.toLowerCase() === 'true' ? true : flagString.toLowerCase() === 'false' ? false : null
 		}
 		const channels = message.guild.channels.cache.filter(ch => ch.type !== 'category')

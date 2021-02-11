@@ -11,7 +11,7 @@ const reload: Command = {
 	developerOnly: true,
 
 	execute ({ args, message }) {
-		const commandName = args.pop().toLowerCase()
+		const commandName = args.shift().toLowerCase()
 		const command = client.getCommand(commandName)
 		if (!command) {
 			message.reply('No such command was found.')

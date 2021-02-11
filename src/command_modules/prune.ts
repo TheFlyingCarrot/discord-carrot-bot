@@ -20,7 +20,7 @@ const prune: Command = {
 			message.reply('You do not have permission to use this command.')
 			return
 		}
-		const amount = parseInt(args.pop())
+		const amount = parseInt(args.shift())
 		if (isNaN(amount)) {
 			message.channel.bulkDelete(2, true)
 				.catch((err) => {

@@ -8,7 +8,7 @@ const unmute: Command = {
 
 	execute ({ args, message }): void {
 		const targetUser = message.mentions.members.first()
-		args.pop()
+		args.shift()
 
 		if (!Config.muted_role_ids[message.guild.id]) {
 			message.reply('There is no configured muted role for this server.')

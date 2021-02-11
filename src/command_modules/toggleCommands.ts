@@ -12,7 +12,7 @@ const toggleCommands: Command = {
 	developerOnly: true,
 
 	execute ({ args }) {
-		switch (args.pop()) {
+		switch (args.shift()) {
 			case 'true':
 				client.commandsEnabled = true
 				break
