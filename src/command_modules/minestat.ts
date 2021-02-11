@@ -11,8 +11,8 @@ const minestat: Command = {
 	args: true,
 
 	async execute ({ args, message }) {
-		const ip = args.pop()
-		const port = args.length ? `&port${args.pop()}` : ''
+		const ip = args.shift()
+		const port = args.length ? `&port${args.shift()}` : ''
 		const requestURL = `http://mcapi.us/server/status?ip=${ip}${port}`
 		const fetchedData = await (await fetch(requestURL, { method: 'get', headers: { 'Content-Type': 'application/json' } })).json()
 			.catch(console.error)
