@@ -4,11 +4,13 @@ export { fetch } from 'node-fetch'
 export * as path from 'path'
 export { ExtendedClient } from './client_modules/ExtendedClient'
 export * as Config from './config.json'
-export { client } from './index'
 export { ClientEvents, Command, ReactionRole, ReactionRoleConfig } from './typings'
+
+export { client } from './index'
 
 import { getCommand } from './client_modules/getCommand'
 import { initalizeCommands } from './client_modules/initalizeCommands'
+import { logEvent } from './client_modules/logEvent'
 import { parseCommandFromMessage } from './client_modules/parseCommandFromMessage'
 
 import { onGuildBanAdd } from './handlers/guildBanAdd'
@@ -21,12 +23,13 @@ import { onMessageReactionRemove } from './handlers/messageReactionRemove'
 import { onMessageUpdate } from './handlers/messageUpdate'
 import { onReady } from './handlers/ready'
 import { onWebhookUpdate } from './handlers/webhookUpdate'
+
 import { canUseCommand } from './helper_modules/canUseCommand'
 import { cooldown } from './helper_modules/cooldown'
 import { fetchPartial } from './helper_modules/fetchPartial'
 import { isValidReaction } from './helper_modules/isValidReaction'
 
 
-export const ClientModules = { getCommand, initalizeCommands, parseCommandFromMessage }
+export const ClientModules = { getCommand, initalizeCommands, parseCommandFromMessage, logEvent }
 export const EventHandlers = { onGuildBanAdd, onGuildBanRemove, onGuildMemberRemove, onMessageDeletion, onMessageReactionAdd, onMessageReactionRemove, onMessageUpdate, onMessage, onReady, onWebhookUpdate }
 export const HelperModules = { cooldown, fetchPartial, canUseCommand, isValidReaction }

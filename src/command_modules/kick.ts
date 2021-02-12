@@ -1,4 +1,4 @@
-import { Command, Discord } from '../internal.js'
+import { ClientModules, Command } from '../internal.js'
 
 const kick: Command = {
 	name: 'kick',
@@ -11,7 +11,6 @@ const kick: Command = {
 	cooldown: 10,
 
 	guildOnly: true,
-
 	permission: 'KICK_MEMBERS',
 
 	execute ({ message }) {
@@ -20,16 +19,12 @@ const kick: Command = {
 			message.reply('I can\'t kick that user.')
 			throw new Error('PermissionsError')
 		}
-		targetUser.ban({ reason: `Kicked by: ${message.author.tag}` })
+		targetUser.kick(`Kicked by: ${message.author.tag}`)
 			.then(() => {
-				const newEmbed = new Discord.MessageEmbed()
-				newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
-					.setThumbnail('https://i.ibb.co/QjCW2nx/user-banned.png')
-					.setTimestamp()
-					.setTitle('Kick Command')
-					.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
-					.addField(`**${targetUser}**`, `Kicked by ${message.author}`)
-				message.reply(newEmbed)
+				ClientModules.logEvent(message.guild, `${message.author} kicked ${targetUser}.`)
+				setTimeout(() => {
+					if (message.deletable) message.delete({ reason: 'Kick command.' })
+				}, 1250)
 			})
 			.catch(console.error)
 	}

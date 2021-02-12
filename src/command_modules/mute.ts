@@ -1,5 +1,4 @@
-import { connect } from 'http2'
-import { Command, Config } from '../internal.js'
+import { ClientModules, Command, Config } from '../internal.js'
 
 const mute: Command = {
 	name: 'mute',
@@ -25,6 +24,7 @@ const mute: Command = {
 
 		message.reply(`${targetUser.user.tag} was muted.`)
 			.then((sentMessage) => {
+				ClientModules.logEvent(message.guild, `${message.author} muted ${targetUser}.`)
 				setTimeout(() => {
 					if (sentMessage.deletable) sentMessage.delete({ reason: 'Mute command.' })
 					if (message.deletable) message.delete({ reason: 'Mute command.' })
