@@ -4,14 +4,24 @@
 
 Carrot Bot collects data from the Discord API for the purposes of helping the developer(s) debug the app, and process commands. This data includes, but is not limited to:
 
-* Username
-* User ID
-* User Discriminator
-* User Tag
+* User:
+	* Name
+	* Tag
+	* Discriminator
+	* ID
+	* Name History
+	* Avatar Source Image
 * Messages:
 	* Message Content
+		* Text, images, embeds, etc.
 	* Creation Date & Time
 	* Edit History
+	* Deleted Messages
+* Emoji/Emotes/Reactions:
+	* Name
+	* Tag
+	* Source Image
+	* Source Discord Guild (if public)
 
 ## Heroku
 
