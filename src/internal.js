@@ -1,4 +1,3 @@
-export * as DiscordAPITypes from 'discord-api-types/v8'
 export * as DiscordJS from 'discord.js'
 export * as fs from 'fs'
 export { fetch } from 'node-fetch'
