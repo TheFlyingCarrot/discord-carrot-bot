@@ -1,10 +1,7 @@
 *.env*
-*.http*
 *.log*
-*.rest*
 *.vs*
 *.vscode*
-cURL_Data.json
 dist
 git
 node_modules

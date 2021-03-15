@@ -1,15 +1,2 @@
-.eslintignore
-.eslintrc.js
-.eslintrc.json
-*.d.ts
-*.env*
-*.http*
-*.log*
-*.rest*
-*.vs*
-*.vscode*
-cURL_Data.json
 dist
-git
-node_modules
 node_modules

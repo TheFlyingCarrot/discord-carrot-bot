@@ -1,0 +1,40 @@
+@TARGET_GUILD_ID=442001192655257620
+@TARGET_GUILD_COMMAND_NAME=modmail
+@TARGET_GUILD_COMMAND_ID=819268708081074186
+
+
+### Get Global Commands
+GET https://discord.com/api/v8/applications/{{Client-ID}}/commands HTTP/1.1
+Authorization: Bot {{Client-Token}}
+### Get Global Command
+GET https://discord.com/api/v8/applications/{{Client-ID}}/commands/{{TARGET_GUILD_ID}} HTTP/1.1
+Authorization: Bot {{Client-Token}}
+
+
+### Get Guild Commands
+GET https://discord.com/api/v8/applications/{{Client-ID}}/guilds/{{TARGET_GUILD_ID}}/commands HTTP/1.1
+Authorization: Bot {{Client-Token}}
+### Get Guild Command
+GET https://discord.com/api/v8/applications/{{Client-ID}}/guilds/{{TARGET_GUILD_ID}}/commands/{{TARGET_GUILD_COMMAND_ID}} HTTP/1.1
+Authorization: Bot {{Client-Token}}
+
+
+### Create Guild Command
+POST https://discord.com/api/v8/applications/{{Client-ID}}/guilds/{{TARGET_GUILD_ID}}/commands
+Authorization: Bot {{Client-Token}}
+Content-Type: application/json
+
+<@ ./src/slash_command_modules/{{TARGET_GUILD_COMMAND_NAME}}_data.json
+
+
+### Edit Guild Command
+PATCH https://discord.com/api/v8/applications/{{Client-ID}}/guilds/{{TARGET_GUILD_ID}}/commands/{{TARGET_GUILD_COMMAND_ID}}
+Authorization: Bot {{Client-Token}}
+Content-Type: application/json
+
+<@ ./src/slash_command_modules/{{TARGET_GUILD_COMMAND_NAME}}_data.json
+
+
+### Delete Guild Command
+DELETE https://discord.com/api/v8/applications/{{Client-ID}}/guilds/{{TARGET_GUILD_ID}}/commands/{{TARGET_GUILD_COMMAND_ID}} HTTP/1.1
+Authorization: Bot {{Client-Token}}
