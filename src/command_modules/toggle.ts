@@ -1,4 +1,5 @@
-import { client, Command } from '../internal.js'
+import { getCommand } from '../internal'
+import { Command } from '../typings'
 
 const QueryAliases = ['query', 'q']
 
@@ -11,13 +12,13 @@ const toggle: Command = {
 	usage: '[command] (query)',
 	args: true,
 
-	developerOnly: true,
+	developer_only: true,
 
 	execute ({ args, message }) {
 		const commandName = args.shift().toLowerCase()
 		const query = args.length ? QueryAliases.includes(args.shift().toLowerCase()) : false
 
-		const command = client.getCommand(commandName)
+		const command = getCommand(commandName)
 		if (!command) {
 			message.reply('No such command was found.')
 			return

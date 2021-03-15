@@ -1,26 +1,26 @@
-import { client, Discord } from '../internal.js'
+import { client, DiscordJS } from '../internal'
 
-export async function onMessageDeletion (message: Discord.Message) {
-	if (client.events.messageDelete === false || message.channel.type === 'dm' || message.channel.name === 'logs' || !message.guild || !message.guild.available) return
+export async function onMessageDeletion (message: DiscordJS.Message): Promise<void> {
+	if (message.channel.type === 'dm' || message.channel.name === 'logs' || !message.guild || !message.guild.available) return
 
-	const eventLog: Discord.GuildAuditLogsEntry = (await message.guild.fetchAuditLogs({ limit: 1, type: 'MESSAGE_DELETE' })).entries.first()
+	const eventLog: DiscordJS.GuildAuditLogsEntry = (await message.guild.fetchAuditLogs({ limit: 1, type: 'MESSAGE_DELETE' })).entries.first()
 	if (!eventLog) {
 		console.log(`A message by ${message.author.tag} was deleted, but no relevant audit logs were found.`)
 		return
 	}
 	if (eventLog.action != 'MESSAGE_DELETE') return
 
-	const logChannel = message.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as Discord.TextChannel
+	const logChannel = message.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as DiscordJS.TextChannel
 	if (!logChannel) return
 
 	const { executor, target } = eventLog
 
-	if (typeof target != 'object' || target.constructor != Discord.User) {
+	if (typeof target != 'object' || target.constructor != DiscordJS.User) {
 		client.emit('warn', `${__filename} Invalid log detected.`)
 		return
 	}
 
-	const newEmbed = new Discord.MessageEmbed()
+	const newEmbed = new DiscordJS.MessageEmbed()
 	newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 		.setTimestamp()
 		.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))

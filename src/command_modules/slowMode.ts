@@ -1,4 +1,4 @@
-import { Command } from '../internal.js'
+import { Command } from '../typings'
 
 const slow_mode: Command = {
 	name: 'slowmode',
@@ -10,7 +10,7 @@ const slow_mode: Command = {
 	usage: '(duration in seconds)',
 	cooldown: 10,
 
-	guildOnly: true,
+	guild_only: true,
 
 	permission: 'MANAGE_CHANNELS',
 

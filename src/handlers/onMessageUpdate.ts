@@ -1,9 +1,9 @@
-import { client, Discord } from '../internal.js'
+import { DiscordJS } from '../internal'
 
-export async function onMessageUpdate (oldMessage: Discord.Message, newMessage: Discord.Message) {
-	if (client.events.messageUpdate === false || oldMessage.channel.type === 'dm' || oldMessage.channel.name === 'logs' || !newMessage.guild.available) return
+export async function onMessageUpdate (oldMessage: DiscordJS.Message, newMessage: DiscordJS.Message): Promise<void> {
+	if (oldMessage.channel.type === 'dm' || oldMessage.channel.name === 'logs' || !newMessage.guild.available) return
 
-	const logChannel = oldMessage.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as Discord.TextChannel
+	const logChannel = oldMessage.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as DiscordJS.TextChannel
 	if (!logChannel) return
 
 	if (oldMessage.partial) await oldMessage.fetch()
@@ -11,7 +11,7 @@ export async function onMessageUpdate (oldMessage: Discord.Message, newMessage: 
 
 	if (!newMessage.cleanContent || oldMessage.cleanContent === newMessage.cleanContent) return
 
-	const newEmbed = new Discord.MessageEmbed()
+	const newEmbed = new DiscordJS.MessageEmbed()
 	newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 		.setTimestamp()
 		.setThumbnail(newMessage.author.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))

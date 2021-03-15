@@ -1,4 +1,5 @@
-import { client, Command, Discord } from '../internal.js'
+import { client, DiscordJS, getCommand } from '../internal'
+import { Command } from '../typings'
 
 const reload: Command = {
 	name: 'reload',
@@ -8,20 +9,21 @@ const reload: Command = {
 
 	args: true,
 
-	developerOnly: true,
+	developer_only: true,
 
 	execute ({ args, message }) {
 		const commandName = args.shift().toLowerCase()
-		const command = client.getCommand(commandName)
+		const command = getCommand(commandName)
 		if (!command) {
 			message.reply('No such command was found.')
 			return
 		}
 		delete require.cache[require.resolve(`./${command.name}.js`)]
 		const newCommand: Command = require(`./${command.name}.js`).default
+		if (!newCommand) return
 		client.commands.set(newCommand.name, newCommand)
 
-		const newEmbed = new Discord.MessageEmbed()
+		const newEmbed = new DiscordJS.MessageEmbed()
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setThumbnail('https://i.ibb.co/sJ4CyGj/admin-check.png')
 			.setTimestamp()

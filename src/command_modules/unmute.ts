@@ -1,4 +1,5 @@
-import { Command, Config } from '../internal.js'
+import { config } from '../internal'
+import { Command } from '../typings'
 
 const unmute: Command = {
 	name: 'unmute',
@@ -10,7 +11,7 @@ const unmute: Command = {
 		const targetUser = message.mentions.members.first()
 		args.shift()
 
-		if (!Config.muted_role_ids[message.guild.id]) {
+		if (!config.muted_role_ids[message.guild.id]) {
 			message.reply('There is no configured muted role for this server.')
 				.then((sentMessage) => {
 					setTimeout(() => {
@@ -20,7 +21,7 @@ const unmute: Command = {
 				})
 			return
 		}
-		const mutedRoleID = Config.muted_role_ids[message.guild.id].muted_role_id ?? -1
+		const mutedRoleID: string = config.muted_role_ids.get[message.guild.id] ?? '-1'
 
 		const mutedRole = message.guild.roles.cache.find((role) => role.id === mutedRoleID)
 		if (!mutedRole) return

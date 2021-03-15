@@ -1,4 +1,4 @@
-import { Command } from '../internal.js'
+import { Command } from '../typings'
 
 const kungfu: Command = {
 	name: 'kungfu',

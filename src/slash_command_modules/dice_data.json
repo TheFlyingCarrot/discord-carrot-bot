@@ -1,0 +1,16 @@
+{
+	"name": "dice",
+	"description": "Roll dice.",
+	"options": [
+		{
+			"type": 4,
+			"name": "faces",
+			"description": "Number of faces (1-20)"
+		},
+		{
+			"type": 4,
+			"name": "dice",
+			"description": "Number of dice (1-6)"
+		}
+	]
+}

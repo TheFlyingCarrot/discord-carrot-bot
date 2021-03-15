@@ -1,53 +1,78 @@
-import { Discord, ExtendedClient } from './internal'
-
-declare module '*.json' {
-	const value: any
-	export default value
-}
+import { APIApplicationCommandInteraction } from 'discord-api-types'
+import { Message, PermissionString } from 'discord.js'
 
 declare interface Command {
-	name: string
-	description: string
-	enabled: boolean
-	toggleable: boolean
-
 	aliases?: string[]
-	usage?: string
-	args?: boolean
 	cooldown?: number
-
-	guildOnly?: boolean
-	permission?: Discord.PermissionString
+	enabled: boolean
 	guildSpecific?: string[]
-
-	developerOnly?: boolean
-
-	execute?: ({ args, message }: { args: string[], message: Discord.Message }) => void | Promise<void>
+	permission?: PermissionString
+	readonly args?: boolean
+	readonly description: string
+	readonly developer_only?: boolean
+	readonly execute?: ({ args, message }: { args: string[], message: Message }) => void | Promise<void>
+	readonly guild_only?: boolean
+	readonly name: string
+	readonly slash_command?: boolean
+	readonly toggleable: boolean
+	readonly usage?: string
 }
 
+/**
+ * Propreitary slash commands used for Discord Slash Commands
+ * @todo Expand type to include IDs and more specifics. Non-ephemeral storage necessary?
+ */
+declare interface SlashCommand {
+	readonly description: string
+	readonly execute?: (interaction: APIApplicationCommandInteraction) => Object | Promise<Object>
+	readonly name: string
+}
+
+/**
+ * Properties of a guild's Reaction Roles' JSON object.
+ */
 declare interface ReactionRoleConfig {
-	title: string
 	guild_id: string
-	role_channel_id: string
-	role_categories: string
 	reaction_roles: ReactionRole[]
+	role_categories: string
+	role_channel_id: string
+	title: string
 }
 
+/**
+ * Properties of a single Reaction Role in a ReactionRoleConfig.
+ */
 declare interface ReactionRole {
-	name: string
 	category: string
-	role_id: string
 	emoji_tag: string
+	name: string
+	role_id: string
 }
 
-declare interface ClientEvents {
-	webhookUpdate: boolean
-	message: boolean
-	messageUpdate: boolean
-	messageDelete: boolean
-	messageReactionAdd: boolean
-	messageReactionRemove: boolean
-	guildMemberRemove: boolean
-	guildBanAdd: boolean
-	guildBanRemove: boolean
+/**
+ * Events received by the client user.
+ */
+declare enum ClientEvent {
+	guildBanAdd,
+	guildBanRemove,
+	guildMemberRemove,
+	message,
+	messageDelete,
+	messageReactionAdd,
+	messageReactionRemove,
+	messageUpdate,
+	webhookUpdate
+}
+
+declare interface Config {
+	readonly default_commands_enabled: boolean
+	default_cooldown: number
+	readonly developers: string[]
+	readonly log_tolerance_ms: number
+	maximum_role_name_length: number
+	ms_to_s_multiplier: number
+	muted_role_ids: Record<string, string>
+	personal_role_ids: Record<string, string>
+	prefix: string
+	time_decimals: number
 }

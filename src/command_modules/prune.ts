@@ -1,4 +1,4 @@
-import { Command } from '../internal.js'
+import { Command } from '../typings'
 
 const prune: Command = {
 	name: 'prune',
@@ -10,7 +10,7 @@ const prune: Command = {
 	usage: '(number of messages to delete)',
 	cooldown: 5,
 
-	guildOnly: true,
+	guild_only: true,
 
 	permission: 'MANAGE_MESSAGES',
 

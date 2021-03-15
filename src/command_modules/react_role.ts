@@ -1,7 +1,6 @@
-import { Command, Discord } from '../internal.js'
-
-import team_discord from '../guilds/750480529765171302.json'
-import { ReactionRole } from '../typings.js'
+import { TeamDiscord } from '../guilds/750480529765171302.js'
+import { DiscordJS } from '../internal'
+import { Command, ReactionRole } from '../typings.js'
 
 const reactRole: Command = {
 	name: 'reactrole',
@@ -11,15 +10,15 @@ const reactRole: Command = {
 
 	aliases: ['react-role', 'reactroles', 'react-roles'],
 
-	developerOnly: true,
+	developer_only: true,
 
 	execute ({ args, message }) {
 		const desiredRoleCategory = args.shift()
-		if (team_discord.role_categories.includes(desiredRoleCategory)) {
-			const newEmbed = new Discord.MessageEmbed()
+		if (TeamDiscord.role_categories.includes(desiredRoleCategory)) {
+			const newEmbed = new DiscordJS.MessageEmbed()
 			newEmbed.setTitle(`${desiredRoleCategory.toUpperCase()} ROLES`)
 			let ReactionRole: ReactionRole
-			for (ReactionRole of Object.values(team_discord.reaction_roles)) {
+			for (ReactionRole of Object.values(TeamDiscord.reaction_roles)) {
 				if (ReactionRole.category === desiredRoleCategory.toLowerCase()) {
 					newEmbed.addField(ReactionRole.emoji_tag, ReactionRole.name)
 				}
