@@ -42,7 +42,7 @@ const rps: SlashCommand = {
 		const Results = playGame(MoveOption)
 
 		const ResponseEmbed = new DiscordJS.MessageEmbed()
-		ResponseEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+		ResponseEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
 			.setTimestamp()
 			.setTitle(Results.outcome)
 			.setDescription(`You chose: ${Results.playerChoice}\nComputer chose: ${Results.computerChoice}`)

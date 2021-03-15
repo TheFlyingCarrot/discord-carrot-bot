@@ -24,7 +24,7 @@ const reload: Command = {
 		client.commands.set(newCommand.name, newCommand)
 
 		const newEmbed = new DiscordJS.MessageEmbed()
-		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+		newEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
 			.setThumbnail('https://i.ibb.co/sJ4CyGj/admin-check.png')
 			.setTimestamp()
 			.setTitle('Reload Command')

@@ -8,7 +8,7 @@ export function logToGuild (guild: DiscordJS.Guild, log: string, color?: Discord
 	if (!logChannel || !logChannel.isText()) return
 
 	const newEmbed = new DiscordJS.MessageEmbed()
-	newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+	newEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
 		.setTimestamp()
 		.setColor(color || DefaultEmbedColor)
 		.setTitle('Event Log')

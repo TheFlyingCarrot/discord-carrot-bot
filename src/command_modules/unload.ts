@@ -23,7 +23,7 @@ const unload: Command = {
 		client.commands.sweep((_value: Command, key: string) => key === commandName)
 
 		const newEmbed = new DiscordJS.MessageEmbed()
-		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+		newEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
 			.setTimestamp()
 			.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
 			.setTitle('Command Unload')

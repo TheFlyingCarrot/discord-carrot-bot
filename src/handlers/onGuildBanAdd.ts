@@ -21,7 +21,7 @@ export async function onGuildBanAdd (guild: DiscordJS.Guild, user: DiscordJS.Use
 	}
 
 	const newEmbed = new DiscordJS.MessageEmbed()
-	newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+	newEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
 		.setTimestamp()
 		.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))
 		.setColor('#ff0000')

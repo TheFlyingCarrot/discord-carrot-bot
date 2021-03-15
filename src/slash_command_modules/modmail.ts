@@ -16,7 +16,7 @@ const modmail: SlashCommand = {
 		if (!ModMailMessage) return
 
 		const ResponseEmbed = new DiscordJS.MessageEmbed()
-		ResponseEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+		ResponseEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
 			.setThumbnail('https://i.ibb.co/xXQbnn5/user-menu.png')
 			.setTitle('Mod-Mail')
 			.setTimestamp()

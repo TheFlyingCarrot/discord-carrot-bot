@@ -12,7 +12,7 @@ export async function onMessageUpdate (oldMessage: DiscordJS.Message, newMessage
 	if (!newMessage.cleanContent || oldMessage.cleanContent === newMessage.cleanContent) return
 
 	const newEmbed = new DiscordJS.MessageEmbed()
-	newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+	newEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
 		.setTimestamp()
 		.setThumbnail(newMessage.author.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))
 		.setColor('#ff6400')
