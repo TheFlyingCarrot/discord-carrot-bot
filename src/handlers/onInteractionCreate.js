@@ -1,9 +1,8 @@
 import { client, getSlashCommand } from '../internal'
 
-function respond (interaction, commandData) {
-	console.log(commandData)
+async function respond (interaction, commandData) {
 	if (!commandData.data) commandData.data = {}
-	client.api.interactions(interaction.id, interaction.token).callback.post({
+	await client.api.interactions(interaction.id, interaction.token).callback.post({
 		data: {
 			type: commandData.type ?? 2,
 			data: {
@@ -15,6 +14,13 @@ function respond (interaction, commandData) {
 			}
 		}
 	})
+	// Followup Webhook - TBUL
+	/* client.api.webhooks(client.user.id, interaction.token).post({
+		contentType: 'application/json',
+		data: {
+			content: 'Test'
+		}
+	}) */
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
