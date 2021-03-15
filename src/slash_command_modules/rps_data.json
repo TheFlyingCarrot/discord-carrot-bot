@@ -1,0 +1,26 @@
+{
+	"name": "rps",
+	"description": "Play a game of rock, paper, scissors.",
+	"options": [
+		{
+			"type": 3,
+			"name": "move",
+			"description": "Your move.",
+			"required": true,
+			"choices": [
+				{
+					"name": "Rock",
+					"value": "rock"
+				},
+				{
+					"name": "Paper",
+					"value": "paper"
+				},
+				{
+					"name": "Scissors",
+					"value": "scissors"
+				}
+			]
+		}
+	]
+}

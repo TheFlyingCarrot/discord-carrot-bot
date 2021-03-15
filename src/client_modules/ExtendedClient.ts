@@ -1,21 +1,20 @@
-import { Command, ClientEvents, Discord, ClientModules, Config } from '../internal'
+import { ClientOptions, Collection } from 'discord.js'
+import { config, DiscordJS } from '../internal'
+import { Command, SlashCommand } from '../typings'
 
-export class ExtendedClient extends Discord.Client {
+export default class ExtendedClient extends DiscordJS.Client {
 	activity: string
-	commands: Discord.Collection<string, Command>
-	commandsEnabled: boolean
-	cooldowns: Discord.Collection<string, Discord.Collection<string, number>>
-	events: ClientEvents
+	commands: Collection<string, Command>
+	slash_commands: Collection<string, SlashCommand>
+	commands_enabled: boolean
+	cooldowns: Collection<string, Collection<string, number>>
 
-	constructor (activity: string, options: Discord.ClientOptions) {
+	constructor (activity: string, options: ClientOptions) {
 		super(options)
 		this.activity = activity
-		this.commands = new Discord.Collection()
-		this.commandsEnabled = Config.default_commands_enabled
-		this.cooldowns = new Discord.Collection()
-		this.events = Config.client_events
+		this.commands = new Collection()
+		this.slash_commands = new Collection()
+		this.commands_enabled = config.default_commands_enabled
+		this.cooldowns = new Collection()
 	}
-
-	getCommand = ClientModules.getCommand
-	parseCommandFromMessage = ClientModules.parseCommandFromMessage
 }

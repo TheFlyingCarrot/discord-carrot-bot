@@ -1,4 +1,5 @@
-import { client, Command } from '../internal'
+import { client } from '../internal'
+import { Command } from '../typings'
 
 const stop_client: Command = {
 	name: 'stop',
@@ -8,7 +9,7 @@ const stop_client: Command = {
 
 	aliases: ['kill','commit-sudoku'],
 
-	developerOnly: true,
+	developer_only: true,
 
 	execute ({ message }) {
 		console.log(`=== ===STOP COMMAND CALLED, ENDING OPEN PROCESSES=== ===\nCALLER: ${message.author.tag}`)

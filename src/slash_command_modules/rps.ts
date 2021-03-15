@@ -1,9 +1,10 @@
-import { Command, Discord } from '../internal.js'
+import { DiscordJS } from '../internal'
+import { SlashCommand } from '../typings'
 
 const outcomes = ['It\'s a draw!', 'You win!', 'You lose!']
 const choices = ['rock', 'paper', 'scissors']
 
-const randomIndex = (arr: Array<any>) => Math.floor(Math.random() * arr.length)
+const randomIndex = (arr: Array<string>) => Math.floor(Math.random() * arr.length)
 
 function outcomesProxy (playerChoice: string, computerChoice: string): string {
 	if (playerChoice === computerChoice) return outcomes[0]
@@ -30,36 +31,29 @@ function playGame (input: string): { outcome: string, playerChoice: string, comp
 	}
 }
 
-const rockpaperscissors: Command = {
-	name: 'rockpaperscissors',
+const rps: SlashCommand = {
 	description: 'Play a game of rock, paper, scissors.',
-	enabled: true,
-	toggleable: true,
+	name: 'rps',
+	execute (interaction) {
+		const Options = interaction.data.options ?? []
 
-	aliases: ['rock-paper-scissors', 'rps'],
-	usage: '(rock/paper/scissors)',
-	args: true,
+		const MoveOption = String(Options.find(element => 'name' in element && element.name === 'move').value)
 
-	execute ({ args, message }) {
-		const input = args.shift().toLowerCase()
-		const choice = choices.find(choiceFromChoices => choiceFromChoices.startsWith(input))
+		const Results = playGame(MoveOption)
 
-		if (!choice) {
-			message.reply('That\'s not a possible choice!')
-			return
-		}
-
-		const results = playGame(choice)
-
-		const newEmbed = new Discord.MessageEmbed()
-		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
+		const ResponseEmbed = new DiscordJS.MessageEmbed()
+		ResponseEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setTimestamp()
-			.setTitle(results.outcome)
-			.setDescription(`You chose: ${results.playerChoice}\nComputer chose: ${results.computerChoice}`)
+			.setTitle(Results.outcome)
+			.setDescription(`You chose: ${Results.playerChoice}\nComputer chose: ${Results.computerChoice}`)
 			.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
-		message.reply(newEmbed)
-
+		return {
+			type: 4,
+			data: {
+				embeds: [ResponseEmbed]
+			}
+		}
 	}
 }
 
-export default rockpaperscissors as Command
+export default rps as SlashCommand

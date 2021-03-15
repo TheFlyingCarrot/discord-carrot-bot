@@ -1,8 +1,9 @@
-import { ClientModules, Config, Discord, EventHandlers, ExtendedClient } from './internal'
+import { config, EventHandlers, ExtendedClient, generateCommands, generateSlashCommands } from './internal'
 
 // Set-up
-export const client = new ExtendedClient(`${Config.default_commands_enabled ? `${Config.prefix}help` : 'nobody.'}`, { partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
-client.commands = ClientModules.initalizeCommands()
+export const client = new ExtendedClient(`${config.default_commands_enabled ? `${config.prefix}help` : 'nobody.'}`, { partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
+client.commands = generateCommands()
+client.slash_commands = generateSlashCommands()
 client.login(process.env.BOT_TOKEN)
 
 // Events
@@ -22,3 +23,4 @@ client
 	.on('messageReactionAdd', EventHandlers.onMessageReactionAdd)
 	.on('messageReactionRemove', EventHandlers.onMessageReactionRemove)
 	.on('webhookUpdate', EventHandlers.onWebhookUpdate)
+	.ws.on('INTERACTION_CREATE', EventHandlers.onInteractionCreate)

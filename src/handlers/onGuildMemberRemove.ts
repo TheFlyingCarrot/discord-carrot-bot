@@ -1,36 +1,36 @@
-import { client, Config, Discord } from '../internal.js'
+import { client, config, DiscordJS } from '../internal'
 
-export async function onGuildMemberRemove (member: Discord.GuildMember) {
+export async function onGuildMemberRemove (member: DiscordJS.GuildMember): Promise<void> {
 	const now = Date.now()
 
-	if (client.events.messageDelete === false || !member.guild.available) return
+	if (!member.guild.available) return
 
 	const eventLog = (await member.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_KICK' })).entries.first()
-	
+
 	if (!eventLog) {
 		console.log(`User: ${member.user.tag} was removed, but no relevant audit logs were found.`)
 		// TODO: Check: User left the Guild?
 		return
 	}
-	
-	if ((eventLog.createdTimestamp - now) >= Config.log_tolerance_ms) {
+
+	if ((eventLog.createdTimestamp - now) >= config.log_tolerance_ms) {
 		console.log(`User: ${member.user.tag} was removed, but no recent log from the time of the event trigger was found.`)
 		return
 	} else if (eventLog.action !== 'MEMBER_KICK') {
 		return
 	}
 
-	const logChannel = member.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as Discord.TextChannel
+	const logChannel = member.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as DiscordJS.TextChannel
 	if (!logChannel) return
 
 	const { executor, target } = eventLog
 
-	if (typeof target != 'object' || target.constructor != Discord.User) {
+	if (typeof target != 'object' || target.constructor != DiscordJS.User) {
 		client.emit('warn', `${__filename} Invalid log detected.`)
 		return
 	}
 
-	const newEmbed = new Discord.MessageEmbed()
+	const newEmbed = new DiscordJS.MessageEmbed()
 	newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 		.setTimestamp()
 		.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))

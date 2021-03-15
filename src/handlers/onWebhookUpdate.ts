@@ -1,29 +1,29 @@
-import { client, Discord } from '../internal.js'
+import { client, DiscordJS } from '../internal'
 
 const webhookActionMap = { 'WEBHOOK_CREATE': 'Create Webhook', 'WEBHOOK_UPDATE': 'Update Webhook', 'WEBHOOK_DELETE': 'Delete Webhook' }
 const embedActions = { 'CREATE': '#00ff00', 'DELETE': '#ff0000', 'UPDATE': '#ff6400', 'ALL': '#ff00ff' }
 
-export async function onWebhookUpdate (channel: Discord.TextChannel) {
-	if (client.events.messageDelete === false || channel.name === 'logs' || !channel.guild || !channel.guild.available) return
+export async function onWebhookUpdate (channel: DiscordJS.TextChannel): Promise<void> {
+	if (channel.name === 'logs' || !channel.guild || !channel.guild.available) return
 
-	const eventLog: Discord.GuildAuditLogsEntry = (await channel.guild.fetchAuditLogs({ limit: 1, type: 'WEBHOOK_UPDATE' })).entries.first()
+	const eventLog: DiscordJS.GuildAuditLogsEntry = (await channel.guild.fetchAuditLogs({ limit: 1, type: 'WEBHOOK_UPDATE' })).entries.first()
 	if (!eventLog) {
 		console.log('A webhook was updated, but no relevant audit logs were found.')
 		return
 	}
 	if (eventLog.action != 'MESSAGE_DELETE') return
 
-	const logChannel = channel.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as Discord.TextChannel
+	const logChannel = channel.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as DiscordJS.TextChannel
 	if (!logChannel) return
 
 	const { executor, target } = eventLog
 
-	if (typeof target != 'object' || target.constructor != Discord.Webhook) {
+	if (typeof target != 'object' || target.constructor != DiscordJS.Webhook) {
 		client.emit('warn', `${__filename} Invalid log detected.`)
 		return
 	}
 
-	const newEmbed = new Discord.MessageEmbed()
+	const newEmbed = new DiscordJS.MessageEmbed()
 	newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 		.setTimestamp()
 		.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))

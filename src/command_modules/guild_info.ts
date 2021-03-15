@@ -1,4 +1,5 @@
-import { Command, fs } from '../internal.js'
+import { fs } from '../internal'
+import { Command } from '../typings'
 
 const guildInfo: Command = {
 	name: 'guildinfo',
@@ -8,9 +9,9 @@ const guildInfo: Command = {
 
 	aliases: ['guild-info'],
 
-	guildOnly: true,
+	guild_only: true,
 
-	developerOnly: true,
+	developer_only: true,
 
 	async execute ({ message }) {
 		const data = JSON.stringify(message.guild, null, '	')
@@ -21,7 +22,7 @@ const guildInfo: Command = {
 		setTimeout(() => {
 			if (fs.existsSync(filename)) fs.unlinkSync(filename)
 		}, 1000)
-		
+
 	}
 }
 

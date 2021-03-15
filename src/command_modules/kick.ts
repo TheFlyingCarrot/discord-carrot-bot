@@ -1,4 +1,5 @@
-import { ClientModules, Command } from '../internal.js'
+import { logToGuild } from '../internal'
+import { Command } from '../typings'
 
 const kick: Command = {
 	name: 'kick',
@@ -10,7 +11,7 @@ const kick: Command = {
 	args: true,
 	cooldown: 10,
 
-	guildOnly: true,
+	guild_only: true,
 	permission: 'KICK_MEMBERS',
 
 	execute ({ message }) {
@@ -21,7 +22,7 @@ const kick: Command = {
 		}
 		targetUser.kick(`Kicked by: ${message.author.tag}`)
 			.then(() => {
-				ClientModules.logEvent(message.guild, `${message.author} kicked ${targetUser}.`)
+				logToGuild(message.guild, `${message.author} kicked ${targetUser}.`)
 				setTimeout(() => {
 					if (message.deletable) message.delete({ reason: 'Kick command.' })
 				}, 1250)

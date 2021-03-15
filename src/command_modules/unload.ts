@@ -1,4 +1,5 @@
-import { client, Command, Discord } from '../internal.js'
+import { client, getCommand, DiscordJS } from '../internal'
+import { Command } from '../typings'
 
 const unload: Command = {
 	name: 'unload',
@@ -8,11 +9,11 @@ const unload: Command = {
 
 	args: true,
 
-	developerOnly: true,
+	developer_only: true,
 
 	execute ({ args, message }) {
 		const commandName = args.shift().toLowerCase()
-		const command = client.getCommand(commandName)
+		const command = getCommand(commandName)
 		if (!command) {
 			message.reply('No such command was found.')
 			return
@@ -21,7 +22,7 @@ const unload: Command = {
 		delete require.cache[require.resolve(`./${command.name}.js`)]
 		client.commands.sweep((_value: Command, key: string) => key === commandName)
 
-		const newEmbed = new Discord.MessageEmbed()
+		const newEmbed = new DiscordJS.MessageEmbed()
 		newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setTimestamp()
 			.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)

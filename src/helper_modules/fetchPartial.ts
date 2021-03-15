@@ -1,11 +1,10 @@
-import { Discord } from '../internal'
+import { DiscordJS } from '../internal'
 
-export async function fetchPartial (partial: Partial<Discord.MessageReaction | Discord.User | Discord.Channel>): Promise<Partial<Discord.MessageReaction | Discord.User | Discord.Channel>> | null {
+export async function fetchPartial (partial: Partial<DiscordJS.MessageReaction | DiscordJS.User | DiscordJS.Channel>): Promise<Partial<DiscordJS.MessageReaction | DiscordJS.User | DiscordJS.Channel>> {
 	try {
 		await partial.fetch()
 	} catch (error) {
 		console.error(error)
-		return null
 	}
 	return partial
 }

@@ -1,6 +1,6 @@
-import { client, Discord, HelperModules } from '../internal.js'
+import { client, DiscordJS, HelperModules } from '../internal'
 
-export async function isValidReaction (messageReaction: Discord.MessageReaction, user: Discord.User): Promise<boolean> {
+export async function isValidReaction (messageReaction: DiscordJS.MessageReaction, user: DiscordJS.User): Promise<boolean> {
 	if (messageReaction.partial) await HelperModules.fetchPartial(messageReaction)
 	if (user.partial) await HelperModules.fetchPartial(user)
 

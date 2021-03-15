@@ -1,35 +1,51 @@
-export * as Discord from 'discord.js'
+export * as DiscordAPITypes from 'discord-api-types/v8'
+export * as DiscordJS from 'discord.js'
 export * as fs from 'fs'
 export { fetch } from 'node-fetch'
 export * as path from 'path'
-export { ExtendedClient } from './client_modules/ExtendedClient'
-export * as Config from './config.json'
-export { ClientEvents, Command, ReactionRole, ReactionRoleConfig } from './typings'
-
+export { default as ExtendedClient } from './client_modules/ExtendedClient'
+export { generateCommands } from './client_modules/generateCommands'
+export { generateSlashCommands } from './client_modules/generateSlashCommands'
+export { getCommand } from './client_modules/getCommand'
+export { getSlashCommand } from './client_modules/getSlashCommand'
+export { logToGuild } from './client_modules/logToGuild'
+export { parseCommandFromMessage } from './client_modules/parseCommandFromMessage'
+export { config } from './config'
+export { createRole } from './helper_modules/createRole'
 export { client } from './index'
 
-import { getCommand } from './client_modules/getCommand'
-import { initalizeCommands } from './client_modules/initalizeCommands'
-import { logEvent } from './client_modules/logEvent'
-import { parseCommandFromMessage } from './client_modules/parseCommandFromMessage'
-
-import { onGuildBanAdd } from './handlers/guildBanAdd'
-import { onGuildBanRemove } from './handlers/guildBanRemove'
-import { onGuildMemberRemove } from './handlers/guildMemberRemove'
-import { onMessage } from './handlers/message'
-import { onMessageDeletion } from './handlers/messageDelete'
-import { onMessageReactionAdd } from './handlers/messageReactionAdd'
-import { onMessageReactionRemove } from './handlers/messageReactionRemove'
-import { onMessageUpdate } from './handlers/messageUpdate'
-import { onReady } from './handlers/ready'
-import { onWebhookUpdate } from './handlers/webhookUpdate'
-
+import { onGuildBanAdd } from './handlers/onGuildBanAdd'
+import { onGuildBanRemove } from './handlers/onGuildBanRemove'
+import { onGuildMemberRemove } from './handlers/onGuildMemberRemove'
+import { onInteractionCreate } from './handlers/onInteractionCreate'
+import { onMessage } from './handlers/onMessage'
+import { onMessageDeletion } from './handlers/onMessageDelete'
+import { onMessageReactionAdd } from './handlers/onMessageReactionAdd'
+import { onMessageReactionRemove } from './handlers/onMessageReactionRemove'
+import { onMessageUpdate } from './handlers/onMessageUpdate'
+import { onReady } from './handlers/onReady'
+import { onWebhookUpdate } from './handlers/onWebhookUpdate'
 import { canUseCommand } from './helper_modules/canUseCommand'
 import { cooldown } from './helper_modules/cooldown'
 import { fetchPartial } from './helper_modules/fetchPartial'
 import { isValidReaction } from './helper_modules/isValidReaction'
 
-
-export const ClientModules = { getCommand, initalizeCommands, parseCommandFromMessage, logEvent }
-export const EventHandlers = { onGuildBanAdd, onGuildBanRemove, onGuildMemberRemove, onMessageDeletion, onMessageReactionAdd, onMessageReactionRemove, onMessageUpdate, onMessage, onReady, onWebhookUpdate }
-export const HelperModules = { cooldown, fetchPartial, canUseCommand, isValidReaction }
+export const EventHandlers = {
+	onGuildBanAdd,
+	onGuildBanRemove,
+	onGuildMemberRemove,
+	onInteractionCreate,
+	onMessage,
+	onMessageDeletion,
+	onMessageReactionAdd,
+	onMessageReactionRemove,
+	onMessageUpdate,
+	onReady,
+	onWebhookUpdate
+}
+export const HelperModules = {
+	canUseCommand,
+	cooldown,
+	fetchPartial,
+	isValidReaction
+}

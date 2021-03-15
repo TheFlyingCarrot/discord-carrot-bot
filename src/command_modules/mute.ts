@@ -1,4 +1,5 @@
-import { ClientModules, Command, Config } from '../internal.js'
+import { config, logToGuild as logToGuild } from '../internal'
+import { Command } from '../typings'
 
 const mute: Command = {
 	name: 'mute',
@@ -10,11 +11,11 @@ const mute: Command = {
 		const targetUser = message.mentions.members.first()
 		args.shift()
 
-		if (!Config.muted_role_ids[message.guild.id]) {
+		if (!config.muted_role_ids[message.guild.id]) {
 			message.reply('There is no configured muted role for this server.')
 			return
 		}
-		const mutedRoleID = Config.muted_role_ids[message.guild.id].muted_role_id ?? -1
+		const mutedRoleID: string = config.muted_role_ids[message.guild.id] ?? '-1'
 
 		const mutedRole = message.guild.roles.cache.find((role) => role.id === mutedRoleID)
 		if (!mutedRole) return
@@ -24,7 +25,7 @@ const mute: Command = {
 
 		message.reply(`${targetUser.user.tag} was muted.`)
 			.then((sentMessage) => {
-				ClientModules.logEvent(message.guild, `${message.author} muted ${targetUser}.`)
+				logToGuild(message.guild, `${message.author} muted ${targetUser}.`)
 				setTimeout(() => {
 					if (sentMessage.deletable) sentMessage.delete({ reason: 'Mute command.' })
 					if (message.deletable) message.delete({ reason: 'Mute command.' })

@@ -1,24 +1,25 @@
-import { client, Command, Config, Discord } from '../internal.js'
+import { client, config, DiscordJS } from '../internal'
+import { Command } from '../typings'
 
-export function canUseCommand (message: Discord.Message, command: Command, args: string[] | null): boolean {
-	const isDeveloper = Config.developers.includes(message.author.id)
+export function canUseCommand (message: DiscordJS.Message, command: Command, args: string[] | null): boolean {
+	const isDeveloper = config.developers.includes(message.author.id)
 	// Enabled?
 	if (!command.enabled && !isDeveloper) {
 		// message.reply(`\`${command.name}\` is currently \`disabled\`. Sorry!`)
 		return false
 	}
 	// Client has commands enabled?
-	if (!client.commandsEnabled && !isDeveloper) {
+	if (!client.commands_enabled && !isDeveloper) {
 		// message.reply('All commands are currently disabled. Sorry!')
 		return false
 	}
 	// Dev-only?
-	if (command.developerOnly && !isDeveloper) {
+	if (command.developer_only && !isDeveloper) {
 		message.reply('That command can only be used by developers. Sorry!')
 		return false
 	}
 	// Guild-only?
-	if (command.guildOnly && message.channel.type !== 'text') {
+	if (command.guild_only && message.channel.type !== 'text') {
 		message.reply('That command is reserved for servers only. Sorry!')
 		return false
 	}
@@ -38,7 +39,7 @@ export function canUseCommand (message: Discord.Message, command: Command, args:
 	// Requires args?
 	if (command.args && !args.length) {
 		if (command.usage) {
-			message.reply(`The proper usage for that command is: \`${Config.prefix}${command.name} ${command.usage}\``)
+			message.reply(`The proper usage for that command is: \`${config.prefix}${command.name} ${command.usage}\``)
 		} else {
 			message.reply('That command requires arguments.')
 		}

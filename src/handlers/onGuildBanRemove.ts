@@ -1,7 +1,7 @@
-import { client, Discord } from '../internal.js'
+import { client, DiscordJS } from '../internal'
 
-export async function onGuildBanRemove (guild: Discord.Guild, user: Discord.User) {
-	if (client.events.messageDelete === false || !guild.available) return
+export async function onGuildBanRemove (guild: DiscordJS.Guild, user: DiscordJS.User): Promise<void> {
+	if (!guild.available) return
 
 	const eventLog = (await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_REMOVE' })).entries.first()
 	if (!eventLog) {
@@ -10,17 +10,17 @@ export async function onGuildBanRemove (guild: Discord.Guild, user: Discord.User
 	}
 	if (eventLog.action != 'MEMBER_BAN_REMOVE') return
 
-	const logChannel = guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as Discord.TextChannel
+	const logChannel = guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as DiscordJS.TextChannel
 	if (!logChannel) return
 
 	const { executor, target } = eventLog
 
-	if (typeof target != 'object' || target.constructor != Discord.User) {
+	if (typeof target != 'object' || target.constructor != DiscordJS.User) {
 		client.emit('warn', `${__filename} Invalid log detected.`)
 		return
 	}
 
-	const newEmbed = new Discord.MessageEmbed()
+	const newEmbed = new DiscordJS.MessageEmbed()
 	newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 		.setTimestamp()
 		.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))

@@ -1,4 +1,5 @@
-import { Command, Discord, fetch } from '../internal.js'
+import { DiscordJS, fetch } from '../internal'
+import { Command } from '../typings'
 
 const minestat: Command = {
 	name: 'minestat',
@@ -17,7 +18,7 @@ const minestat: Command = {
 		const fetchedData = await (await fetch(requestURL, { method: 'get', headers: { 'Content-Type': 'application/json' } })).json()
 			.catch(console.error)
 		if (fetchedData) {
-			const newEmbed = new Discord.MessageEmbed()
+			const newEmbed = new DiscordJS.MessageEmbed()
 			newEmbed.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 				.setThumbnail('https://i.ibb.co/xXQbnn5/user-menu.png')
 				.setTitle('Minecraft Server Status')

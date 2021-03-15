@@ -1,4 +1,5 @@
-import { client, Command, Discord, fs, path } from '../internal.js'
+import { client, DiscordJS, fs, getCommand, path } from '../internal'
+import { Command } from '../typings'
 
 const load: Command = {
 	name: 'load',
@@ -8,11 +9,11 @@ const load: Command = {
 
 	args: true,
 
-	developerOnly: true,
+	developer_only: true,
 
 	execute ({ args, message }) {
 		const commandName = args.shift().toLowerCase()
-		if (client.getCommand(commandName)) {
+		if (getCommand(commandName)) {
 			message.reply('That command is already loaded.')
 			return
 		}
@@ -25,7 +26,7 @@ const load: Command = {
 		const newCommand: Command = require(commandPath).default
 		client.commands.set(newCommand.name, newCommand)
 
-		const newEmbed = new Discord.MessageEmbed()
+		const newEmbed = new DiscordJS.MessageEmbed()
 		newEmbed
 			.setAuthor('Carrot Bot', 'https://i.ibb.co/v3d9t9x/carrot-clip-art.png')
 			.setTimestamp()

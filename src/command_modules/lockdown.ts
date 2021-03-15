@@ -1,4 +1,4 @@
-import { Command } from '../internal.js'
+import { Command } from '../typings'
 
 const IgnoredChannels = new Set([
 	'751250239897469049', '785786109208428564', '750498579797377196', '750499239171457064', '750505158043107509',
@@ -16,7 +16,7 @@ const lockdown: Command = {
 	args: true,
 	cooldown: 30,
 
-	guildOnly: true,
+	guild_only: true,
 	guildSpecific: ['442001192655257620'],
 
 	permission: 'ADMINISTRATOR',
@@ -25,7 +25,7 @@ const lockdown: Command = {
 		let flag: boolean = null
 		{
 			const flagString = args.shift()
-			flagString.toLowerCase() === 'true' ? true : flagString.toLowerCase() === 'false' ? false : null
+			flag = flagString.toLowerCase() === 'true' ? true : flagString.toLowerCase() === 'false' ? false : null
 		}
 		const channels = message.guild.channels.cache.filter(ch => ch.type !== 'category')
 		channels.forEach(channel => {
