@@ -14,13 +14,6 @@ async function respond (interaction, commandData) {
 			}
 		}
 	})
-	// Followup Webhook - TBUL
-	/* client.api.webhooks(client.user.id, interaction.token).post({
-		contentType: 'application/json',
-		data: {
-			content: 'Test'
-		}
-	}) */
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

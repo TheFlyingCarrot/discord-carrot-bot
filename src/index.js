@@ -6,7 +6,6 @@ client.commands = generateCommands()
 client.slash_commands = generateSlashCommands()
 client.login(process.env.BOT_TOKEN)
 
-// Events
 client
 	.on('debug', console.debug)
 	.on('warn', console.warn)
