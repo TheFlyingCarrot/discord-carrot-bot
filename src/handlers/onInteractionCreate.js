@@ -1,29 +1,22 @@
 import { client, getSlashCommand } from '../internal'
 
-async function respond (interaction, commandData) {
-	if (!commandData.data) commandData.data = {}
+export async function onInteractionCreate (interaction) {
+	const Command = getSlashCommand(interaction.data.name)
+	if (!Command) throw new Error('No command found.')
+	const CommandData = await Command.execute(interaction)
+	if (!CommandData) throw new Error('Command produced no data.')
+	if (!CommandData.data) CommandData.data = {}
+
 	await client.api.interactions(interaction.id, interaction.token).callback.post({
 		data: {
-			type: commandData.type ?? 2,
+			type: CommandData.type ?? 2,
 			data: {
-				tts: commandData.data.tts ?? false,
-				content: commandData.data.content ?? null,
-				embeds: commandData.data.embeds ?? null,
-				allowed_mentions: commandData.data.allowed_mentions ?? null,
-				flags: commandData.data.flags ?? null
+				tts: CommandData.data.tts ?? false,
+				content: CommandData.data.content ?? null,
+				embeds: CommandData.data.embeds ?? null,
+				allowed_mentions: CommandData.data.allowed_mentions ?? null,
+				flags: CommandData.data.flags ?? null
 			}
 		}
 	})
-}
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function onInteractionCreate (interaction) {
-
-	const Command = getSlashCommand(interaction.data.name)
-	if (!Command) return
-
-	const CommandData = await Command.execute(interaction)
-	if (!CommandData) return
-
-	respond(interaction, CommandData)
 }
