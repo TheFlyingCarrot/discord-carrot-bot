@@ -1,4 +1,4 @@
-import { config, logToGuild as logToGuild } from '../internal'
+import { config } from '../internal'
 import { Command } from '../typings'
 
 const mute: Command = {
@@ -25,7 +25,6 @@ const mute: Command = {
 
 		message.reply(`${targetUser.user.tag} was muted.`)
 			.then((sentMessage) => {
-				logToGuild(message.guild, `${message.author} muted ${targetUser}.`)
 				setTimeout(() => {
 					if (sentMessage.deletable) sentMessage.delete({ reason: 'Mute command.' })
 					if (message.deletable) message.delete({ reason: 'Mute command.' })

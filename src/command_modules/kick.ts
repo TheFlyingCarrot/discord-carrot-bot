@@ -1,4 +1,3 @@
-import { logToGuild } from '../internal'
 import { Command } from '../typings'
 
 const kick: Command = {
@@ -22,7 +21,6 @@ const kick: Command = {
 		}
 		targetUser.kick(`Kicked by: ${message.author.tag}`)
 			.then(() => {
-				logToGuild(message.guild, `${message.author} kicked ${targetUser}.`)
 				setTimeout(() => {
 					if (message.deletable) message.delete({ reason: 'Kick command.' })
 				}, 1250)

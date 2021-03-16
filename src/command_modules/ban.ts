@@ -1,4 +1,3 @@
-import { logToGuild } from '../internal'
 import { Command } from '../typings'
 
 const ban: Command = {
@@ -22,7 +21,6 @@ const ban: Command = {
 		}
 		targetUser.ban({ reason: `Banned by: ${message.author.tag}` })
 			.then(() => {
-				logToGuild(message.guild, `${message.author} banned ${targetUser}.`)
 				setTimeout(() => {
 					if (message.deletable) message.delete({ reason: 'Ban command.' })
 				}, 1250)
