@@ -30,6 +30,16 @@ declare interface SlashCommand {
 }
 
 /**
+ * Properties of a single Reaction Role in a ReactionRoleConfig.
+ */
+declare interface ReactionRole {
+	category: string
+	emoji_tag: string
+	name: string
+	role_id: string
+}
+
+/**
  * Properties of a guild's Reaction Roles' JSON object.
  */
 declare interface ReactionRoleConfig {
@@ -38,16 +48,6 @@ declare interface ReactionRoleConfig {
 	role_categories: string
 	role_channel_id: string
 	title: string
-}
-
-/**
- * Properties of a single Reaction Role in a ReactionRoleConfig.
- */
-declare interface ReactionRole {
-	category: string
-	emoji_tag: string
-	name: string
-	role_id: string
 }
 
 declare interface Config {
