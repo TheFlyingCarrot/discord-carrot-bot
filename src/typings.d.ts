@@ -50,21 +50,6 @@ declare interface ReactionRole {
 	role_id: string
 }
 
-/**
- * Events received by the client user.
- */
-declare enum ClientEvent {
-	guildBanAdd,
-	guildBanRemove,
-	guildMemberRemove,
-	message,
-	messageDelete,
-	messageReactionAdd,
-	messageReactionRemove,
-	messageUpdate,
-	webhookUpdate
-}
-
 declare interface Config {
 	readonly default_commands_enabled: boolean
 	default_cooldown: number
