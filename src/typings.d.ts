@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { APIApplicationCommandInteraction } from 'discord-api-types'
 import { Message, PermissionString } from 'discord.js'
 
@@ -19,12 +20,12 @@ declare interface Command {
 }
 
 /**
- * Propreitary slash commands used for Discord Slash Commands
- * @todo Expand type to include IDs and more specifics. Non-ephemeral storage necessary?
+ * Proprietary slash command type used for Discord's Slash Commands
+ * @todo Expand type to include IDs and more specifics. Is non-ephemeral storage to hold these necessary?
  */
 declare interface SlashCommand {
 	readonly description: string
-	readonly execute?: (interaction: APIApplicationCommandInteraction) => Object | Promise<Object>
+	readonly execute?: (interaction: APIApplicationCommandInteraction) => Record<string, any> | Promise<Record<string, any>>
 	readonly name: string
 }
 
