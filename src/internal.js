@@ -10,7 +10,11 @@ export { getSlashCommand } from './client_modules/getSlashCommand'
 export { logToGuild } from './client_modules/logToGuild'
 export { parseCommandFromMessage } from './client_modules/parseCommandFromMessage'
 export { config } from './config'
+export { cooldown } from './helper_modules/cooldown'
 export { createRole } from './helper_modules/createRole'
+export { fetchPartial } from './helper_modules/fetchPartial'
+export { isValidCommand } from './helper_modules/isValidCommand'
+export { isValidReaction } from './helper_modules/isValidReaction'
 export { client } from './index'
 
 import { onGuildBanAdd } from './handlers/onGuildBanAdd'
@@ -24,10 +28,6 @@ import { onMessageReactionRemove } from './handlers/onMessageReactionRemove'
 import { onMessageUpdate } from './handlers/onMessageUpdate'
 import { onReady } from './handlers/onReady'
 import { onWebhookUpdate } from './handlers/onWebhookUpdate'
-import { canUseCommand } from './helper_modules/canUseCommand'
-import { cooldown } from './helper_modules/cooldown'
-import { fetchPartial } from './helper_modules/fetchPartial'
-import { isValidReaction } from './helper_modules/isValidReaction'
 
 export const EventHandlers = {
 	onGuildBanAdd,
@@ -41,10 +41,4 @@ export const EventHandlers = {
 	onMessageUpdate,
 	onReady,
 	onWebhookUpdate
-}
-export const HelperModules = {
-	canUseCommand,
-	cooldown,
-	fetchPartial,
-	isValidReaction
 }

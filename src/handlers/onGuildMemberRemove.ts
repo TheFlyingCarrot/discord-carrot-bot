@@ -1,37 +1,22 @@
-import { client, config, DiscordJS } from '../internal'
+import { DiscordJS } from '../internal'
 
 export async function onGuildMemberRemove (member: DiscordJS.GuildMember): Promise<void> {
-	const now = Date.now()
-
 	if (!member.guild.available) return
 
-	const eventLog = (await member.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_KICK' })).entries.first()
+	const EventLog = (await member.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_KICK' })).entries.first()
+	// No error because this could also mean that a user has left the guild.
+	if (!EventLog) return
+	if (EventLog.action !== 'MEMBER_KICK') return
 
-	if (!eventLog) {
-		console.log(`User: ${member.user.tag} was removed, but no relevant audit logs were found.`)
-		// TODO: Check: User left the Guild?
-		return
-	}
+	const LogChannel = member.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as DiscordJS.TextChannel
+	if (!LogChannel) return
 
-	if ((eventLog.createdTimestamp - now) >= config.log_tolerance_ms) {
-		console.log(`User: ${member.user.tag} was removed, but no recent log from the time of the event trigger was found.`)
-		return
-	} else if (eventLog.action !== 'MEMBER_KICK') {
-		return
-	}
+	const { executor, target } = EventLog
 
-	const logChannel = member.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as DiscordJS.TextChannel
-	if (!logChannel) return
+	if (typeof target !== 'object' || target.constructor !== DiscordJS.User) return
 
-	const { executor, target } = eventLog
-
-	if (typeof target != 'object' || target.constructor != DiscordJS.User) {
-		client.emit('warn', `${__filename} Invalid log detected.`)
-		return
-	}
-
-	const newEmbed = new DiscordJS.MessageEmbed()
-	newEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
+	const ResponseEmbed = new DiscordJS.MessageEmbed()
+	ResponseEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
 		.setTimestamp()
 		.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))
 		.setColor('#ff0000')
@@ -39,7 +24,7 @@ export async function onGuildMemberRemove (member: DiscordJS.GuildMember): Promi
 		.addField('Target', `${target}`, true)
 		.addField('Executor', executor.id, true)
 		.setFooter(`Target User ID: ${target.id} | Executor ID: ${executor.id}${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
-	if (eventLog.reason) newEmbed.addField('Reason', eventLog.reason, true)
+	if (EventLog.reason) ResponseEmbed.addField('Reason', EventLog.reason, true)
 
-	logChannel.send(newEmbed)
+	LogChannel.send(ResponseEmbed)
 }

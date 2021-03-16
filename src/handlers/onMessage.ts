@@ -1,9 +1,11 @@
-import { DiscordJS, HelperModules, parseCommandFromMessage } from '../internal'
+import { cooldown, DiscordJS, isValidCommand, parseCommandFromMessage } from '../internal'
 
 export function onMessage (message: DiscordJS.Message): void {
-	const { command, args } = parseCommandFromMessage(message) ?? {}
-	if (command && HelperModules.canUseCommand(message, command, args)) {
-		if (HelperModules.cooldown({ message, command })) return
+	const { command, args } = parseCommandFromMessage(message)
+	if (!command) return
+
+	if (isValidCommand(message, command, args)) {
+		if (cooldown({ message, command })) return
 		command.execute({ args, message })
 	}
 }

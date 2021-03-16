@@ -6,14 +6,18 @@ const modmail: SlashCommand = {
 	name: 'modmail',
 	async execute (interaction) {
 		const guild = await client.guilds.fetch(interaction.guild_id)
-		if (!guild.available) return
+		if (!guild) throw new Error('Guild not found.')
+		if (!guild.available) throw new Error('Guild not available.')
 
 		const { publicUpdatesChannel } = guild
+		// Guilds without the Community option enabled and/or no selected channel for public updates do not have a `publicUpdatesChannel`.
 		if (!publicUpdatesChannel) return
 
-		const Options = interaction.data.options ?? []
+		const Options = interaction.data.options
+		// There is at least one required argument for this command.
+		if (!Options) throw new Error('Interaction data did not contain expected options.')
 		const ModMailMessage = String(Options.find(element => 'name' in element && element.name === 'message').value)
-		if (!ModMailMessage) return
+		if (!ModMailMessage) throw new Error('Could not find property `message` of interaction data options.')
 
 		const ResponseEmbed = new DiscordJS.MessageEmbed()
 		ResponseEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')

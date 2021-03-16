@@ -3,6 +3,7 @@ import { client, getSlashCommand } from '../internal'
 export async function onInteractionCreate (interaction) {
 	const Command = getSlashCommand(interaction.data.name)
 	if (!Command) throw new Error('No command found.')
+
 	const CommandData = await Command.execute(interaction)
 	if (!CommandData) throw new Error('Command produced no data.')
 	if (!CommandData.data) CommandData.data = {}

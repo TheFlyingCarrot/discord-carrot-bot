@@ -1,6 +1,6 @@
 import { TeamDiscord } from '../guilds/750480529765171302.js'
 import { DiscordJS } from '../internal'
-import { Command, ReactionRole } from '../typings.js'
+import { Command, ReactionRole } from '../typings'
 
 const reactRole: Command = {
 	name: 'reactrole',

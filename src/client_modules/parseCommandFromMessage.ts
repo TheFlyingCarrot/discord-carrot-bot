@@ -2,12 +2,14 @@ import { config, DiscordJS, getCommand } from '../internal'
 import { Command } from '../typings'
 
 /**
- * 
  * @param message Discord message.
  * @returns Object containing `args`, `command` of type Command, and the original message.
  */
 export function parseCommandFromMessage (message: DiscordJS.Message): { args: string[] | null, command: Command | null, message: DiscordJS.Message } {
-	if (!message.content.startsWith(config.prefix) || message.author.bot || message.tts || message.system) return
+	if (!message.content.startsWith(config.prefix)) return
+	if (message.author.bot) return
+	if (message.system) return
+	if (message.tts) return
 
 	const input = message.content.slice(config.prefix.length)
 

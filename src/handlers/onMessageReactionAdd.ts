@@ -1,14 +1,14 @@
 import { TeamDiscord } from '../guilds/750480529765171302.js'
-import { DiscordJS, HelperModules } from '../internal'
-import { ReactionRole } from '../typings.js'
+import { DiscordJS, isValidReaction } from '../internal'
+import { ReactionRole } from '../typings'
 
 export async function onMessageReactionAdd (messageReaction: DiscordJS.MessageReaction, user: DiscordJS.User): Promise<void> {
-	if (!HelperModules.isValidReaction(messageReaction, user)) return
-
+	if (!isValidReaction(messageReaction, user)) return
 
 	const { guild } = messageReaction.message
-
+	// Message most likely originates from a Direct Message, no implementation.
 	if (!guild) return
+	if (!guild.available) throw new Error('Guild not available.')
 
 	if (!guild.available) {
 		console.error('[Reaction Handler] [Error] Guild not available:', guild)

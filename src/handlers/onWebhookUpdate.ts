@@ -1,48 +1,47 @@
-import { client, DiscordJS } from '../internal'
+import { DiscordJS } from '../internal'
 
 const webhookActionMap = { 'WEBHOOK_CREATE': 'Create Webhook', 'WEBHOOK_UPDATE': 'Update Webhook', 'WEBHOOK_DELETE': 'Delete Webhook' }
 const embedActions = { 'CREATE': '#00ff00', 'DELETE': '#ff0000', 'UPDATE': '#ff6400', 'ALL': '#ff00ff' }
+const EventName = 'WEBHOOK_UPDATE'
 
 export async function onWebhookUpdate (channel: DiscordJS.TextChannel): Promise<void> {
-	if (channel.name === 'logs' || !channel.guild || !channel.guild.available) return
+	const { guild } = channel
+	// Message most likely originates from a Direct Message, no implementation.
+	if (!guild) return
+	if (!guild.available) throw new Error('Guild not available.')
+	if (channel.name === 'logs') return
 
-	const eventLog: DiscordJS.GuildAuditLogsEntry = (await channel.guild.fetchAuditLogs({ limit: 1, type: 'WEBHOOK_UPDATE' })).entries.first()
-	if (!eventLog) {
-		console.log('A webhook was updated, but no relevant audit logs were found.')
-		return
-	}
-	if (eventLog.action != 'MESSAGE_DELETE') return
+	const EventLog = (await guild.fetchAuditLogs({ limit: 1, type: EventName })).entries.first()
+	if (!EventLog) throw new Error(`No ${EventName} log found.`)
+	if (EventLog.action !== EventName) return
 
-	const logChannel = channel.guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as DiscordJS.TextChannel
-	if (!logChannel) return
+	const LogChannel = guild.channels.cache.find(channel => channel.name === 'logs' && channel.type === 'text') as DiscordJS.TextChannel
+	if (!LogChannel) return
 
-	const { executor, target } = eventLog
+	const { executor, target } = EventLog
 
-	if (typeof target != 'object' || target.constructor != DiscordJS.Webhook) {
-		client.emit('warn', `${__filename} Invalid log detected.`)
-		return
-	}
+	if (typeof target !== 'object' || target.constructor !== DiscordJS.User) return
 
-	const newEmbed = new DiscordJS.MessageEmbed()
-	newEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
+	const ResponseEmbed = new DiscordJS.MessageEmbed()
+	ResponseEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
 		.setTimestamp()
 		.setThumbnail(executor.displayAvatarURL({ dynamic: true, format: 'png', size: 256 }))
-		.setColor(embedActions[eventLog.actionType] || '#ff6400')
+		.setColor(embedActions[EventLog.actionType] || '#ff6400')
 		.setTitle('Webhook Updated')
 		.addField('Executor', `${executor}`, true)
 		.addField('Channel', `${channel}`, true)
-		.addField('Action', webhookActionMap[eventLog.action] || 'Unknown')
+		.addField('Action', webhookActionMap[EventLog.action] || 'Unknown')
 		.setFooter(`Executor ID: ${executor.id} ${process.env.NODE_ENV === 'test' ? '| Test Build' : ''}`)
-	if (eventLog.reason) newEmbed.addField('Reason', eventLog.reason, true)
-	eventLog.changes.forEach(change => {
+	if (EventLog.reason) ResponseEmbed.addField('Reason', EventLog.reason, true)
+	EventLog.changes.forEach(change => {
 		if (change.old && change.new) {
-			newEmbed.addField('Change', `Key: ${change.key}\nOld: ${change.old}\nNew: ${change.new}`, true)
+			ResponseEmbed.addField('Change', `Key: ${change.key}\nOld: ${change.old}\nNew: ${change.new}`, true)
 		} else if (change.new) {
-			newEmbed.addField('Change', `Key: ${change.key}\nValue: ${change.new}`, true)
+			ResponseEmbed.addField('Change', `Key: ${change.key}\nValue: ${change.new}`, true)
 		} else if (change.old) {
-			newEmbed.addField('Change', `Key: ${change.key}\nValue: ${change.old}`, true)
+			ResponseEmbed.addField('Change', `Key: ${change.key}\nValue: ${change.old}`, true)
 		}
 	})
 
-	logChannel.send(newEmbed)
+	LogChannel.send(ResponseEmbed)
 }
