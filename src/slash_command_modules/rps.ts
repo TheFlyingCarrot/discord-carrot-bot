@@ -35,12 +35,12 @@ const rps: SlashCommand = {
 	description: 'Play a game of rock, paper, scissors.',
 	name: 'rps',
 	execute (interaction) {
-		const Options = interaction.data.options ?? []
-
+		const Options = interaction.data.options
+		// There is at least one required argument for this command.
+		if (!Options) throw new Error('Interaction data did not contain expected options.')
 		const MoveOption = String(Options.find(element => 'name' in element && element.name === 'move').value)
-
+		if (!MoveOption) throw new Error('Could not find property `move` of interaction data options.')
 		const Results = playGame(MoveOption)
-
 		const ResponseEmbed = new DiscordJS.MessageEmbed()
 		ResponseEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
 			.setTimestamp()
