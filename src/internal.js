@@ -1,4 +1,5 @@
 export * as DiscordJS from 'discord.js'
+export { APIUser } from 'discord-api-types/v8'
 export * as fs from 'fs'
 export { fetch } from 'node-fetch'
 export * as path from 'path'

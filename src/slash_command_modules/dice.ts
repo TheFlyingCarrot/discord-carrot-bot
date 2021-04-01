@@ -1,7 +1,8 @@
+import { ApplicationCommandInteractionDataOptionInteger } from 'discord-api-types/v8'
 import { SlashCommand } from '../typings'
 
 const MaxFaces = 20
-const MinFaces = 6
+const MinFaces = 3
 
 const MaxDice = 6
 const MinDice = 1
@@ -22,18 +23,24 @@ const dice: SlashCommand = {
 	description: 'Roll dice.',
 	name: 'dice',
 	execute (interaction) {
-		const Options = interaction.data.options ?? []
+		if (!interaction.data) throw new Error('Interaction did not contain expected `data` array.')
+		const Options = interaction.data.options
 
-		const FacesOption = Options.find(element => 'name' in element && element.name === 'faces')
+		let FacesOption: ApplicationCommandInteractionDataOptionInteger | null = null
+		let DiceOption: ApplicationCommandInteractionDataOptionInteger | null = null
+		if (Options) {
+			FacesOption = Options.find(element => element.name === 'faces') as ApplicationCommandInteractionDataOptionInteger
+			DiceOption = Options.find(element => element.name === 'dice') as ApplicationCommandInteractionDataOptionInteger
+		}
+
 		const Faces = bindNumber(Number(FacesOption ? FacesOption.value : MinFaces), MaxFaces, MinFaces)
-
-		const DiceOption = Options.find(element => 'name' in element && element.name === 'dice')
 		const Dice = bindNumber(Number(DiceOption ? DiceOption.value : MinDice), MaxDice, MinDice)
+		const Results = rollDice(Faces, Dice)
 
 		return {
 			type: 4,
 			data: {
-				content: `It's a **${rollDice(Faces, Dice)}**.\n\`${Faces}\` Faces | \`${Dice}\` ${Dice > 1 ? 'Dice' : 'Die'}`
+				content: `It's a **${Results}**.\n\`${Faces}\` Faces | \`${Dice}\` ${Dice > 1 ? 'Dice' : 'Die'}`
 			}
 		}
 	}

@@ -1,3 +1,4 @@
+import { ApplicationCommandInteractionDataOptionUser } from 'discord-api-types/v8'
 import { client, DiscordJS } from '../internal'
 import { SlashCommand } from '../typings'
 
@@ -6,8 +7,10 @@ const avatar: SlashCommand = {
 	name: 'avatar',
 	async execute (interaction) {
 		let TargetUser: DiscordJS.User
+
 		if (interaction.data && interaction.data.options) {
-			TargetUser = await client.users.fetch(interaction.data.options.find(option => option.name === 'user').value.toString())
+			const UserOption = interaction.data.options.find(option => option.name === 'user') as ApplicationCommandInteractionDataOptionUser
+			TargetUser = await client.users.fetch(UserOption.value.toString())
 		} else {
 			TargetUser = await client.users.fetch(interaction.member.user.id)
 		}

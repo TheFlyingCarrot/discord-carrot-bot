@@ -1,3 +1,4 @@
+import { ApplicationCommandInteractionDataOptionString } from 'discord-api-types/v8'
 import { DiscordJS, client } from '../internal'
 import { SlashCommand } from '../typings'
 
@@ -5,6 +6,10 @@ const modmail: SlashCommand = {
 	description: 'Send a message to server staff.',
 	name: 'modmail',
 	async execute (interaction) {
+		if (!interaction.data) throw new Error('Interaction did not contain expected `data` array.')
+		const Options = interaction.data.options
+		if (!Options) throw new Error('Interaction data did not contain expected `options` array.')
+
 		const guild = await client.guilds.fetch(interaction.guild_id)
 		if (!guild) throw new Error('Guild not found.')
 		if (!guild.available) throw new Error('Guild not available.')
@@ -13,10 +18,7 @@ const modmail: SlashCommand = {
 		// Guilds without the Community option enabled and/or no selected channel for public updates do not have a `publicUpdatesChannel`.
 		if (!publicUpdatesChannel) return
 
-		const Options = interaction.data.options
-		// There is at least one required argument for this command.
-		if (!Options) throw new Error('Interaction data did not contain expected options.')
-		const ModMailMessage = String(Options.find(element => 'name' in element && element.name === 'message').value)
+		const ModMailMessage = Options.find(element => element.name === 'message') as ApplicationCommandInteractionDataOptionString
 		if (!ModMailMessage) throw new Error('Could not find property `message` of interaction data options.')
 
 		const ResponseEmbed = new DiscordJS.MessageEmbed()
@@ -26,7 +28,7 @@ const modmail: SlashCommand = {
 			.setTimestamp()
 			.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
 			.addField('Author', interaction.member.user.username)
-			.addField('Message', ModMailMessage)
+			.addField('Message', ModMailMessage.value)
 		publicUpdatesChannel.send(ResponseEmbed)
 
 		return {

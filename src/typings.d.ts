@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { APIApplicationCommandInteraction } from 'discord-api-types'
+import { APIGuildInteraction } from 'discord-api-types/v8'
 import { Message, PermissionString } from 'discord.js'
 
 declare interface Command {
@@ -25,7 +25,7 @@ declare interface Command {
  */
 declare interface SlashCommand {
 	readonly description: string
-	readonly execute?: (interaction: APIApplicationCommandInteraction) => Record<string, any> | Promise<Record<string, any>>
+	readonly execute?: (interaction: APIGuildInteraction) => Record<string, any> | Promise<Record<string, any>>
 	readonly name: string
 }
 

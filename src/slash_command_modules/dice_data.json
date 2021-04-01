@@ -5,7 +5,7 @@
 		{
 			"type": 4,
 			"name": "faces",
-			"description": "Number of faces (1-20)"
+			"description": "Number of faces (3-20)"
 		},
 		{
 			"type": 4,

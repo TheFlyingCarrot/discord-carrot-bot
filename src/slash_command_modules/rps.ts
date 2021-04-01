@@ -1,3 +1,4 @@
+import { ApplicationCommandInteractionDataOptionString } from 'discord-api-types/v8'
 import { DiscordJS } from '../internal'
 import { SlashCommand } from '../typings'
 
@@ -35,18 +36,22 @@ const rps: SlashCommand = {
 	description: 'Play a game of rock, paper, scissors.',
 	name: 'rps',
 	execute (interaction) {
+		if (!interaction.data) throw new Error('Interaction did not contain expected `data` array.')
 		const Options = interaction.data.options
-		// There is at least one required argument for this command.
-		if (!Options) throw new Error('Interaction data did not contain expected options.')
-		const MoveOption = String(Options.find(element => 'name' in element && element.name === 'move').value)
+		if (!Options) throw new Error('Interaction data did not contain expected `options` array.')
+
+		const MoveOption = Options.find(element => element.name === 'move') as ApplicationCommandInteractionDataOptionString
 		if (!MoveOption) throw new Error('Could not find property `move` of interaction data options.')
-		const Results = playGame(MoveOption)
+
+		const Results = playGame(MoveOption.value.toString())
+
 		const ResponseEmbed = new DiscordJS.MessageEmbed()
 		ResponseEmbed.setAuthor('Carrot Bot', 'https://raw.githubusercontent.com/TheFlyingCarrot/carrot-discord-bot/main/Carrot%20Bot.png')
 			.setTimestamp()
 			.setTitle(Results.outcome)
 			.setDescription(`You chose: ${Results.playerChoice}\nComputer chose: ${Results.computerChoice}`)
 			.setFooter(`Carrot Bot${process.env.NODE_ENV == 'test' ? ' | Test Build' : ''}`)
+
 		return {
 			type: 4,
 			data: {
