@@ -4,7 +4,7 @@
 	"description": "Discord bot made with NodeJS and DiscordJS.",
 	"main": "dist/index.js",
 	"dependencies": {
-		"discord.js": "^12.5.1",
+		"discord.js": "^12.5.2",
 		"dotenv": "^8.2.0",
 		"node-fetch": "^2.6.1",
 		"tslib": "^2.1.0"
