@@ -1,7 +1,7 @@
 import { config, EventHandlers, ExtendedClient, generateCommands, generateSlashCommands } from './internal'
 
 // Set-up
-export const client = new ExtendedClient(`${config.default_commands_enabled ? `${config.prefix}help` : 'nobody.'}`, { partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
+export const client = new ExtendedClient(config.default_commands_enabled ? `${config.prefix}help` : 'nobody.', { partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 client.commands = generateCommands()
 client.slash_commands = generateSlashCommands()
 client.login(process.env.BOT_TOKEN)
