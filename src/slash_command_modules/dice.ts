@@ -2,9 +2,11 @@ import { ApplicationCommandInteractionDataOptionInteger } from 'discord-api-type
 import { SlashCommand } from '../typings'
 
 const MaxFaces = 20
+const DefaultFaces = 6
 const MinFaces = 3
 
 const MaxDice = 6
+const DefaultDice = 1
 const MinDice = 1
 
 const bindNumber = (input: number, maxInput: number, minInput: number): number => {
@@ -33,8 +35,8 @@ const dice: SlashCommand = {
 			DiceOption = Options.find(element => element.name === 'dice') as ApplicationCommandInteractionDataOptionInteger
 		}
 
-		const Faces = bindNumber(Number(FacesOption ? FacesOption.value : MinFaces), MaxFaces, MinFaces)
-		const Dice = bindNumber(Number(DiceOption ? DiceOption.value : MinDice), MaxDice, MinDice)
+		const Faces = bindNumber(Number(FacesOption ? FacesOption.value : DefaultFaces), MaxFaces, MinFaces)
+		const Dice = bindNumber(Number(DiceOption ? DiceOption.value : DefaultDice), MaxDice, MinDice)
 		const Results = rollDice(Faces, Dice)
 
 		return {
