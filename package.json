@@ -4,14 +4,14 @@
 	"description": "Discord bot made with NodeJS and DiscordJS.",
 	"main": "dist/index.js",
 	"dependencies": {
-		"discord.js": "^12.5.2",
+		"discord.js": "^12.5.3",
 		"dotenv": "^8.2.0",
 		"node-fetch": "^2.6.1",
 		"tslib": "^2.1.0"
 	},
 	"devDependencies": {
 		"@types/node": "^14.14.37",
-		"@types/node-fetch": "^2.5.8",
+		"@types/node-fetch": "^2.5.9",
 		"@typescript-eslint/eslint-plugin": "^4.20.0",
 		"@typescript-eslint/parser": "^4.20.0",
 		"discord-api-types": "^0.13.3",
