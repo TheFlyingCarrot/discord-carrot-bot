@@ -38,11 +38,3 @@ Content-Type: application/json
 ### Delete Guild Command
 DELETE https://discord.com/api/v8/applications/{{Client-ID}}/guilds/{{TARGET_GUILD_ID}}/commands/{{TARGET_GUILD_COMMAND_ID}} HTTP/1.1
 Authorization: Bot {{Client-Token}}
-
-
-
-
-
-### Check Creed Services
-GET https://us-central1-creed-services.cloudfunctions.net/put-command HTTP/1.1
-Authorization: bearer {{GCloud-Identity-Token}}
