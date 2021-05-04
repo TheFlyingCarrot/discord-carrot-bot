@@ -6,7 +6,7 @@ const slow_mode: Command = {
 	enabled: true,
 	toggleable: true,
 
-	aliases: ['slow-node'],
+	aliases: ['slow-mode'],
 	usage: '(duration in seconds)',
 	cooldown: 10,
 

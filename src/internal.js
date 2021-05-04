@@ -29,16 +29,4 @@ import { onMessageUpdate } from './handlers/onMessageUpdate'
 import { onReady } from './handlers/onReady'
 import { onWebhookUpdate } from './handlers/onWebhookUpdate'
 
-export const EventHandlers = {
-	onGuildBanAdd,
-	onGuildBanRemove,
-	onGuildMemberRemove,
-	onInteractionCreate,
-	onMessage,
-	onMessageDeletion,
-	onMessageReactionAdd,
-	onMessageReactionRemove,
-	onMessageUpdate,
-	onReady,
-	onWebhookUpdate
-}
+export const eventHandlers = { onGuildBanAdd, onGuildBanRemove, onGuildMemberRemove, onInteractionCreate, onMessage, onMessageDeletion, onMessageReactionAdd, onMessageReactionRemove, onMessageUpdate, onReady, onWebhookUpdate }

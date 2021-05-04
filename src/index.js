@@ -1,4 +1,4 @@
-import { config, EventHandlers, ExtendedClient, generateCommands, generateSlashCommands } from './internal'
+import { config, ExtendedClient, generateCommands, generateSlashCommands, eventHandlers } from './internal'
 
 // Set-up
 export const client = new ExtendedClient(config.default_commands_enabled ? `${config.prefix}help` : 'nobody.', { partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
@@ -7,19 +7,18 @@ client.slash_commands = generateSlashCommands()
 client.login(process.env.BOT_TOKEN)
 
 client
-	.on('debug', console.debug)
 	.on('warn', console.warn)
 	.on('error', console.error)
-	.on('invalidated', console.error)
-	.on('disconnect', console.error)
-	.on('ready', EventHandlers.onReady)
-	.on('guildBanAdd', EventHandlers.onGuildBanAdd)
-	.on('guildBanRemove', EventHandlers.onGuildBanRemove)
-	.on('guildMemberRemove', EventHandlers.onGuildMemberRemove)
-	.on('message', EventHandlers.onMessage)
-	.on('messageUpdate', EventHandlers.onMessageUpdate)
-	.on('messageDelete', EventHandlers.onMessageDeletion)
-	.on('messageReactionAdd', EventHandlers.onMessageReactionAdd)
-	.on('messageReactionRemove', EventHandlers.onMessageReactionRemove)
-	.on('webhookUpdate', EventHandlers.onWebhookUpdate)
-	.ws.on('INTERACTION_CREATE', EventHandlers.onInteractionCreate)
+	.on('invalidated', console.warn)
+	.on('disconnect', console.warn)
+	.on('ready', eventHandlers.onReady)
+	.on('guildBanAdd', eventHandlers.onGuildBanAdd)
+	.on('guildBanRemove', eventHandlers.onGuildBanRemove)
+	.on('guildMemberRemove', eventHandlers.onGuildMemberRemove)
+	.on('message', eventHandlers.onMessage)
+	.on('messageUpdate', eventHandlers.onMessageUpdate)
+	.on('messageDelete', eventHandlers.onMessageDeletion)
+	.on('messageReactionAdd', eventHandlers.onMessageReactionAdd)
+	.on('messageReactionRemove', eventHandlers.onMessageReactionRemove)
+	.on('webhookUpdate', eventHandlers.onWebhookUpdate)
+	.ws.on('INTERACTION_CREATE', eventHandlers.onInteractionCreate)
