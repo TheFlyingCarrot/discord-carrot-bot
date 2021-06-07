@@ -1,6 +1,6 @@
 import { Command } from '../typings'
 
-const slow_mode: Command = {
+const slowMode: Command = {
 	name: 'slowmode',
 	description: 'Enable slow-mode in the current channel.',
 	enabled: true,
@@ -27,4 +27,4 @@ const slow_mode: Command = {
 	}
 }
 
-export default slow_mode as Command
+export default slowMode as Command

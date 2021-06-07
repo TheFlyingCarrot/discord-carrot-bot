@@ -1,5 +1,5 @@
 import { config, DiscordJS } from '../internal'
-import { HexColorRegExp } from '../command_modules/custom_role'
+import { HexColorRegExp } from '../command_modules/customRole'
 
 export async function createRole (guild: DiscordJS.Guild, roleColor: string, roleName: string, reason: string): Promise<DiscordJS.Role> {
 	return new Promise((resolve, reject) => {

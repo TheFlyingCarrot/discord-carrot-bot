@@ -1,6 +1,5 @@
 import { Config } from './typings'
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 export const config: Config = {
 	default_commands_enabled: true,
 	default_cooldown: 3,
