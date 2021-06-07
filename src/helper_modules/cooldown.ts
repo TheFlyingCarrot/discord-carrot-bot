@@ -17,9 +17,9 @@ export function cooldown ({ message, command }: { message: DiscordJS.Message, co
 			message.reply(`You cannot use that command for another \`${timeLeft.toFixed(config.time_decimals)}\` seconds`)
 			return true
 		}
-	} else if (!timestamps.has(message.author.id) && !config.developers.includes(message.author.id)) {
+	} else if (!config.developers.includes(message.author.id)) {
 		timestamps.set(message.author.id, now)
-		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)
+		//setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)
 	}
 
 	return false
