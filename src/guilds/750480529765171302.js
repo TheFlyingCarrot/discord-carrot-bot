@@ -4,8 +4,7 @@ export const TeamDiscord = {
 	role_channel_id: '751241962534731867',
 	role_categories: [
 		'Business',
-		'Technical',
-		'2021'
+		'Technical'
 	],
 	reaction_roles: [
 		{
@@ -73,30 +72,6 @@ export const TeamDiscord = {
 			category: 'technical',
 			role_id: '750485104035627080',
 			emoji_tag: '<:systemsintegration:751538798172700683>'
-		},
-		{
-			name: 'Game Design Challenge',
-			category: '2021',
-			role_id: '796904579563257866',
-			emoji_tag: '1️⃣'
-		},
-		{
-			name: 'Infinite Recharge at Home',
-			category: '2021',
-			role_id: '796904619807735819',
-			emoji_tag: '2️⃣'
-		},
-		{
-			name: 'Innovation Challenge',
-			category: '2021',
-			role_id: '796904682810376243',
-			emoji_tag: '3️⃣'
-		},
-		{
-			name: 'Traditional Awards',
-			category: '2021',
-			role_id: '796904743498416128',
-			emoji_tag: '4️⃣'
 		}
 	]
 }
