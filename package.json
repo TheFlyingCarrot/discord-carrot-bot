@@ -29,7 +29,7 @@
 		"build-ts": "tsc",
 		"postinstall": "npm run build-ts",
 		"start": "heroku local",
-		"test": "heroku local -e .env.test",
+		"test": "heroku local -e test.env",
 		"watch-ts": "tsc -w",
 		"lint": "eslint . --ext .ts"
 	},
